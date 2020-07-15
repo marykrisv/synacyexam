@@ -14,20 +14,47 @@ public class OnePairFactory extends HandFactory implements Pair {
     private List<Card> otherCards;
 
     @Override
+    public void initializeCards() {
+        pairCards = new ArrayList<>();
+        otherCards = new ArrayList<>();
+    }
+
+    @Override
     public boolean check() {
         return this.checkPair();
     }
 
     @Override
-    public void initializeCards() {
-        pairCards = new ArrayList<>();
-        otherCards = new ArrayList<>();
+    public void populateCards() {
+        Map<CardRank, List<CardSuit>> groupedDeck = this.groupDeckByRank();
+
+        for (Map.Entry<CardRank, List<CardSuit>> entry : groupedDeck.entrySet()) {
+            CardRank cardRank = entry.getKey();
+            List<CardSuit> cardSuits = entry.getValue();
+            if (cardSuits.size() == 2) {
+                populatePairCards(cardRank, cardSuits);
+            } else {
+                populateOtherCards(cardRank, cardSuits);
+            }
+        }
+
+        CardUtil.sortCardsDesc(pairCards, otherCards);
+        otherCards = CardUtil.maxOutCardsOnHand(pairCards, otherCards);
     }
 
     public void populateOtherCards(CardRank cardRank, List<CardSuit> cardSuits) {
         if (otherCards != null) {
             for (CardSuit cardSuit: cardSuits) {
                 otherCards.add(new Card(cardRank, cardSuit));
+            }
+        }
+    }
+
+    @Override
+    public void populatePairCards(CardRank cardRank, List<CardSuit> cardSuits) {
+        if (pairCards != null) {
+            for (CardSuit cardSuit: cardSuits) {
+                pairCards.add(new Card(cardRank, cardSuit));
             }
         }
     }
@@ -49,35 +76,18 @@ public class OnePairFactory extends HandFactory implements Pair {
     }
 
     @Override
-    public void populatePairCards(CardRank cardRank, List<CardSuit> cardSuits) {
-        if (pairCards != null) {
-            for (CardSuit cardSuit: cardSuits) {
-                pairCards.add(new Card(cardRank, cardSuit));
-            }
-        }
-    }
-
-    @Override
     public boolean checkPair() {
-        boolean isOnePair = false;
         Map<CardRank, List<CardSuit>> groupedDeck = this.groupDeckByRank();
 
-        // check for suit with 5 or greater than 5 value
         for (Map.Entry<CardRank, List<CardSuit>> entry : groupedDeck.entrySet()) {
-            CardRank cardRank = entry.getKey();
             List<CardSuit> cardSuits = entry.getValue();
             if (cardSuits.size() == 2) {
-                populatePairCards(cardRank, cardSuits);
+                return true;
             } else {
-                populateOtherCards(cardRank, cardSuits);
+                // do nothing
             }
         }
 
-        if (pairCards.size() == 2) {
-            CardUtil.sortCardsDesc(pairCards, otherCards);
-            return true;
-        } else {
-            return false;
-        }
+        return false;
     }
 }

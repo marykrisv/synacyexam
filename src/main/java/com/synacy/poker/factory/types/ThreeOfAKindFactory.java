@@ -18,8 +18,12 @@ public class ThreeOfAKindFactory extends HandFactory implements ThreeOfAKind {
 
     @Override
     public boolean check() {
-        CardUtil.sortCardsDesc(otherCards);
         return this.checkThreeOfAKind();
+    }
+
+    @Override
+    public void populateCards() {
+        CardUtil.sortCardsDesc(otherCards);
     }
 
     @Override

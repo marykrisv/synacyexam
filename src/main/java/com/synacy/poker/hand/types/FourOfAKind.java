@@ -5,6 +5,7 @@ import com.synacy.poker.card.CardRank;
 import com.synacy.poker.card.CardSuit;
 import com.synacy.poker.hand.Hand;
 import com.synacy.poker.hand.HandType;
+import com.synacy.poker.utils.CardUtil;
 
 import java.util.*;
 
@@ -34,15 +35,7 @@ public class FourOfAKind extends Hand {
     }
 
     private String getHighCard () {
-        List<CardRank> cardRanks = new ArrayList<>();
-
-        for (Card card: otherCards) {
-            cardRanks.add(card.getRank());
-        }
-
-        cardRanks.sort(Collections.reverseOrder());
-
-        return cardRanks.get(0).toString();
+        return ranksToString(CardUtil.maxOutCardsOnHand(fourOfAKindCards, otherCards));
     }
 
     private String getQuadRank () {

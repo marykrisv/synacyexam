@@ -49,10 +49,10 @@ public class HandIdentifier {
     }
 
     private List<Card> combineCards(List<Card> playerCards, List<Card> communityCards) {
-        List<Card> cards = new ArrayList<Card>();
-        cards.addAll(playerCards);
-        cards.addAll(communityCards);
-        return cards;
+//        List<Card> cards = new ArrayList<Card>();
+//        cards.addAll(playerCards);
+//        cards.addAll(communityCards);
+//        return cards;
 
 //        return highCard();
 //        return onePair();
@@ -60,16 +60,16 @@ public class HandIdentifier {
 //        return threeOfAKind();
 //        return straight1();
 //        return straight2();
-//        return flush();
+        return flush();
 //        return this.fullHouse();
     }
 
     private List<Card> highCard() {
         return Arrays.asList(
                 new Card(CardRank.ACE, CardSuit.CLUBS),
-                new Card(CardRank.KING, CardSuit.CLUBS),
-                new Card(CardRank.QUEEN, CardSuit.CLUBS),
-                new Card(CardRank.SEVEN, CardSuit.CLUBS),
+                new Card(CardRank.KING, CardSuit.HEARTS),
+                new Card(CardRank.QUEEN, CardSuit.DIAMONDS),
+                new Card(CardRank.SEVEN, CardSuit.HEARTS),
                 new Card(CardRank.TWO, CardSuit.CLUBS),
                 new Card(CardRank.EIGHT, CardSuit.CLUBS)
         );
@@ -78,9 +78,9 @@ public class HandIdentifier {
     private List<Card> onePair() {
         return Arrays.asList(
                 new Card(CardRank.ACE, CardSuit.CLUBS),
-                new Card(CardRank.ACE, CardSuit.CLUBS),
+                new Card(CardRank.ACE, CardSuit.HEARTS),
                 new Card(CardRank.EIGHT, CardSuit.CLUBS),
-                new Card(CardRank.SEVEN, CardSuit.CLUBS),
+                new Card(CardRank.SEVEN, CardSuit.DIAMONDS),
                 new Card(CardRank.TWO, CardSuit.CLUBS),
                 new Card(CardRank.QUEEN, CardSuit.CLUBS)
         );
@@ -88,11 +88,11 @@ public class HandIdentifier {
 
     private List<Card> twoPair() {
         return Arrays.asList(
-                new Card(CardRank.TWO, CardSuit.CLUBS),
+                new Card(CardRank.TWO, CardSuit.DIAMONDS),
                 new Card(CardRank.TWO, CardSuit.CLUBS),
                 new Card(CardRank.ACE, CardSuit.CLUBS),
                 new Card(CardRank.ACE, CardSuit.HEARTS),
-                new Card(CardRank.SEVEN, CardSuit.CLUBS),
+                new Card(CardRank.SEVEN, CardSuit.SPADES),
                 new Card(CardRank.QUEEN, CardSuit.CLUBS)
         );
     }
@@ -102,10 +102,10 @@ public class HandIdentifier {
                 new Card(CardRank.ACE, CardSuit.CLUBS),
                 new Card(CardRank.ACE, CardSuit.HEARTS),
                 new Card(CardRank.SIX, CardSuit.CLUBS),
-                new Card(CardRank.QUEEN, CardSuit.CLUBS),
+                new Card(CardRank.QUEEN, CardSuit.SPADES),
                 new Card(CardRank.ACE, CardSuit.DIAMONDS),
                 new Card(CardRank.TWO, CardSuit.CLUBS),
-                new Card(CardRank.NINE, CardSuit.CLUBS)
+                new Card(CardRank.NINE, CardSuit.HEARTS)
         );
     }
 
@@ -114,10 +114,9 @@ public class HandIdentifier {
                 new Card(CardRank.ACE, CardSuit.CLUBS),
                 new Card(CardRank.QUEEN, CardSuit.HEARTS),
                 new Card(CardRank.KING, CardSuit.CLUBS),
-                new Card(CardRank.ACE, CardSuit.DIAMONDS),
-                new Card(CardRank.TWO, CardSuit.CLUBS),
+                new Card(CardRank.TWO, CardSuit.SPADES),
                 new Card(CardRank.TEN, CardSuit.CLUBS),
-                new Card(CardRank.JACK, CardSuit.CLUBS)
+                new Card(CardRank.JACK, CardSuit.HEARTS)
         );
     }
 
@@ -127,9 +126,9 @@ public class HandIdentifier {
                 new Card(CardRank.QUEEN, CardSuit.HEARTS),
                 new Card(CardRank.FIVE, CardSuit.CLUBS),
                 new Card(CardRank.THREE, CardSuit.DIAMONDS),
-                new Card(CardRank.SIX, CardSuit.CLUBS),
+                new Card(CardRank.SIX, CardSuit.SPADES),
                 new Card(CardRank.TWO, CardSuit.CLUBS),
-                new Card(CardRank.FOUR, CardSuit.CLUBS)
+                new Card(CardRank.FOUR, CardSuit.DIAMONDS)
         );
     }
 

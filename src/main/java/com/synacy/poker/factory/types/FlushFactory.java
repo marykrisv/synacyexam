@@ -13,8 +13,25 @@ public class FlushFactory extends HandFactory {
     private List<Card> cards;
 
     @Override
+    public void initializeCards() {
+        this.cards = super.getCards();
+    }
+
+    @Override
     public boolean check() {
-        boolean isFlush = false;
+        Map<CardSuit, List<CardRank>> groupedDeck = this.groupDeckBySuit();
+
+        for (Map.Entry<CardSuit, List<CardRank>> entry : groupedDeck.entrySet()) {
+            if (entry.getValue().size() >= 5) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    @Override
+    public void populateCards() {
         Map<CardSuit, List<CardRank>> groupedDeck = this.groupDeckBySuit();
 
         CardSuit cardSuit;
@@ -27,25 +44,11 @@ public class FlushFactory extends HandFactory {
             if (cardRanks.size() >= 5) {
                 this.cards = new ArrayList<>();
                 for (int i = 0; i < 5; i++) {
-                    this.populateCards(new Card(cardRanks.get(i), cardSuit));
+                    cards.add(new Card(cardRanks.get(i), cardSuit));
                 }
                 super.setCards(this.cards);
-                isFlush = true;
                 break;
             }
         }
-
-        return isFlush;
-    }
-
-    private void populateCards (Card card) {
-        if (cards != null) {
-            cards.add(card);
-        }
-    }
-
-    @Override
-    public void initializeCards() {
-        this.cards = super.getCards();
     }
 }

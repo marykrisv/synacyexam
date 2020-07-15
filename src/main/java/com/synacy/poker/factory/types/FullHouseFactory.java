@@ -15,12 +15,17 @@ public class FullHouseFactory extends ThreeOfAKindFactory implements Pair {
     private List<Card> pairCards;
 
     @Override
+    public void initializeCards() {
+        super.initializeCards();
+
+        pairCards = new ArrayList<>();
+    }
+
+    @Override
     public boolean check() {
         boolean isThreeOfAKind = super.checkThreeOfAKind();
         boolean isPair = checkPair();
         if (isThreeOfAKind && isPair) {
-            this.threeOfAKindCards = super.getThreeOfAKindCards();
-            CardUtil.sortCardsDesc(pairCards, threeOfAKindCards);
             return true;
         } else {
             return false;
@@ -28,10 +33,9 @@ public class FullHouseFactory extends ThreeOfAKindFactory implements Pair {
     }
 
     @Override
-    public void initializeCards() {
-        super.initializeCards();
-
-        pairCards = new ArrayList<>();
+    public void populateCards() {
+        this.threeOfAKindCards = super.getThreeOfAKindCards();
+        CardUtil.sortCardsDesc(pairCards, threeOfAKindCards);
     }
 
     @Override

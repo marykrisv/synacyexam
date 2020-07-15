@@ -4,8 +4,6 @@ import com.synacy.poker.card.Card;
 import com.synacy.poker.card.CardRank;
 import com.synacy.poker.card.CardSuit;
 import com.synacy.poker.factory.HandFactory;
-import com.synacy.poker.hand.HandType;
-import com.synacy.poker.hand.types.HighCard;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,7 +15,38 @@ public class StraightFactory extends HandFactory {
     @Override
     public boolean check() {
         List<Card> straightCard = null;
-        boolean isStraight = false;
+
+        int sizeOfCard = cards.size();
+        int i, j;
+        Card nextCard, prevCard;
+        for (i = 0; i < sizeOfCard; i++) {
+            straightCard = new ArrayList<>();
+            for (j = i; j < sizeOfCard && straightCard.size() != 5; j++) {
+                prevCard = cards.get(j);
+                if (straightCard.size() == 4 || j == sizeOfCard-1) { //if last index of straight card
+
+                } else {
+                    nextCard = cards.get(j+1);
+                    if (prevCard.getRank().ordinal()-1 != nextCard.getRank().ordinal()
+                        && (prevCard.getRank() != CardRank.ACE && nextCard.getRank() != CardRank.KING)) {
+                        break;
+                    } else {
+                        // do nothing
+                    }
+                }
+
+            }
+            if (straightCard.size() == 5) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    @Override
+    public void populateCards() {
+        List<Card> straightCard = null;
 
         int sizeOfCard = cards.size();
         int i, j;
@@ -36,7 +65,7 @@ public class StraightFactory extends HandFactory {
                 } else {
                     nextCard = cards.get(j+1);
                     if (prevCard.getRank().ordinal()-1 != nextCard.getRank().ordinal()
-                        && (prevCard.getRank() != CardRank.ACE && nextCard.getRank() != CardRank.KING)) {
+                            && (prevCard.getRank() != CardRank.ACE && nextCard.getRank() != CardRank.KING)) {
                         break;
                     } else {
                         if (prevCard.getRank() == CardRank.ACE && nextCard.getRank() != CardRank.KING) {
@@ -48,14 +77,8 @@ public class StraightFactory extends HandFactory {
                 }
 
             }
-            if (straightCard.size() == 5) {
-                isStraight = true;
-                super.setCards(straightCard);
-                break;
-            }
+            super.setCards(straightCard);
         }
-
-        return isStraight;
     }
 
     private boolean cardContainsAce() {

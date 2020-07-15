@@ -10,9 +10,11 @@ import java.util.*;
 public abstract class HandFactory {
     private List<Card> cards;
 
+    public abstract void initializeCards();
+
     public abstract boolean check();
 
-    public abstract void initializeCards();
+    public abstract void populateCards();
 
     public HandFactory() {}
 
@@ -20,6 +22,7 @@ public abstract class HandFactory {
         this.initializeCards();
         CardUtil.sortCardsDesc(cards);
         if (this.check()) {
+            populateCards();
             return this;
         } else {
             return null;
