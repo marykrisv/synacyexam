@@ -51,19 +51,19 @@ public class HandIdentifier {
 //        cards.addAll(playerCards);
 //        cards.addAll(communityCards);
 
-        cards.add(new Card(CardRank.TWO, CardSuit.DIAMONDS));
+        cards.add(new Card(CardRank.TEN, CardSuit.DIAMONDS));
+        cards.add(new Card(CardRank.KING, CardSuit.DIAMONDS));
         cards.add(new Card(CardRank.ACE, CardSuit.DIAMONDS));
-//        cards.add(new Card(CardRank.KING, CardSuit.DIAMONDS));
 //        cards.add(new Card(CardRank.ACE, CardSuit.DIAMONDS));
 //        cards.add(new Card(CardRank.TWO, CardSuit.HEARTS));
 //        cards.add(new Card(CardRank.TWO, CardSuit.SPADES));
-//        cards.add(new Card(CardRank.TWO, CardSuit.CLUBS));
+        cards.add(new Card(CardRank.TWO, CardSuit.CLUBS));
 //        cards.add(new Card(CardRank.FOUR, CardSuit.HEARTS));
-//        cards.add(new Card(CardRank.FIVE, CardSuit.SPADES));
-        cards.add(new Card(CardRank.THREE, CardSuit.SPADES));
+        cards.add(new Card(CardRank.FIVE, CardSuit.SPADES));
+        cards.add(new Card(CardRank.QUEEN, CardSuit.SPADES));
 //        cards.add(new Card(CardRank.SIX, CardSuit.SPADES));
 //        cards.add(new Card(CardRank.KING, CardSuit.SPADES));
-//        cards.add(new Card(CardRank.TEN, CardSuit.SPADES));
+        cards.add(new Card(CardRank.JACK, CardSuit.SPADES));
 
         return cards;
     }

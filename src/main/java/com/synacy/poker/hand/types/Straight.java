@@ -41,7 +41,6 @@ public class Straight extends Hand {
 //    }
 
     private List<Card> getHighest () {
-        this.sortedCardsDesc(cards);
         List<Card> highest = new ArrayList<>();
 
         highest.add(cards.get(0));
