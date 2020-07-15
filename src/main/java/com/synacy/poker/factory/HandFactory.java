@@ -15,8 +15,7 @@ public abstract class HandFactory {
 
     public HandFactory() {}
 
-    public HandFactory create (List<Card> cards) {
-        this.cards = cards;
+    public HandFactory create () {
         this.initializeCards();
         this.sortedCardsDesc();
         if (this.check()) {
@@ -30,7 +29,7 @@ public abstract class HandFactory {
         Collections.sort(cards, Comparator.comparing(Card::getRank).reversed());
     }
 
-    public Map<CardSuit, List<CardRank>> groupDeckBySuit (List<Card> cards) {
+    public Map<CardSuit, List<CardRank>> groupDeckBySuit () {
         Map<CardSuit, List<CardRank>> groupedCard = new HashMap<>();
 
         // put a map for suits
@@ -50,7 +49,7 @@ public abstract class HandFactory {
         return groupedCard;
     }
 
-    public Map<CardRank, List<CardSuit>> groupDeckByRank (List<Card> cards) {
+    public Map<CardRank, List<CardSuit>> groupDeckByRank () {
         Map<CardRank, List<CardSuit>> groupedCard = new HashMap<>();
 
         // put a map for suits

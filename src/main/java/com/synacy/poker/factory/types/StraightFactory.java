@@ -24,7 +24,7 @@ public class StraightFactory extends HandFactory {
         Card nextCard, prevCard;
         for (i = 0; i < sizeOfCard; i++) {
             straightCard = new ArrayList<>();
-            for (j = i; j < sizeOfCard; ) {
+            for (j = i; j < sizeOfCard && straightCard.size() != 5; j++) {
                 prevCard = cards.get(j);
                 if (straightCard.size() == 4 || j == sizeOfCard-1) { //if last index of straight card
                     straightCard.add(cards.get(j));
@@ -46,15 +46,16 @@ public class StraightFactory extends HandFactory {
                         }
                     }
                 }
-                j++;
+//                j++;
 
             }
             if (straightCard.size() == 5) {
                 isStraight = true;
-                this.cards = straightCard;
+                super.setCards(straightCard);
                 break;
             }
         }
+
 
         System.out.println(straightCard);
         return isStraight;
@@ -99,15 +100,5 @@ public class StraightFactory extends HandFactory {
     @Override
     public void initializeCards() {
         this.cards = super.getCards();
-    }
-
-    @Override
-    public List<Card> getCards() {
-        return cards;
-    }
-
-    @Override
-    public void setCards(List<Card> cards) {
-        this.cards = cards;
     }
 }

@@ -17,7 +17,7 @@ public class ThreeOfAKindFactory extends HandFactory {
     @Override
     public boolean check() {
         boolean ifThreeOfAKind = false;
-        Map<CardRank, List<CardSuit>> groupedDeck = this.groupDeckByRank(super.getCards());
+        Map<CardRank, List<CardSuit>> groupedDeck = this.groupDeckByRank();
 
         // check for suit with 5 or greater than 5 value
         for (Map.Entry<CardRank, List<CardSuit>> entry : groupedDeck.entrySet()) {

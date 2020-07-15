@@ -47,32 +47,95 @@ public class HandIdentifier {
     }
 
     private List<Card> combineCards(List<Card> playerCards, List<Card> communityCards) {
-        List<Card> cards = new ArrayList<Card>();
+//        List<Card> cards = new ArrayList<Card>();
 //        cards.addAll(playerCards);
 //        cards.addAll(communityCards);
+//        return cards;
 
-        cards.add(new Card(CardRank.TEN, CardSuit.DIAMONDS));
-        cards.add(new Card(CardRank.KING, CardSuit.DIAMONDS));
-        cards.add(new Card(CardRank.ACE, CardSuit.DIAMONDS));
-//        cards.add(new Card(CardRank.ACE, CardSuit.DIAMONDS));
-//        cards.add(new Card(CardRank.TWO, CardSuit.HEARTS));
-//        cards.add(new Card(CardRank.TWO, CardSuit.SPADES));
-        cards.add(new Card(CardRank.TWO, CardSuit.CLUBS));
-//        cards.add(new Card(CardRank.FOUR, CardSuit.HEARTS));
-        cards.add(new Card(CardRank.FIVE, CardSuit.SPADES));
-        cards.add(new Card(CardRank.QUEEN, CardSuit.SPADES));
-//        cards.add(new Card(CardRank.SIX, CardSuit.SPADES));
-//        cards.add(new Card(CardRank.KING, CardSuit.SPADES));
-        cards.add(new Card(CardRank.JACK, CardSuit.SPADES));
+//        return highCard();
+//        return onePair();
+//        return twoPair();
+//        return threeOfAKind();
+//        return straight1();
+        return straight2();
+    }
 
-        return cards;
+    private List<Card> highCard() {
+        return Arrays.asList(
+                new Card(CardRank.ACE, CardSuit.CLUBS),
+                new Card(CardRank.KING, CardSuit.CLUBS),
+                new Card(CardRank.QUEEN, CardSuit.CLUBS),
+                new Card(CardRank.SEVEN, CardSuit.CLUBS),
+                new Card(CardRank.TWO, CardSuit.CLUBS),
+                new Card(CardRank.EIGHT, CardSuit.CLUBS)
+        );
+    }
+
+    private List<Card> onePair() {
+        return Arrays.asList(
+                new Card(CardRank.ACE, CardSuit.CLUBS),
+                new Card(CardRank.ACE, CardSuit.CLUBS),
+                new Card(CardRank.QUEEN, CardSuit.CLUBS),
+                new Card(CardRank.SEVEN, CardSuit.CLUBS),
+                new Card(CardRank.TWO, CardSuit.CLUBS),
+                new Card(CardRank.FIVE, CardSuit.CLUBS)
+        );
+    }
+
+    private List<Card> twoPair() {
+        return Arrays.asList(
+                new Card(CardRank.ACE, CardSuit.CLUBS),
+                new Card(CardRank.ACE, CardSuit.HEARTS),
+                new Card(CardRank.QUEEN, CardSuit.CLUBS),
+                new Card(CardRank.SEVEN, CardSuit.CLUBS),
+                new Card(CardRank.TWO, CardSuit.CLUBS),
+                new Card(CardRank.TWO, CardSuit.CLUBS)
+        );
+    }
+
+    private List<Card> threeOfAKind() {
+        return Arrays.asList(
+                new Card(CardRank.ACE, CardSuit.CLUBS),
+                new Card(CardRank.ACE, CardSuit.HEARTS),
+                new Card(CardRank.QUEEN, CardSuit.CLUBS),
+                new Card(CardRank.ACE, CardSuit.DIAMONDS),
+                new Card(CardRank.TWO, CardSuit.CLUBS),
+                new Card(CardRank.SIX, CardSuit.CLUBS),
+                new Card(CardRank.NINE, CardSuit.CLUBS)
+        );
+    }
+
+    private List<Card> straight1() {
+        return Arrays.asList(
+                new Card(CardRank.ACE, CardSuit.CLUBS),
+                new Card(CardRank.QUEEN, CardSuit.HEARTS),
+                new Card(CardRank.KING, CardSuit.CLUBS),
+                new Card(CardRank.ACE, CardSuit.DIAMONDS),
+                new Card(CardRank.TWO, CardSuit.CLUBS),
+                new Card(CardRank.TEN, CardSuit.CLUBS),
+                new Card(CardRank.JACK, CardSuit.CLUBS)
+        );
+    }
+
+    private List<Card> straight2() {
+        return Arrays.asList(
+                new Card(CardRank.ACE, CardSuit.CLUBS),
+                new Card(CardRank.QUEEN, CardSuit.HEARTS),
+                new Card(CardRank.FIVE, CardSuit.CLUBS),
+                new Card(CardRank.THREE, CardSuit.DIAMONDS),
+                new Card(CardRank.SIX, CardSuit.CLUBS),
+                new Card(CardRank.TWO, CardSuit.CLUBS),
+                new Card(CardRank.FOUR, CardSuit.CLUBS)
+        );
     }
 
     private HandFactoryType getCurrentHand (List<Card> cards) {
         HandFactoryType currentHand = null;
         HandFactory tempHandFactory;
         for (int i = 0; i < handFactoryTypes.size(); i++) {
-            tempHandFactory = handFactoryTypes.get(i).getHandFactory().create(cards);
+            tempHandFactory = handFactoryTypes.get(i).getHandFactory();
+            tempHandFactory.setCards(cards);
+            tempHandFactory = tempHandFactory.create();
             if (tempHandFactory == null){
                 continue;
             } else {

@@ -36,11 +36,9 @@ public class Straight extends Hand {
         return String.format("Straight (%s High)", ranksToString(getHighest()));
     }
 
-//    private String otherCardsHigh() {
-//        return ranksToString(getHighest());
-//    }
-
     private List<Card> getHighest () {
+        System.out.println("highest");
+        System.out.println(cards);
         List<Card> highest = new ArrayList<>();
 
         highest.add(cards.get(0));
