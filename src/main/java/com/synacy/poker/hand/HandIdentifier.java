@@ -75,21 +75,21 @@ public class HandIdentifier {
         return Arrays.asList(
                 new Card(CardRank.ACE, CardSuit.CLUBS),
                 new Card(CardRank.ACE, CardSuit.CLUBS),
-                new Card(CardRank.QUEEN, CardSuit.CLUBS),
+                new Card(CardRank.EIGHT, CardSuit.CLUBS),
                 new Card(CardRank.SEVEN, CardSuit.CLUBS),
                 new Card(CardRank.TWO, CardSuit.CLUBS),
-                new Card(CardRank.FIVE, CardSuit.CLUBS)
+                new Card(CardRank.QUEEN, CardSuit.CLUBS)
         );
     }
 
     private List<Card> twoPair() {
         return Arrays.asList(
+                new Card(CardRank.TWO, CardSuit.CLUBS),
+                new Card(CardRank.TWO, CardSuit.CLUBS),
                 new Card(CardRank.ACE, CardSuit.CLUBS),
                 new Card(CardRank.ACE, CardSuit.HEARTS),
-                new Card(CardRank.QUEEN, CardSuit.CLUBS),
                 new Card(CardRank.SEVEN, CardSuit.CLUBS),
-                new Card(CardRank.TWO, CardSuit.CLUBS),
-                new Card(CardRank.TWO, CardSuit.CLUBS)
+                new Card(CardRank.QUEEN, CardSuit.CLUBS)
         );
     }
 
@@ -97,10 +97,10 @@ public class HandIdentifier {
         return Arrays.asList(
                 new Card(CardRank.ACE, CardSuit.CLUBS),
                 new Card(CardRank.ACE, CardSuit.HEARTS),
+                new Card(CardRank.SIX, CardSuit.CLUBS),
                 new Card(CardRank.QUEEN, CardSuit.CLUBS),
                 new Card(CardRank.ACE, CardSuit.DIAMONDS),
                 new Card(CardRank.TWO, CardSuit.CLUBS),
-                new Card(CardRank.SIX, CardSuit.CLUBS),
                 new Card(CardRank.NINE, CardSuit.CLUBS)
         );
     }

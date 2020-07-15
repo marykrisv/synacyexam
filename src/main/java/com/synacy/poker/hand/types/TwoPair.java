@@ -4,6 +4,7 @@ import com.synacy.poker.card.Card;
 import com.synacy.poker.card.CardRank;
 import com.synacy.poker.hand.Hand;
 import com.synacy.poker.hand.HandType;
+import com.synacy.poker.utils.CardUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,7 +35,6 @@ public class TwoPair extends Hand {
      */
     @Override
     public String toString() {
-
         return String.format("Two Pair (%s,%s) - %s High",
                 getFirstPairRank(), getSecondPairRank(), otherCardsHigh());
     }
@@ -48,16 +48,10 @@ public class TwoPair extends Hand {
     }
 
     private String otherCardsHigh() {
-        return ranksToString(getHighest());
-    }
-
-    private List<Card> getHighest () {
-        this.sortedCardsDesc(otherCards);
-        List<Card> highest = new ArrayList<>();
-
-        highest.add(otherCards.get(0));
-
-        return highest;
+        List<Card> combined = new ArrayList<>();
+        combined.addAll(firstPairCards);
+        combined.addAll(secondPairCards);
+        return ranksToString(CardUtil.maxOutCardsOnHand(combined, otherCards));
     }
 
 }

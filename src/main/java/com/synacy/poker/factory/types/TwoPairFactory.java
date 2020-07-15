@@ -3,7 +3,7 @@ package com.synacy.poker.factory.types;
 import com.synacy.poker.card.Card;
 import com.synacy.poker.card.CardRank;
 import com.synacy.poker.card.CardSuit;
-import com.synacy.poker.factory.HandFactory;
+import com.synacy.poker.utils.CardUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,6 @@ import java.util.Map;
 public class TwoPairFactory extends OnePairFactory {
     private List<Card> firstPairCards;
     private List<Card> secondPairCards;
-    private List<Card> otherCards;
 
     @Override
     public boolean check() {
@@ -21,7 +20,6 @@ public class TwoPairFactory extends OnePairFactory {
         int pairCtr = 0;
         Map<CardRank, List<CardSuit>> groupedDeck = this.groupDeckByRank();
 
-        // check for suit with 5 or greater than 5 value
         for (Map.Entry<CardRank, List<CardSuit>> entry : groupedDeck.entrySet()) {
             CardRank cardRank = entry.getKey();
             List<CardSuit> cardSuits = entry.getValue();
@@ -43,6 +41,7 @@ public class TwoPairFactory extends OnePairFactory {
         }
 
         if (pairCtr == 2) {
+            CardUtil.sortCardsDesc(super.getOtherCards());
             return true;
         } else {
             return false;

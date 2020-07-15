@@ -3,6 +3,7 @@ package com.synacy.poker.factory;
 import com.synacy.poker.card.Card;
 import com.synacy.poker.card.CardRank;
 import com.synacy.poker.card.CardSuit;
+import com.synacy.poker.utils.CardUtil;
 
 import java.util.*;
 
@@ -17,7 +18,7 @@ public abstract class HandFactory {
 
     public HandFactory create () {
         this.initializeCards();
-        this.sortedCardsDesc();
+        CardUtil.sortCardsDesc(cards);
         if (this.check()) {
             return this;
         } else {
@@ -25,14 +26,9 @@ public abstract class HandFactory {
         }
     }
 
-    private void sortedCardsDesc () {
-        Collections.sort(cards, Comparator.comparing(Card::getRank).reversed());
-    }
-
     public Map<CardSuit, List<CardRank>> groupDeckBySuit () {
         Map<CardSuit, List<CardRank>> groupedCard = new HashMap<>();
 
-        // put a map for suits
         List<CardRank> cardRank;
         for (Card card: cards) {
             try {
@@ -52,7 +48,6 @@ public abstract class HandFactory {
     public Map<CardRank, List<CardSuit>> groupDeckByRank () {
         Map<CardRank, List<CardSuit>> groupedCard = new HashMap<>();
 
-        // put a map for suits
         List<CardSuit> cardSuit;
         for (Card card: cards) {
             try {

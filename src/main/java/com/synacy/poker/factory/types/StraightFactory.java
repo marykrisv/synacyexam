@@ -46,7 +46,6 @@ public class StraightFactory extends HandFactory {
                         }
                     }
                 }
-//                j++;
 
             }
             if (straightCard.size() == 5) {
@@ -56,8 +55,6 @@ public class StraightFactory extends HandFactory {
             }
         }
 
-
-        System.out.println(straightCard);
         return isStraight;
     }
 

@@ -4,6 +4,7 @@ import com.synacy.poker.card.Card;
 import com.synacy.poker.card.CardRank;
 import com.synacy.poker.hand.Hand;
 import com.synacy.poker.hand.HandType;
+import com.synacy.poker.utils.CardUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,18 +41,6 @@ public class ThreeOfAKind extends Hand {
     }
 
     private String otherCardsHigh() {
-        return ranksToString(getFirstTwoHigh());
+        return ranksToString(CardUtil.maxOutCardsOnHand(threeOfAKindCards, otherCards));
     }
-
-    private List<Card> getFirstTwoHigh () {
-        this.sortedCardsDesc(otherCards);
-        List<Card> firstTwoHigh = new ArrayList<>();
-
-        for (int i = 0; i < 2; i++) {
-            firstTwoHigh.add(otherCards.get(i));
-        }
-
-        return firstTwoHigh;
-    }
-
 }

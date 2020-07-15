@@ -4,6 +4,7 @@ import com.synacy.poker.card.Card;
 import com.synacy.poker.card.CardRank;
 import com.synacy.poker.card.CardSuit;
 import com.synacy.poker.factory.HandFactory;
+import com.synacy.poker.utils.CardUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +20,6 @@ public class ThreeOfAKindFactory extends HandFactory {
         boolean ifThreeOfAKind = false;
         Map<CardRank, List<CardSuit>> groupedDeck = this.groupDeckByRank();
 
-        // check for suit with 5 or greater than 5 value
         for (Map.Entry<CardRank, List<CardSuit>> entry : groupedDeck.entrySet()) {
             CardRank cardRank = entry.getKey();
             List<CardSuit> cardSuits = entry.getValue();
@@ -31,6 +31,7 @@ public class ThreeOfAKindFactory extends HandFactory {
             }
         }
 
+        CardUtil.sortCardsDesc(otherCards);
         return ifThreeOfAKind;
     }
 
@@ -53,22 +54,18 @@ public class ThreeOfAKindFactory extends HandFactory {
     }
 
     public List<Card> getThreeOfAKindCards() {
-
         return threeOfAKindCards;
     }
 
     public void setThreeOfAKindCards(List<Card> threeOfAKindCards) {
-
         this.threeOfAKindCards = threeOfAKindCards;
     }
 
     public List<Card> getOtherCards() {
-
         return otherCards;
     }
 
     public void setOtherCards(List<Card> otherCards) {
-
         this.otherCards = otherCards;
     }
 }

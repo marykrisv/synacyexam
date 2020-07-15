@@ -4,6 +4,7 @@ import com.synacy.poker.card.Card;
 import com.synacy.poker.card.CardRank;
 import com.synacy.poker.hand.Hand;
 import com.synacy.poker.hand.HandType;
+import com.synacy.poker.utils.CardUtil;
 
 import java.util.*;
 
@@ -32,7 +33,7 @@ public class OnePair extends Hand {
     public String toString() {
         String format;
         if (otherCards != null && otherCards.size() != 0) {
-            format = String.format("One Pair (%s) - %s High", getOnePairRank(), otherCardsHigh());
+            format = String.format("One Pair (%s) - %s High", getOnePairRank(), otherCardsAppended());
         } else {
             format = String.format("One Pair (%s)", getOnePairRank());
         }
@@ -43,19 +44,8 @@ public class OnePair extends Hand {
         return this.pairCards.get(0).getRank().toString();
     }
 
-    private String otherCardsHigh() {
-        return ranksToString(getFirstThreeHigh());
-    }
-
-    private List<Card> getFirstThreeHigh () {
-        this.sortedCardsDesc(otherCards);
-        List<Card> firstThreeHigh = new ArrayList<>();
-
-        for (int i = 0; i < 3; i++) {
-            firstThreeHigh.add(otherCards.get(i));
-        }
-
-        return firstThreeHigh;
+    private String otherCardsAppended() {
+        return ranksToString(CardUtil.maxOutCardsOnHand(pairCards, otherCards));
     }
 
 }

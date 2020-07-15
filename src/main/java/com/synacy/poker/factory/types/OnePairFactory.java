@@ -4,10 +4,9 @@ import com.synacy.poker.card.Card;
 import com.synacy.poker.card.CardRank;
 import com.synacy.poker.card.CardSuit;
 import com.synacy.poker.factory.HandFactory;
+import com.synacy.poker.utils.CardUtil;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class OnePairFactory extends HandFactory {
     private List<Card> pairCards;
@@ -15,6 +14,7 @@ public class OnePairFactory extends HandFactory {
 
     @Override
     public boolean check() {
+        boolean isOnePair = false;
         Map<CardRank, List<CardSuit>> groupedDeck = this.groupDeckByRank();
 
         // check for suit with 5 or greater than 5 value
@@ -29,6 +29,7 @@ public class OnePairFactory extends HandFactory {
         }
 
         if (pairCards.size() == 2) {
+            CardUtil.sortCardsDesc(pairCards, otherCards);
             return true;
         } else {
             return false;

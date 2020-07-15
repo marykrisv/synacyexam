@@ -4,6 +4,7 @@ import com.synacy.poker.card.Card;
 import com.synacy.poker.card.CardRank;
 import com.synacy.poker.hand.Hand;
 import com.synacy.poker.hand.HandType;
+import com.synacy.poker.utils.CardUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,7 +30,7 @@ public class HighCard extends Hand {
      */
     @Override
     public String toString() {
-        return ranksToString(cards);
+        return ranksToString(CardUtil.maxOutCardsOnHand(cards));
     }
 
 }

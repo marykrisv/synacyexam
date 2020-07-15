@@ -23,7 +23,8 @@ public class OnePairTest {
         List<Card> kickers = Arrays.asList(
                 new Card(CardRank.ACE, CardSuit.CLUBS),
                 new Card(CardRank.KING, CardSuit.DIAMONDS),
-                new Card(CardRank.QUEEN, CardSuit.SPADES)
+                new Card(CardRank.QUEEN, CardSuit.SPADES),
+                new Card(CardRank.FOUR, CardSuit.SPADES)
         );
 
         OnePair onePair = new OnePair(pair, kickers);
