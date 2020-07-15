@@ -17,7 +17,7 @@ public class TwoPairFactoryTest {
         List<Card> cards = Arrays.asList(
                 new Card(CardRank.TWO, CardSuit.CLUBS),
                 new Card(CardRank.TWO, CardSuit.CLUBS),
-                new Card(CardRank.ACE, CardSuit.CLUBS),
+                new Card(CardRank.ACE, CardSuit.HEARTS),
                 new Card(CardRank.ACE, CardSuit.HEARTS),
                 new Card(CardRank.SEVEN, CardSuit.CLUBS),
                 new Card(CardRank.QUEEN, CardSuit.CLUBS)

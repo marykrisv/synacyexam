@@ -15,14 +15,15 @@ public class TwoPairFactory extends OnePairFactory {
 
     @Override
     public boolean check() {
-        this.initializeCards();
-
         int pairCtr = 0;
         Map<CardRank, List<CardSuit>> groupedDeck = this.groupDeckByRank();
 
+        CardRank cardRank;
+        List<CardSuit> cardSuits;
+
         for (Map.Entry<CardRank, List<CardSuit>> entry : groupedDeck.entrySet()) {
-            CardRank cardRank = entry.getKey();
-            List<CardSuit> cardSuits = entry.getValue();
+            cardRank = entry.getKey();
+            cardSuits = entry.getValue();
 
             if (cardSuits.size() >= 2) {
                 pairCtr++;

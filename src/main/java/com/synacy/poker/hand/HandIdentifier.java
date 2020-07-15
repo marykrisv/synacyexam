@@ -28,6 +28,8 @@ public class HandIdentifier {
 
     private void initializeMap () {
         handFactoryTypes = new ArrayList<>();
+        handFactoryTypes.add(new HandFactoryType(HandType.FULL_HOUSE, new FullHouseFactory()));
+        handFactoryTypes.add(new HandFactoryType(HandType.FLUSH, new FlushFactory()));
         handFactoryTypes.add(new HandFactoryType(HandType.STRAIGHT, new StraightFactory()));
         handFactoryTypes.add(new HandFactoryType(HandType.THREE_OF_A_KIND, new ThreeOfAKindFactory()));
         handFactoryTypes.add(new HandFactoryType(HandType.TWO_PAIR, new TwoPairFactory()));
@@ -47,17 +49,19 @@ public class HandIdentifier {
     }
 
     private List<Card> combineCards(List<Card> playerCards, List<Card> communityCards) {
-//        List<Card> cards = new ArrayList<Card>();
-//        cards.addAll(playerCards);
-//        cards.addAll(communityCards);
-//        return cards;
+        List<Card> cards = new ArrayList<Card>();
+        cards.addAll(playerCards);
+        cards.addAll(communityCards);
+        return cards;
 
 //        return highCard();
 //        return onePair();
 //        return twoPair();
 //        return threeOfAKind();
 //        return straight1();
-        return straight2();
+//        return straight2();
+//        return flush();
+//        return this.fullHouse();
     }
 
     private List<Card> highCard() {
@@ -129,6 +133,30 @@ public class HandIdentifier {
         );
     }
 
+    private List<Card> flush() {
+        return Arrays.asList(
+                new Card(CardRank.ACE, CardSuit.CLUBS),
+                new Card(CardRank.QUEEN, CardSuit.HEARTS),
+                new Card(CardRank.FIVE, CardSuit.CLUBS),
+                new Card(CardRank.THREE, CardSuit.CLUBS),
+                new Card(CardRank.SIX, CardSuit.CLUBS),
+                new Card(CardRank.TWO, CardSuit.CLUBS),
+                new Card(CardRank.FOUR, CardSuit.CLUBS)
+        );
+    }
+
+    private List<Card> fullHouse() {
+        return Arrays.asList(
+                new Card(CardRank.ACE, CardSuit.CLUBS),
+                new Card(CardRank.ACE, CardSuit.HEARTS),
+                new Card(CardRank.ACE, CardSuit.DIAMONDS)
+//                new Card(CardRank.TWO, CardSuit.DIAMONDS),
+//                new Card(CardRank.SIX, CardSuit.CLUBS),
+//                new Card(CardRank.TWO, CardSuit.DIAMONDS),
+//                new Card(CardRank.TWO, CardSuit.CLUBS)
+        );
+    }
+
     private HandFactoryType getCurrentHand (List<Card> cards) {
         HandFactoryType currentHand = null;
         HandFactory tempHandFactory;
@@ -152,6 +180,14 @@ public class HandIdentifier {
 
         if (currentHand != null) {
             switch (currentHand.getHandType()) {
+                case FULL_HOUSE:
+                    FullHouseFactory fullHouseFactory = (FullHouseFactory) currentHand.getHandFactory();
+                    retHand = new FullHouse(fullHouseFactory.getThreeOfAKindCards(), fullHouseFactory.getPairCards());
+                    break;
+                case FLUSH:
+                    FlushFactory flushFactory = (FlushFactory) currentHand.getHandFactory();
+                    retHand = new Flush(flushFactory.getCards());
+                    break;
                 case STRAIGHT:
                     StraightFactory straightFactory = (StraightFactory)  currentHand.getHandFactory();
                     retHand = new Straight(straightFactory.getCards());

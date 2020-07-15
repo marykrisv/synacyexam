@@ -22,15 +22,57 @@ public class StraightFactoryTest {
     @Test
     public void check() {
         List<Card> cards = Arrays.asList(
-                new Card(CardRank.TEN, CardSuit.CLUBS),
+                new Card(CardRank.SIX, CardSuit.CLUBS),
+                new Card(CardRank.JACK, CardSuit.CLUBS),
+                new Card(CardRank.THREE, CardSuit.HEARTS),
+                new Card(CardRank.TWO, CardSuit.CLUBS),
+                new Card(CardRank.FIVE, CardSuit.DIAMONDS)
+//                new Card(CardRank.EIGHT, CardSuit.CLUBS),
+//                new Card(CardRank.FOUR, CardSuit.CLUBS)
+        );
+
+        StraightFactory straightFactory = new StraightFactory();
+        straightFactory.setCards(cards);
+
+        this.cards = cards;
+        this.sortedCardsDesc();
+        straightFactory.initializeCards();
+
+        assertEquals(false, straightFactory.check());
+    }
+
+    @Test
+    public void check1() {
+        List<Card> cards = Arrays.asList(
+                new Card(CardRank.ACE, CardSuit.CLUBS),
                 new Card(CardRank.QUEEN, CardSuit.HEARTS),
                 new Card(CardRank.KING, CardSuit.CLUBS),
-                new Card(CardRank.FOUR, CardSuit.DIAMONDS),
+                new Card(CardRank.ACE, CardSuit.DIAMONDS),
                 new Card(CardRank.TWO, CardSuit.CLUBS),
-                new Card(CardRank.JACK, CardSuit.CLUBS),
+                new Card(CardRank.TEN, CardSuit.CLUBS),
+                new Card(CardRank.JACK, CardSuit.CLUBS)
+        );
+
+        StraightFactory straightFactory = new StraightFactory();
+        straightFactory.setCards(cards);
+
+        this.cards = cards;
+        this.sortedCardsDesc();
+        straightFactory.initializeCards();
+
+        assertEquals(true, straightFactory.check());
+    }
+
+    @Test
+    public void check2() {
+        List<Card> cards = Arrays.asList(
+                new Card(CardRank.ACE, CardSuit.CLUBS),
+                new Card(CardRank.QUEEN, CardSuit.HEARTS),
                 new Card(CardRank.FIVE, CardSuit.CLUBS),
-                new Card(CardRank.THREE, CardSuit.CLUBS),
-                new Card(CardRank.ACE, CardSuit.CLUBS)
+                new Card(CardRank.THREE, CardSuit.DIAMONDS),
+                new Card(CardRank.SIX, CardSuit.CLUBS),
+                new Card(CardRank.TWO, CardSuit.CLUBS),
+                new Card(CardRank.FOUR, CardSuit.CLUBS)
         );
 
         StraightFactory straightFactory = new StraightFactory();

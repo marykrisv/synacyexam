@@ -31,19 +31,15 @@ public class Flush extends Hand {
      */
     @Override
     public String toString() {
-        return String.format("Flush (%s High)", getHighCard());
+        return String.format("Flush (%s High)",  ranksToString(getHighest()));
     }
 
-    private String getHighCard () {
-        List<CardRank> cardRanks = new ArrayList<>();
+    private List<Card> getHighest () {
+        List<Card> highest = new ArrayList<>();
 
-        for (Card card: cards) {
-            cardRanks.add(card.getRank());
-        }
+        highest.add(cards.get(0));
 
-        cardRanks.sort(Collections.reverseOrder());
-
-        return cardRanks.get(0).toString();
+        return highest;
     }
 
 }

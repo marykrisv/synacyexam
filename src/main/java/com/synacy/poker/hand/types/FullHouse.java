@@ -11,8 +11,8 @@ import java.util.List;
  */
 public class FullHouse extends Hand {
 
-    private final List<Card> threeOfAKindCards;
-    private final List<Card> pairCards;
+    private List<Card> threeOfAKindCards;
+    private List<Card> pairCards;
 
     public FullHouse(List<Card> threeOfAKindCards, List<Card> pairCards) {
         this.threeOfAKindCards = threeOfAKindCards;

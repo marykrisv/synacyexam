@@ -20,7 +20,7 @@ public class StraightFactory extends HandFactory {
         boolean isStraight = false;
 
         int sizeOfCard = cards.size();
-        int i, j, ACE_INDEX = 0;
+        int i, j;
         Card nextCard, prevCard;
         for (i = 0; i < sizeOfCard; i++) {
             straightCard = new ArrayList<>();
@@ -36,7 +36,7 @@ public class StraightFactory extends HandFactory {
                 } else {
                     nextCard = cards.get(j+1);
                     if (prevCard.getRank().ordinal()-1 != nextCard.getRank().ordinal()
-                        && (cardContainsAce() && nextCard.getRank() != CardRank.KING)) {
+                        && (prevCard.getRank() != CardRank.ACE && nextCard.getRank() != CardRank.KING)) {
                         break;
                     } else {
                         if (prevCard.getRank() == CardRank.ACE && nextCard.getRank() != CardRank.KING) {

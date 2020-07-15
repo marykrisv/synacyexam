@@ -3,33 +3,45 @@ package com.synacy.poker.factory.types;
 import com.synacy.poker.card.Card;
 import com.synacy.poker.card.CardRank;
 import com.synacy.poker.card.CardSuit;
-import com.synacy.poker.factory.HandFactory;
 import com.synacy.poker.factory.Pair;
 import com.synacy.poker.utils.CardUtil;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
-public class OnePairFactory extends HandFactory implements Pair {
+public class FullHouseFactory extends ThreeOfAKindFactory implements Pair {
+    private List<Card> threeOfAKindCards;
     private List<Card> pairCards;
-    private List<Card> otherCards;
 
     @Override
     public boolean check() {
-        return this.checkPair();
+        boolean isThreeOfAKind = super.checkThreeOfAKind();
+        boolean isPair = checkPair();
+        if (isThreeOfAKind && isPair) {
+            this.threeOfAKindCards = super.getThreeOfAKindCards();
+            CardUtil.sortCardsDesc(pairCards, threeOfAKindCards);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
     public void initializeCards() {
+        super.initializeCards();
+
         pairCards = new ArrayList<>();
-        otherCards = new ArrayList<>();
     }
 
-    public void populateOtherCards(CardRank cardRank, List<CardSuit> cardSuits) {
-        if (otherCards != null) {
-            for (CardSuit cardSuit: cardSuits) {
-                otherCards.add(new Card(cardRank, cardSuit));
-            }
-        }
+    @Override
+    public List<Card> getThreeOfAKindCards() {
+        return threeOfAKindCards;
+    }
+
+    @Override
+    public void setThreeOfAKindCards(List<Card> threeOfAKindCards) {
+        this.threeOfAKindCards = threeOfAKindCards;
     }
 
     public List<Card> getPairCards() {
@@ -38,14 +50,6 @@ public class OnePairFactory extends HandFactory implements Pair {
 
     public void setPairCards(List<Card> pairCards) {
         this.pairCards = pairCards;
-    }
-
-    public List<Card> getOtherCards() {
-        return otherCards;
-    }
-
-    public void setOtherCards(List<Card> otherCards) {
-        this.otherCards = otherCards;
     }
 
     @Override
@@ -74,7 +78,6 @@ public class OnePairFactory extends HandFactory implements Pair {
         }
 
         if (pairCards.size() == 2) {
-            CardUtil.sortCardsDesc(pairCards, otherCards);
             return true;
         } else {
             return false;
