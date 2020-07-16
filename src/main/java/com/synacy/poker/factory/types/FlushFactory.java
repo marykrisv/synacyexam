@@ -19,9 +19,7 @@ public class FlushFactory extends HandFactory {
 
     @Override
     public boolean check() {
-        Map<CardSuit, List<CardRank>> groupedDeck = this.groupDeckBySuit();
-
-        for (Map.Entry<CardSuit, List<CardRank>> entry : groupedDeck.entrySet()) {
+        for (Map.Entry<CardSuit, List<CardRank>> entry : super.getGroupedDeckBySuit().entrySet()) {
             if (entry.getValue().size() >= 5) {
                 return true;
             }
@@ -32,12 +30,10 @@ public class FlushFactory extends HandFactory {
 
     @Override
     public void populateCards() {
-        Map<CardSuit, List<CardRank>> groupedDeck = this.groupDeckBySuit();
-
         CardSuit cardSuit;
         List<CardRank> cardRanks;
 
-        for (Map.Entry<CardSuit, List<CardRank>> entry : groupedDeck.entrySet()) {
+        for (Map.Entry<CardSuit, List<CardRank>> entry : super.getGroupedDeckBySuit().entrySet()) {
             cardSuit = entry.getKey();
             cardRanks = entry.getValue();
 
@@ -50,5 +46,10 @@ public class FlushFactory extends HandFactory {
                 break;
             }
         }
+    }
+
+    @Override
+    public void groupDeck() {
+        super.groupDeckBySuit();
     }
 }

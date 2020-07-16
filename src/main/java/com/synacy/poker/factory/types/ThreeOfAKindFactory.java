@@ -16,6 +16,8 @@ public class ThreeOfAKindFactory extends HandFactory implements ThreeOfAKind {
     private List<Card> threeOfAKindCards;
     private List<Card> otherCards;
 
+    private int SAME_RANK_SIZE = 3;
+
     @Override
     public boolean check() {
         return this.checkThreeOfAKind();
@@ -23,7 +25,23 @@ public class ThreeOfAKindFactory extends HandFactory implements ThreeOfAKind {
 
     @Override
     public void populateCards() {
+        for (Map.Entry<CardRank, List<CardSuit>> entry : super.getGroupedDeckByRank().entrySet()) {
+            CardRank cardRank = entry.getKey();
+            List<CardSuit> cardSuits = entry.getValue();
+            if (cardSuits.size() == SAME_RANK_SIZE) {
+                populateThreeOfAKindCards(cardRank, cardSuits);
+            } else {
+                populateOtherCards(cardRank, cardSuits);
+            }
+        }
+
         CardUtil.sortCardsDesc(otherCards);
+        otherCards = CardUtil.maxOutCardsOnHand(threeOfAKindCards, otherCards);
+    }
+
+    @Override
+    public void groupDeck() {
+        super.groupDeckByRank();
     }
 
     @Override
@@ -48,6 +66,17 @@ public class ThreeOfAKindFactory extends HandFactory implements ThreeOfAKind {
         }
     }
 
+    @Override
+    public boolean checkThreeOfAKind() {
+        for (Map.Entry<CardRank, List<CardSuit>> entry : super.getGroupedDeckByRank().entrySet()) {
+            if (entry.getValue().size() == SAME_RANK_SIZE) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public List<Card> getThreeOfAKindCards() {
         return threeOfAKindCards;
     }
@@ -62,24 +91,5 @@ public class ThreeOfAKindFactory extends HandFactory implements ThreeOfAKind {
 
     public void setOtherCards(List<Card> otherCards) {
         this.otherCards = otherCards;
-    }
-
-    @Override
-    public boolean checkThreeOfAKind() {
-        boolean ifThreeOfAKind = false;
-        Map<CardRank, List<CardSuit>> groupedDeck = this.groupDeckByRank();
-
-        for (Map.Entry<CardRank, List<CardSuit>> entry : groupedDeck.entrySet()) {
-            CardRank cardRank = entry.getKey();
-            List<CardSuit> cardSuits = entry.getValue();
-            if (cardSuits.size() == 3) {
-                ifThreeOfAKind = true;
-                populateThreeOfAKindCards(cardRank, cardSuits);
-            } else {
-                populateOtherCards(cardRank, cardSuits);
-            }
-        }
-
-        return ifThreeOfAKind;
     }
 }

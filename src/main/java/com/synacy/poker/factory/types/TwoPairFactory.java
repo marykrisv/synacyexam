@@ -13,24 +13,44 @@ public class TwoPairFactory extends OnePairFactory {
     private List<Card> firstPairCards;
     private List<Card> secondPairCards;
 
+    private int SAME_RANK_SIZE = 2;
+    private int FIRST_PAIR = 1;
+    private int SECOND_PAIR = 2;
+
     @Override
     public boolean check() {
         int pairCtr = 0;
-        Map<CardRank, List<CardSuit>> groupedDeck = this.groupDeckByRank();
+
+        for (Map.Entry<CardRank, List<CardSuit>> entry : this.getGroupedDeckByRank().entrySet()) {
+            if (entry.getValue().size() >= SAME_RANK_SIZE) {
+                pairCtr++;
+            }
+        }
+
+        if (pairCtr == 2) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public void populateCards() {
+        int pairCtr = 0;
 
         CardRank cardRank;
         List<CardSuit> cardSuits;
 
-        for (Map.Entry<CardRank, List<CardSuit>> entry : groupedDeck.entrySet()) {
+        for (Map.Entry<CardRank, List<CardSuit>> entry : this.getGroupedDeckByRank().entrySet()) {
             cardRank = entry.getKey();
             cardSuits = entry.getValue();
 
-            if (cardSuits.size() >= 2) {
+            if (cardSuits.size() >= SAME_RANK_SIZE) {
                 pairCtr++;
-                if (pairCtr == 1) {
+                if (pairCtr == FIRST_PAIR) {
                     super.setPairCards(firstPairCards);
                     this.populatePairCards(cardRank, cardSuits);
-                } else if (pairCtr == 2){
+                } else if (pairCtr == SECOND_PAIR){
                     super.setPairCards(secondPairCards);
                     this.populatePairCards(cardRank, cardSuits);
                 } else {
@@ -41,12 +61,10 @@ public class TwoPairFactory extends OnePairFactory {
             }
         }
 
-        if (pairCtr == 2) {
-            CardUtil.sortCardsDesc(super.getOtherCards());
-            return true;
-        } else {
-            return false;
-        }
+        CardUtil.sortCardsDesc(this.firstPairCards, this.secondPairCards, super.getOtherCards());
+        super.setOtherCards(CardUtil.maxOutCardsOnHand(
+                CardUtil.combineCards(firstPairCards, secondPairCards),
+                super.getOtherCards()));
     }
 
     @Override

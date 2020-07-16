@@ -13,6 +13,8 @@ public class OnePairFactory extends HandFactory implements Pair {
     private List<Card> pairCards;
     private List<Card> otherCards;
 
+    private int SAME_RANK_SIZE = 2;
+
     @Override
     public void initializeCards() {
         pairCards = new ArrayList<>();
@@ -26,12 +28,10 @@ public class OnePairFactory extends HandFactory implements Pair {
 
     @Override
     public void populateCards() {
-        Map<CardRank, List<CardSuit>> groupedDeck = this.groupDeckByRank();
-
-        for (Map.Entry<CardRank, List<CardSuit>> entry : groupedDeck.entrySet()) {
+        for (Map.Entry<CardRank, List<CardSuit>> entry : super.getGroupedDeckByRank().entrySet()) {
             CardRank cardRank = entry.getKey();
             List<CardSuit> cardSuits = entry.getValue();
-            if (cardSuits.size() == 2) {
+            if (cardSuits.size() == SAME_RANK_SIZE) {
                 populatePairCards(cardRank, cardSuits);
             } else {
                 populateOtherCards(cardRank, cardSuits);
@@ -40,6 +40,11 @@ public class OnePairFactory extends HandFactory implements Pair {
 
         CardUtil.sortCardsDesc(pairCards, otherCards);
         otherCards = CardUtil.maxOutCardsOnHand(pairCards, otherCards);
+    }
+
+    @Override
+    public void groupDeck() {
+        super.groupDeckByRank();
     }
 
     public void populateOtherCards(CardRank cardRank, List<CardSuit> cardSuits) {
@@ -77,9 +82,7 @@ public class OnePairFactory extends HandFactory implements Pair {
 
     @Override
     public boolean checkPair() {
-        Map<CardRank, List<CardSuit>> groupedDeck = this.groupDeckByRank();
-
-        for (Map.Entry<CardRank, List<CardSuit>> entry : groupedDeck.entrySet()) {
+        for (Map.Entry<CardRank, List<CardSuit>> entry : super.getGroupedDeckByRank().entrySet()) {
             List<CardSuit> cardSuits = entry.getValue();
             if (cardSuits.size() == 2) {
                 return true;

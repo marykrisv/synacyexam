@@ -24,4 +24,9 @@ public class HighCardFactory extends HandFactory {
     public void populateCards() {
         CardUtil.maxOutCardsOnHand(cards);
     }
+
+    @Override
+    public void groupDeck() {
+        // do nothing
+    }
 }

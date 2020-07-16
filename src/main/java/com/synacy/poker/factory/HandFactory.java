@@ -9,6 +9,8 @@ import java.util.*;
 
 public abstract class HandFactory {
     private List<Card> cards;
+    private Map<CardRank, List<CardSuit>> groupedDeckByRank;
+    private Map<CardSuit, List<CardRank>> groupedDeckBySuit;
 
     public abstract void initializeCards();
 
@@ -16,11 +18,14 @@ public abstract class HandFactory {
 
     public abstract void populateCards();
 
+    public abstract void groupDeck();
+
     public HandFactory() {}
 
     public HandFactory create () {
         this.initializeCards();
         CardUtil.sortCardsDesc(cards);
+        this.groupDeck();
         if (this.check()) {
             populateCards();
             return this;
@@ -29,42 +34,38 @@ public abstract class HandFactory {
         }
     }
 
-    public Map<CardSuit, List<CardRank>> groupDeckBySuit () {
-        Map<CardSuit, List<CardRank>> groupedCard = new HashMap<>();
+    public void groupDeckBySuit () {
+        groupedDeckBySuit = new HashMap<>();
 
         List<CardRank> cardRank;
         for (Card card: cards) {
             try {
-                cardRank = groupedCard.get(card.getSuit());
+                cardRank = groupedDeckBySuit.get(card.getSuit());
                 cardRank.add(card.getRank());
-                groupedCard.replace(card.getSuit(), cardRank);
+                groupedDeckBySuit.replace(card.getSuit(), cardRank);
             } catch (NullPointerException e) {
                 cardRank = new ArrayList<>();
                 cardRank.add(card.getRank());
-                groupedCard.put(card.getSuit(), cardRank);
+                groupedDeckBySuit.put(card.getSuit(), cardRank);
             }
         }
-
-        return groupedCard;
     }
 
-    public Map<CardRank, List<CardSuit>> groupDeckByRank () {
-        Map<CardRank, List<CardSuit>> groupedCard = new HashMap<>();
+    public void groupDeckByRank () {
+        groupedDeckByRank = new HashMap<>();
 
         List<CardSuit> cardSuit;
         for (Card card: cards) {
             try {
-                cardSuit = groupedCard.get(card.getRank());
+                cardSuit = groupedDeckByRank.get(card.getRank());
                 cardSuit.add(card.getSuit());
-                groupedCard.replace(card.getRank(), cardSuit);
+                groupedDeckByRank.replace(card.getRank(), cardSuit);
             } catch (NullPointerException e) {
                 cardSuit = new ArrayList<>();
                 cardSuit.add(card.getSuit());
-                groupedCard.put(card.getRank(), cardSuit);
+                groupedDeckByRank.put(card.getRank(), cardSuit);
             }
         }
-
-        return groupedCard;
     }
 
     public List<Card> getCards() {
@@ -73,5 +74,21 @@ public abstract class HandFactory {
 
     public void setCards(List<Card> cards) {
         this.cards = cards;
+    }
+
+    public Map<CardRank, List<CardSuit>> getGroupedDeckByRank() {
+        return groupedDeckByRank;
+    }
+
+    public void setGroupedDeckByRank(Map<CardRank, List<CardSuit>> groupedDeckByRank) {
+        this.groupedDeckByRank = groupedDeckByRank;
+    }
+
+    public Map<CardSuit, List<CardRank>> getGroupedDeckBySuit() {
+        return groupedDeckBySuit;
+    }
+
+    public void setGroupedDeckBySuit(Map<CardSuit, List<CardRank>> groupedDeckBySuit) {
+        this.groupedDeckBySuit = groupedDeckBySuit;
     }
 }

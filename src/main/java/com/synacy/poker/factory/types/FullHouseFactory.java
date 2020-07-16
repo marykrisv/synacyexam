@@ -39,6 +39,11 @@ public class FullHouseFactory extends ThreeOfAKindFactory implements Pair {
     }
 
     @Override
+    public void groupDeck() {
+        super.groupDeckByRank();
+    }
+
+    @Override
     public List<Card> getThreeOfAKindCards() {
         return threeOfAKindCards;
     }
@@ -68,10 +73,9 @@ public class FullHouseFactory extends ThreeOfAKindFactory implements Pair {
     @Override
     public boolean checkPair() {
         boolean isOnePair = false;
-        Map<CardRank, List<CardSuit>> groupedDeck = this.groupDeckByRank();
 
         // check for suit with 5 or greater than 5 value
-        for (Map.Entry<CardRank, List<CardSuit>> entry : groupedDeck.entrySet()) {
+        for (Map.Entry<CardRank, List<CardSuit>> entry : super.getGroupedDeckByRank().entrySet()) {
             CardRank cardRank = entry.getKey();
             List<CardSuit> cardSuits = entry.getValue();
             if (cardSuits.size() == 2) {

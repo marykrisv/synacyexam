@@ -7,6 +7,7 @@ import com.synacy.poker.factory.HandFactory;
 import com.synacy.poker.factory.HandFactoryType;
 import com.synacy.poker.factory.types.*;
 import com.synacy.poker.hand.types.*;
+import com.synacy.poker.utils.CardUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -49,9 +50,7 @@ public class HandIdentifier {
     }
 
     private List<Card> combineCards(List<Card> playerCards, List<Card> communityCards) {
-//        List<Card> cards = new ArrayList<Card>();
-//        cards.addAll(playerCards);
-//        cards.addAll(communityCards);
+//        List<Card> cards = CardUtil.combineCards(playerCards, communityCards);
 //        return cards;
 
 //        return highCard();

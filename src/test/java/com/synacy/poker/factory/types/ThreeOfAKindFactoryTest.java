@@ -3,7 +3,6 @@ package com.synacy.poker.factory.types;
 import com.synacy.poker.card.Card;
 import com.synacy.poker.card.CardRank;
 import com.synacy.poker.card.CardSuit;
-import com.synacy.poker.factory.HandFactory;
 import com.synacy.poker.utils.CardUtil;
 import org.junit.Test;
 
@@ -11,40 +10,41 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-public class OnePairFactoryTest {
+public class ThreeOfAKindFactoryTest {
 
-    private void createInits(OnePairFactory onePairFactory, List<Card> cards) {
-        onePairFactory.setCards(cards);
-        onePairFactory.initializeCards();
+    private void createInits(ThreeOfAKindFactory threeOfAKindFactory, List<Card> cards) {
+        threeOfAKindFactory.setCards(cards);
+        threeOfAKindFactory.initializeCards();
         CardUtil.sortCardsDesc(cards);
-        onePairFactory.groupDeck();
+        threeOfAKindFactory.groupDeck();
     }
 
     @Test
     public void initializeCards() {
-        OnePairFactory onePairFactory = new OnePairFactory();
-        onePairFactory.initializeCards();
+        ThreeOfAKindFactory threeOfAKindFactory = new ThreeOfAKindFactory();
+        threeOfAKindFactory.initializeCards();
 
-        assertNotNull(onePairFactory.getOtherCards());
-        assertNotNull(onePairFactory.getPairCards());
+        assertNotNull(threeOfAKindFactory.getOtherCards());
+        assertNotNull(threeOfAKindFactory.getThreeOfAKindCards());
     }
 
     @Test
     public void check_true() {
         List<Card> cards = Arrays.asList(
                 new Card(CardRank.ACE, CardSuit.CLUBS),
-                new Card(CardRank.ACE, CardSuit.CLUBS),
+                new Card(CardRank.ACE, CardSuit.HEARTS),
                 new Card(CardRank.EIGHT, CardSuit.CLUBS),
                 new Card(CardRank.SEVEN, CardSuit.CLUBS),
                 new Card(CardRank.TWO, CardSuit.CLUBS),
-                new Card(CardRank.QUEEN, CardSuit.CLUBS)
+                new Card(CardRank.ACE, CardSuit.DIAMONDS)
         );
 
-        OnePairFactory onePairFactory = new OnePairFactory();
-        this.createInits(onePairFactory, cards);
+        ThreeOfAKindFactory threeOfAKindFactory = new ThreeOfAKindFactory();
+        this.createInits(threeOfAKindFactory, cards);
 
-        assertTrue(onePairFactory.check());
+        assertTrue(threeOfAKindFactory.check());
     }
 
     @Test
@@ -58,33 +58,34 @@ public class OnePairFactoryTest {
                 new Card(CardRank.QUEEN, CardSuit.CLUBS)
         );
 
-        OnePairFactory onePairFactory = new OnePairFactory();
-        this.createInits(onePairFactory, cards);
+        ThreeOfAKindFactory threeOfAKindFactory = new ThreeOfAKindFactory();
+        this.createInits(threeOfAKindFactory, cards);
 
-        assertFalse(onePairFactory.check());
+        assertFalse(threeOfAKindFactory.check());
     }
 
     @Test
-    public void populateCards_onePair() {
+    public void populateCards_threeOfAKind() {
         List<Card> cards = Arrays.asList(
                 new Card(CardRank.ACE, CardSuit.CLUBS),
                 new Card(CardRank.JACK, CardSuit.SPADES),
-                new Card(CardRank.EIGHT, CardSuit.DIAMONDS),
+                new Card(CardRank.ACE, CardSuit.DIAMONDS),
                 new Card(CardRank.SEVEN, CardSuit.CLUBS),
                 new Card(CardRank.TWO, CardSuit.CLUBS),
                 new Card(CardRank.ACE, CardSuit.HEARTS)
         );
 
-        List<Card> onePairExpected = Arrays.asList(
+        List<Card> threeOfAKindExcepected = Arrays.asList(
                 new Card(CardRank.ACE, CardSuit.CLUBS),
+                new Card(CardRank.ACE, CardSuit.DIAMONDS),
                 new Card(CardRank.ACE, CardSuit.HEARTS)
         );
 
-        OnePairFactory onePairFactory = new OnePairFactory();
-        this.createInits(onePairFactory, cards);
-        onePairFactory.populateCards();
+        ThreeOfAKindFactory threeOfAKindFactory = new ThreeOfAKindFactory();
+        this.createInits(threeOfAKindFactory, cards);
+        threeOfAKindFactory.populateCards();
 
-        assertEquals(onePairExpected, onePairFactory.getPairCards());
+        assertEquals(threeOfAKindExcepected, threeOfAKindFactory.getThreeOfAKindCards());
     }
 
     @Test
@@ -92,22 +93,21 @@ public class OnePairFactoryTest {
         List<Card> cards = Arrays.asList(
                 new Card(CardRank.ACE, CardSuit.CLUBS),
                 new Card(CardRank.JACK, CardSuit.SPADES),
-                new Card(CardRank.EIGHT, CardSuit.DIAMONDS),
+                new Card(CardRank.ACE, CardSuit.DIAMONDS),
                 new Card(CardRank.SEVEN, CardSuit.CLUBS),
                 new Card(CardRank.TWO, CardSuit.CLUBS),
                 new Card(CardRank.ACE, CardSuit.HEARTS)
         );
 
-        List<Card> otherCardsExpected = Arrays.asList(
+        List<Card> otherCardExcepted = Arrays.asList(
                 new Card(CardRank.JACK, CardSuit.SPADES),
-                new Card(CardRank.EIGHT, CardSuit.DIAMONDS),
                 new Card(CardRank.SEVEN, CardSuit.CLUBS)
         );
 
-        OnePairFactory onePairFactory = new OnePairFactory();
-        this.createInits(onePairFactory, cards);
-        onePairFactory.populateCards();
+        ThreeOfAKindFactory threeOfAKindFactory = new ThreeOfAKindFactory();
+        this.createInits(threeOfAKindFactory, cards);
+        threeOfAKindFactory.populateCards();
 
-        assertEquals(otherCardsExpected, onePairFactory.getOtherCards());
+        assertEquals(otherCardExcepted, threeOfAKindFactory.getOtherCards());
     }
 }

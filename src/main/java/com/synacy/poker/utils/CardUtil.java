@@ -44,4 +44,14 @@ public class CardUtil {
 
         return newCardsToAppend;
     }
+
+    public static List<Card> combineCards (List<Card>... cards) {
+        List<Card> combinedCard = new ArrayList<>();
+
+        for (int i =0; i < cards.length; i++) {
+            combinedCard.addAll(cards[i]);
+        }
+
+        return combinedCard;
+    }
 }

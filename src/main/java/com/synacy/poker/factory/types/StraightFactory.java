@@ -11,32 +11,39 @@ import java.util.List;
 
 public class StraightFactory extends HandFactory {
     private List<Card> cards;
+    private int CARD_INDEX_INTERVAL = 1;
+    private int STRAIGHT_CARD_SIZE = 5;
+    private int SECOND_TO_THE_LAST_CARD_SIZE = 4;
 
     @Override
     public boolean check() {
-        List<Card> straightCard = null;
+        int straightCardCtr = 0;
 
         int sizeOfCard = cards.size();
         int i, j;
         Card nextCard, prevCard;
         for (i = 0; i < sizeOfCard; i++) {
-            straightCard = new ArrayList<>();
-            for (j = i; j < sizeOfCard && straightCard.size() != 5; j++) {
+            for (j = i; j < sizeOfCard-CARD_INDEX_INTERVAL && straightCardCtr != 5; j++) {
                 prevCard = cards.get(j);
-                if (straightCard.size() == 4 || j == sizeOfCard-1) { //if last index of straight card
-
+                nextCard = cards.get(j+CARD_INDEX_INTERVAL);
+                if (straightCardCtr == SECOND_TO_THE_LAST_CARD_SIZE ||
+                        j == sizeOfCard-CARD_INDEX_INTERVAL) { //if last index of straight card
+                    straightCardCtr++;
                 } else {
-                    nextCard = cards.get(j+1);
-                    if (prevCard.getRank().ordinal()-1 != nextCard.getRank().ordinal()
-                        && (prevCard.getRank() != CardRank.ACE && nextCard.getRank() != CardRank.KING)) {
+                    if (prevCard.getRank().ordinal()-CARD_INDEX_INTERVAL != nextCard.getRank().ordinal()
+                            && (prevCard.getRank() != CardRank.ACE && nextCard.getRank() != CardRank.KING)) {
                         break;
                     } else {
-                        // do nothing
+                        if (prevCard.getRank() == CardRank.ACE && nextCard.getRank() != CardRank.KING) {
+                            // do nothing
+                        } else {
+                            straightCardCtr++;
+                        }
                     }
                 }
 
             }
-            if (straightCard.size() == 5) {
+            if (straightCardCtr == STRAIGHT_CARD_SIZE) {
                 return true;
             }
         }
@@ -55,7 +62,8 @@ public class StraightFactory extends HandFactory {
             straightCard = new ArrayList<>();
             for (j = i; j < sizeOfCard && straightCard.size() != 5; j++) {
                 prevCard = cards.get(j);
-                if (straightCard.size() == 4 || j == sizeOfCard-1) { //if last index of straight card
+                if (straightCard.size() == SECOND_TO_THE_LAST_CARD_SIZE ||
+                        j == sizeOfCard-CARD_INDEX_INTERVAL) { //if last index of straight card
                     straightCard.add(cards.get(j));
                     if (cardContainsAce()) {
                         if (prevCard.getRank() == CardRank.TWO) {
@@ -64,12 +72,12 @@ public class StraightFactory extends HandFactory {
                     }
                 } else {
                     nextCard = cards.get(j+1);
-                    if (prevCard.getRank().ordinal()-1 != nextCard.getRank().ordinal()
+                    if (prevCard.getRank().ordinal()-CARD_INDEX_INTERVAL != nextCard.getRank().ordinal()
                             && (prevCard.getRank() != CardRank.ACE && nextCard.getRank() != CardRank.KING)) {
                         break;
                     } else {
                         if (prevCard.getRank() == CardRank.ACE && nextCard.getRank() != CardRank.KING) {
-
+                            // do nothing
                         } else {
                             straightCard.add(cards.get(j));
                         }
@@ -77,8 +85,16 @@ public class StraightFactory extends HandFactory {
                 }
 
             }
-            super.setCards(straightCard);
+            if (straightCard.size() == STRAIGHT_CARD_SIZE) {
+                super.setCards(straightCard);
+                break;
+            }
         }
+    }
+
+    @Override
+    public void groupDeck() {
+        // do nothing
     }
 
     private boolean cardContainsAce() {

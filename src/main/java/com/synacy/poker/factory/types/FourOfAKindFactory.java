@@ -14,6 +14,11 @@ public class FourOfAKindFactory extends HandFactory {
     }
 
     @Override
+    public void groupDeck() {
+
+    }
+
+    @Override
     public void initializeCards() {
 
     }
