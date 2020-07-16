@@ -17,7 +17,6 @@ public class HighCardFactoryTest {
     @Test
     public void initializeCards() {
         List<Card> cards = Arrays.asList(
-                new Card(CardRank.ACE, CardSuit.CLUBS),
                 new Card(CardRank.QUEEN, CardSuit.HEARTS),
                 new Card(CardRank.KING, CardSuit.CLUBS),
                 new Card(CardRank.ACE, CardSuit.DIAMONDS),
@@ -43,7 +42,6 @@ public class HighCardFactoryTest {
     @Test
     public void populateCards() {
         List<Card> cards = Arrays.asList(
-                new Card(CardRank.ACE, CardSuit.CLUBS),
                 new Card(CardRank.QUEEN, CardSuit.HEARTS),
                 new Card(CardRank.KING, CardSuit.CLUBS),
                 new Card(CardRank.ACE, CardSuit.DIAMONDS),
@@ -51,7 +49,13 @@ public class HighCardFactoryTest {
                 new Card(CardRank.TEN, CardSuit.DIAMONDS)
         );
 
-        List<Card> expected = CardUtil.maxOutCardsOnHand(cards);
+        List<Card> expected = Arrays.asList(
+                new Card(CardRank.ACE, CardSuit.DIAMONDS),
+                new Card(CardRank.KING, CardSuit.CLUBS),
+                new Card(CardRank.QUEEN, CardSuit.HEARTS),
+                new Card(CardRank.TEN, CardSuit.DIAMONDS),
+                new Card(CardRank.TWO, CardSuit.CLUBS)
+        );
 
         HighCardFactory highCardFactory = new HighCardFactory();
         highCardFactory.setCards(cards);

@@ -41,7 +41,11 @@ public class OnePair extends Hand {
     }
 
     private String getOnePairRank () {
-        return this.pairCards.get(0).getRank().toString();
+        if (!pairCards.isEmpty()) {
+            return this.pairCards.get(0).getRank().toString();
+        }
+
+        return "";
     }
 
     private String otherCardsAppended() {

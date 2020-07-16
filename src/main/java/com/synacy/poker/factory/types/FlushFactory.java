@@ -4,13 +4,15 @@ import com.synacy.poker.card.Card;
 import com.synacy.poker.card.CardRank;
 import com.synacy.poker.card.CardSuit;
 import com.synacy.poker.factory.HandFactory;
+import com.synacy.poker.utils.DeckBySuit;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class FlushFactory extends HandFactory {
     private List<Card> cards;
+
+    private int FLUSH_SIZE_CARD = 5;
 
     @Override
     public void initializeCards() {
@@ -19,8 +21,8 @@ public class FlushFactory extends HandFactory {
 
     @Override
     public boolean check() {
-        for (Map.Entry<CardSuit, List<CardRank>> entry : super.getGroupedDeckBySuit().entrySet()) {
-            if (entry.getValue().size() >= 5) {
+        for (DeckBySuit deckBySuit : super.getGroupedDeckBySuit()) {
+            if (deckBySuit.getCardRanks().size() >= FLUSH_SIZE_CARD) {
                 return true;
             }
         }
@@ -33,13 +35,12 @@ public class FlushFactory extends HandFactory {
         CardSuit cardSuit;
         List<CardRank> cardRanks;
 
-        for (Map.Entry<CardSuit, List<CardRank>> entry : super.getGroupedDeckBySuit().entrySet()) {
-            cardSuit = entry.getKey();
-            cardRanks = entry.getValue();
-
-            if (cardRanks.size() >= 5) {
+        for (DeckBySuit deckBySuit : super.getGroupedDeckBySuit()) {
+            cardSuit = deckBySuit.getCardSuit();
+            cardRanks = deckBySuit.getCardRanks();
+            if (deckBySuit.getCardRanks().size() >= FLUSH_SIZE_CARD) {
                 this.cards = new ArrayList<>();
-                for (int i = 0; i < 5; i++) {
+                for (int i = 0; i < FLUSH_SIZE_CARD; i++) {
                     cards.add(new Card(cardRanks.get(i), cardSuit));
                 }
                 super.setCards(this.cards);

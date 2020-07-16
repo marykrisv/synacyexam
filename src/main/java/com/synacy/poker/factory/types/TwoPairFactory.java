@@ -4,6 +4,7 @@ import com.synacy.poker.card.Card;
 import com.synacy.poker.card.CardRank;
 import com.synacy.poker.card.CardSuit;
 import com.synacy.poker.utils.CardUtil;
+import com.synacy.poker.utils.DeckByRank;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +22,8 @@ public class TwoPairFactory extends OnePairFactory {
     public boolean check() {
         int pairCtr = 0;
 
-        for (Map.Entry<CardRank, List<CardSuit>> entry : this.getGroupedDeckByRank().entrySet()) {
-            if (entry.getValue().size() >= SAME_RANK_SIZE) {
+        for (DeckByRank deckByRank : this.getGroupedDeckByRank()) {
+            if (deckByRank.getCardSuits().size() >= SAME_RANK_SIZE) {
                 pairCtr++;
             }
         }
@@ -41,9 +42,9 @@ public class TwoPairFactory extends OnePairFactory {
         CardRank cardRank;
         List<CardSuit> cardSuits;
 
-        for (Map.Entry<CardRank, List<CardSuit>> entry : this.getGroupedDeckByRank().entrySet()) {
-            cardRank = entry.getKey();
-            cardSuits = entry.getValue();
+        for (DeckByRank deckByRank: this.getGroupedDeckByRank()) {
+            cardRank = deckByRank.getCardRank();
+            cardSuits = deckByRank.getCardSuits();
 
             if (cardSuits.size() >= SAME_RANK_SIZE) {
                 pairCtr++;
@@ -61,7 +62,7 @@ public class TwoPairFactory extends OnePairFactory {
             }
         }
 
-        CardUtil.sortCardsDesc(this.firstPairCards, this.secondPairCards, super.getOtherCards());
+        CardUtil.sortCardsDesc(super.getOtherCards());
         super.setOtherCards(CardUtil.maxOutCardsOnHand(
                 CardUtil.combineCards(firstPairCards, secondPairCards),
                 super.getOtherCards()));

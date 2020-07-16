@@ -4,16 +4,17 @@ import com.synacy.poker.card.Card;
 import com.synacy.poker.card.CardRank;
 import com.synacy.poker.card.CardSuit;
 import com.synacy.poker.factory.Pair;
+import com.synacy.poker.utils.DeckByRank;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class FullHouseFactory extends ThreeOfAKindFactory implements Pair {
     private List<Card> pairCards;
 
     private int SAME_RANK_TRIP_SIZE = 3;
     private int SAME_RANK_PAIR_SIZE = 2;
+    private int TWO_PAIR = 2;
 
     @Override
     public void initializeCards() {
@@ -35,9 +36,9 @@ public class FullHouseFactory extends ThreeOfAKindFactory implements Pair {
 
     @Override
     public void populateCards() {
-        for (Map.Entry<CardRank, List<CardSuit>> entry : super.getGroupedDeckByRank().entrySet()) {
-            CardRank cardRank = entry.getKey();
-            List<CardSuit> cardSuits = entry.getValue();
+        for (DeckByRank deckByRank : super.getGroupedDeckByRank()) {
+            CardRank cardRank = deckByRank.getCardRank();
+            List<CardSuit> cardSuits = deckByRank.getCardSuits();
             if (cardSuits.size() == SAME_RANK_TRIP_SIZE && getThreeOfAKindCards().isEmpty()) {
                 super.populateThreeOfAKindCards(cardRank, cardSuits);
             } else if (cardSuits.size() >= SAME_RANK_PAIR_SIZE){
@@ -72,13 +73,13 @@ public class FullHouseFactory extends ThreeOfAKindFactory implements Pair {
     public boolean checkPair() {
         int ctr = 0;
 
-        for (Map.Entry<CardRank, List<CardSuit>> entry : super.getGroupedDeckByRank().entrySet()) {
-            if (entry.getValue().size() >= SAME_RANK_PAIR_SIZE) {
+        for (DeckByRank deckByRank : super.getGroupedDeckByRank()) {
+            if (deckByRank.getCardSuits().size() >= SAME_RANK_PAIR_SIZE) {
                 ctr++;
             }
         }
 
-        if (ctr == 2) {
+        if (ctr == TWO_PAIR) {
             return true;
         }
 

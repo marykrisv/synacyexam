@@ -6,6 +6,7 @@ import com.synacy.poker.card.CardSuit;
 import com.synacy.poker.factory.HandFactory;
 import com.synacy.poker.factory.ThreeOfAKind;
 import com.synacy.poker.utils.CardUtil;
+import com.synacy.poker.utils.DeckByRank;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,9 +26,9 @@ public class ThreeOfAKindFactory extends HandFactory implements ThreeOfAKind {
 
     @Override
     public void populateCards() {
-        for (Map.Entry<CardRank, List<CardSuit>> entry : super.getGroupedDeckByRank().entrySet()) {
-            CardRank cardRank = entry.getKey();
-            List<CardSuit> cardSuits = entry.getValue();
+        for (DeckByRank deckByRank: super.getGroupedDeckByRank()) {
+            CardRank cardRank = deckByRank.getCardRank();
+            List<CardSuit> cardSuits = deckByRank.getCardSuits();
             if (cardSuits.size() == SAME_RANK_SIZE && threeOfAKindCards.isEmpty()) {
                 populateThreeOfAKindCards(cardRank, cardSuits);
             } else {
@@ -68,8 +69,8 @@ public class ThreeOfAKindFactory extends HandFactory implements ThreeOfAKind {
 
     @Override
     public boolean checkThreeOfAKind() {
-        for (Map.Entry<CardRank, List<CardSuit>> entry : super.getGroupedDeckByRank().entrySet()) {
-            if (entry.getValue().size() == SAME_RANK_SIZE) {
+        for (DeckByRank deckByRank : super.getGroupedDeckByRank()) {
+            if (deckByRank.getCardSuits().size() == SAME_RANK_SIZE) {
                 return true;
             }
         }

@@ -3,7 +3,6 @@ package com.synacy.poker.factory.types;
 import com.synacy.poker.card.Card;
 import com.synacy.poker.card.CardRank;
 import com.synacy.poker.card.CardSuit;
-import com.synacy.poker.factory.HandFactory;
 import com.synacy.poker.utils.CardUtil;
 import org.junit.Test;
 
@@ -62,6 +61,25 @@ public class OnePairFactoryTest {
         this.createInits(onePairFactory, cards);
 
         assertFalse(onePairFactory.check());
+    }
+
+    @Test
+    public void populateCards() {
+        List<Card> cards = Arrays.asList(
+                new Card(CardRank.JACK, CardSuit.CLUBS),
+                new Card(CardRank.JACK, CardSuit.DIAMONDS)
+        );
+
+        List<Card> onePairExpected = Arrays.asList(
+                new Card(CardRank.JACK, CardSuit.CLUBS),
+                new Card(CardRank.JACK, CardSuit.DIAMONDS)
+        );
+
+        OnePairFactory onePairFactory = new OnePairFactory();
+        this.createInits(onePairFactory, cards);
+        onePairFactory.populateCards();
+
+        assertEquals(onePairExpected, onePairFactory.getPairCards());
     }
 
     @Test

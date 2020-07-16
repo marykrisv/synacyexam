@@ -48,10 +48,8 @@ public class TwoPair extends Hand {
     }
 
     private String otherCardsHigh() {
-        List<Card> combined = new ArrayList<>();
-        combined.addAll(firstPairCards);
-        combined.addAll(secondPairCards);
-        return ranksToString(CardUtil.maxOutCardsOnHand(combined, otherCards));
+        return ranksToString(CardUtil.
+                maxOutCardsOnHand(CardUtil.combineCards(firstPairCards, secondPairCards), otherCards));
     }
 
 }

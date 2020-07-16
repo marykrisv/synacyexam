@@ -20,7 +20,7 @@ import java.util.*;
 @Component
 public class HandIdentifier {
 
-    List<HandFactoryType> handFactoryTypes;
+    private List<HandFactoryType> handFactoryTypes;
 //    Map<HandType, HandFactory> factoryMap;
 
     public HandIdentifier () {
@@ -46,21 +46,38 @@ public class HandIdentifier {
      * @return The player's {@link Hand} or `null` if no Hand was identified.
      */
     public Hand identifyHand(List<Card> playerCards, List<Card> communityCards) {
-        return getHand(getCurrentHand(this.combineCards(playerCards, communityCards)));
+        return getHand(getCurrentHand(flush()));
+//        return getHand(getCurrentHand(CardUtil.combineCards(playerCards, communityCards)));
     }
 
-    private List<Card> combineCards(List<Card> playerCards, List<Card> communityCards) {
-//        List<Card> cards = CardUtil.combineCards(playerCards, communityCards);
-//        return cards;
+    private List<Card> onePairBug() {
+        return Arrays.asList(
+                new Card(CardRank.JACK, CardSuit.CLUBS),
+                new Card(CardRank.JACK, CardSuit.DIAMONDS)
+        );
+    }
 
-//        return highCard();
-//        return onePair();
-//        return twoPair();
-//        return threeOfAKind();
-//        return straight1();
-//        return straight2();
-//        return flush();
-        return this.fullHouse();
+    private List<Card> twoPairBug() {
+        return Arrays.asList(
+                new Card(CardRank.NINE, CardSuit.CLUBS),
+                new Card(CardRank.FOUR, CardSuit.DIAMONDS),
+                new Card(CardRank.NINE, CardSuit.DIAMONDS),
+                new Card(CardRank.ACE, CardSuit.HEARTS),
+                new Card(CardRank.SIX, CardSuit.DIAMONDS),
+                new Card(CardRank.FOUR, CardSuit.DIAMONDS)
+        );
+    }
+
+    private List<Card> straightBug() {
+        return Arrays.asList(
+                new Card(CardRank.JACK, CardSuit.CLUBS),
+                new Card(CardRank.NINE, CardSuit.DIAMONDS),
+                new Card(CardRank.ACE, CardSuit.DIAMONDS),
+                new Card(CardRank.SEVEN, CardSuit.HEARTS),
+                new Card(CardRank.SEVEN, CardSuit.DIAMONDS),
+                new Card(CardRank.TEN, CardSuit.SPADES),
+                new Card(CardRank.EIGHT, CardSuit.SPADES)
+        );
     }
 
     private List<Card> highCard() {
@@ -155,11 +172,13 @@ public class HandIdentifier {
     }
 
     private HandFactoryType getCurrentHand (List<Card> cards) {
+        List<Card> tempCards;
         HandFactoryType currentHand = null;
         HandFactory tempHandFactory;
         for (int i = 0; i < handFactoryTypes.size(); i++) {
+            tempCards = cards;
             tempHandFactory = handFactoryTypes.get(i).getHandFactory();
-            tempHandFactory.setCards(cards);
+            tempHandFactory.setCards(tempCards);
             tempHandFactory = tempHandFactory.create();
             if (tempHandFactory == null){
                 continue;

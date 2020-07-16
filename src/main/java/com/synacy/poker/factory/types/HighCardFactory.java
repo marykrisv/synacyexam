@@ -8,11 +8,8 @@ import java.util.List;
 
 public class HighCardFactory extends HandFactory {
 
-    private List<Card> cards;
-
     @Override
     public void initializeCards() {
-        this.cards = super.getCards();
     }
 
     @Override
@@ -22,7 +19,7 @@ public class HighCardFactory extends HandFactory {
 
     @Override
     public void populateCards() {
-        CardUtil.maxOutCardsOnHand(cards);
+        CardUtil.maxOutCardsOnHand(super.getCards());
     }
 
     @Override

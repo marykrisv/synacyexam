@@ -6,6 +6,7 @@ import com.synacy.poker.card.CardSuit;
 import com.synacy.poker.factory.HandFactory;
 import com.synacy.poker.factory.Pair;
 import com.synacy.poker.utils.CardUtil;
+import com.synacy.poker.utils.DeckByRank;
 
 import java.util.*;
 
@@ -28,9 +29,9 @@ public class OnePairFactory extends HandFactory implements Pair {
 
     @Override
     public void populateCards() {
-        for (Map.Entry<CardRank, List<CardSuit>> entry : super.getGroupedDeckByRank().entrySet()) {
-            CardRank cardRank = entry.getKey();
-            List<CardSuit> cardSuits = entry.getValue();
+        for (DeckByRank deckByRank : super.getGroupedDeckByRank()) {
+            CardRank cardRank = deckByRank.getCardRank();
+            List<CardSuit> cardSuits = deckByRank.getCardSuits();
             if (cardSuits.size() == SAME_RANK_SIZE && pairCards.isEmpty()) {
                 populatePairCards(cardRank, cardSuits);
             } else {
@@ -82,8 +83,8 @@ public class OnePairFactory extends HandFactory implements Pair {
 
     @Override
     public boolean checkPair() {
-        for (Map.Entry<CardRank, List<CardSuit>> entry : super.getGroupedDeckByRank().entrySet()) {
-            List<CardSuit> cardSuits = entry.getValue();
+        for (DeckByRank deckByRank: super.getGroupedDeckByRank()) {
+            List<CardSuit> cardSuits = deckByRank.getCardSuits();
             if (cardSuits.size() >= SAME_RANK_SIZE) {
                 return true;
             } else {

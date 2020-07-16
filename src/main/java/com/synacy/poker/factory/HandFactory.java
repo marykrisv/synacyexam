@@ -4,13 +4,15 @@ import com.synacy.poker.card.Card;
 import com.synacy.poker.card.CardRank;
 import com.synacy.poker.card.CardSuit;
 import com.synacy.poker.utils.CardUtil;
+import com.synacy.poker.utils.DeckByRank;
+import com.synacy.poker.utils.DeckBySuit;
 
 import java.util.*;
 
 public abstract class HandFactory {
     private List<Card> cards;
-    private Map<CardRank, List<CardSuit>> groupedDeckByRank;
-    private Map<CardSuit, List<CardRank>> groupedDeckBySuit;
+    private List<DeckByRank> groupedDeckByRank;
+    private List<DeckBySuit> groupedDeckBySuit;
 
     public abstract void initializeCards();
 
@@ -35,37 +37,65 @@ public abstract class HandFactory {
     }
 
     public void groupDeckBySuit () {
-        groupedDeckBySuit = new HashMap<>();
+        groupedDeckBySuit = new ArrayList<>();
 
-        List<CardRank> cardRank;
+        int cardSuitInd;
+
         for (Card card: cards) {
-            try {
-                cardRank = groupedDeckBySuit.get(card.getSuit());
-                cardRank.add(card.getRank());
-                groupedDeckBySuit.replace(card.getSuit(), cardRank);
-            } catch (NullPointerException e) {
-                cardRank = new ArrayList<>();
-                cardRank.add(card.getRank());
-                groupedDeckBySuit.put(card.getSuit(), cardRank);
+            cardSuitInd = deckBySuitContains(card.getSuit());
+            if (cardSuitInd != -1) {
+                groupedDeckBySuit.get(cardSuitInd).addCardRankToList(card.getRank());
+            } else {
+                DeckBySuit deckBySuit = new DeckBySuit();
+                deckBySuit.setCardSuit(card.getSuit());
+                deckBySuit.addCardRankToList(card.getRank());
+
+                groupedDeckBySuit.add(deckBySuit);
             }
         }
     }
 
-    public void groupDeckByRank () {
-        groupedDeckByRank = new HashMap<>();
-
-        List<CardSuit> cardSuit;
-        for (Card card: cards) {
-            try {
-                cardSuit = groupedDeckByRank.get(card.getRank());
-                cardSuit.add(card.getSuit());
-                groupedDeckByRank.replace(card.getRank(), cardSuit);
-            } catch (NullPointerException e) {
-                cardSuit = new ArrayList<>();
-                cardSuit.add(card.getSuit());
-                groupedDeckByRank.put(card.getRank(), cardSuit);
+    private int deckBySuitContains(CardSuit cardSuit) {
+        int i, cardInd = -1;
+        for (i=0; i < groupedDeckBySuit.size(); i++) {
+            if (groupedDeckBySuit.get(i).getCardSuit().equals(cardSuit)) {
+                cardInd = i;
+                break;
             }
         }
+
+        return cardInd;
+    }
+
+    public void groupDeckByRank () {
+        groupedDeckByRank = new ArrayList<>();
+
+        int cardRankInd;
+
+        for (Card card: cards) {
+            cardRankInd = deckByRankContains(card.getRank());
+            if (cardRankInd != -1) {
+                groupedDeckByRank.get(cardRankInd).addCardSuitToList(card.getSuit());
+            } else {
+                DeckByRank deckByRank = new DeckByRank();
+                deckByRank.setCardRank(card.getRank());
+                deckByRank.addCardSuitToList(card.getSuit());
+
+                groupedDeckByRank.add(deckByRank);
+            }
+        }
+    }
+
+    private int deckByRankContains(CardRank cardRank) {
+        int i, cardInd = -1;
+        for (i=0; i < groupedDeckByRank.size(); i++) {
+            if (groupedDeckByRank.get(i).getCardRank().equals(cardRank)) {
+                cardInd = i;
+                break;
+            }
+        }
+
+        return cardInd;
     }
 
     public List<Card> getCards() {
@@ -76,19 +106,19 @@ public abstract class HandFactory {
         this.cards = cards;
     }
 
-    public Map<CardRank, List<CardSuit>> getGroupedDeckByRank() {
+    public List<DeckByRank> getGroupedDeckByRank() {
         return groupedDeckByRank;
     }
 
-    public void setGroupedDeckByRank(Map<CardRank, List<CardSuit>> groupedDeckByRank) {
+    public void setGroupedDeckByRank(List<DeckByRank> groupedDeckByRank) {
         this.groupedDeckByRank = groupedDeckByRank;
     }
 
-    public Map<CardSuit, List<CardRank>> getGroupedDeckBySuit() {
+    public List<DeckBySuit> getGroupedDeckBySuit() {
         return groupedDeckBySuit;
     }
 
-    public void setGroupedDeckBySuit(Map<CardSuit, List<CardRank>> groupedDeckBySuit) {
+    public void setGroupedDeckBySuit(List<DeckBySuit> groupedDeckBySuit) {
         this.groupedDeckBySuit = groupedDeckBySuit;
     }
 }

@@ -16,7 +16,6 @@ public class CardUtil {
         }
     }
 
-
     public static void sortCardsDesc(List<Card>... toSortCards) {
         for (int i =0; i < toSortCards.length; i++) {
             Collections.sort(toSortCards[i], Comparator.comparing(Card::getRank).reversed());
