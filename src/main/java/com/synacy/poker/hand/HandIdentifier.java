@@ -59,8 +59,8 @@ public class HandIdentifier {
 //        return threeOfAKind();
 //        return straight1();
 //        return straight2();
-        return flush();
-//        return this.fullHouse();
+//        return flush();
+        return this.fullHouse();
     }
 
     private List<Card> highCard() {
@@ -145,13 +145,12 @@ public class HandIdentifier {
 
     private List<Card> fullHouse() {
         return Arrays.asList(
+                new Card(CardRank.TWO, CardSuit.DIAMONDS),
+                new Card(CardRank.TWO, CardSuit.HEARTS),
+                new Card(CardRank.TWO, CardSuit.CLUBS),
                 new Card(CardRank.ACE, CardSuit.CLUBS),
                 new Card(CardRank.ACE, CardSuit.HEARTS),
                 new Card(CardRank.ACE, CardSuit.DIAMONDS)
-//                new Card(CardRank.TWO, CardSuit.DIAMONDS),
-//                new Card(CardRank.SIX, CardSuit.CLUBS),
-//                new Card(CardRank.TWO, CardSuit.DIAMONDS),
-//                new Card(CardRank.TWO, CardSuit.CLUBS)
         );
     }
 

@@ -67,18 +67,18 @@ public class ThreeOfAKindFactoryTest {
     @Test
     public void populateCards_threeOfAKind() {
         List<Card> cards = Arrays.asList(
-                new Card(CardRank.ACE, CardSuit.CLUBS),
-                new Card(CardRank.JACK, CardSuit.SPADES),
-                new Card(CardRank.ACE, CardSuit.DIAMONDS),
-                new Card(CardRank.SEVEN, CardSuit.CLUBS),
+                new Card(CardRank.TWO, CardSuit.DIAMONDS),
+                new Card(CardRank.TWO, CardSuit.HEARTS),
                 new Card(CardRank.TWO, CardSuit.CLUBS),
-                new Card(CardRank.ACE, CardSuit.HEARTS)
+                new Card(CardRank.ACE, CardSuit.CLUBS),
+                new Card(CardRank.ACE, CardSuit.HEARTS),
+                new Card(CardRank.ACE, CardSuit.DIAMONDS)
         );
 
         List<Card> threeOfAKindExcepected = Arrays.asList(
                 new Card(CardRank.ACE, CardSuit.CLUBS),
-                new Card(CardRank.ACE, CardSuit.DIAMONDS),
-                new Card(CardRank.ACE, CardSuit.HEARTS)
+                new Card(CardRank.ACE, CardSuit.HEARTS),
+                new Card(CardRank.ACE, CardSuit.DIAMONDS)
         );
 
         ThreeOfAKindFactory threeOfAKindFactory = new ThreeOfAKindFactory();
@@ -91,17 +91,17 @@ public class ThreeOfAKindFactoryTest {
     @Test
     public void populateCards_otherCards() {
         List<Card> cards = Arrays.asList(
-                new Card(CardRank.ACE, CardSuit.CLUBS),
-                new Card(CardRank.JACK, CardSuit.SPADES),
-                new Card(CardRank.ACE, CardSuit.DIAMONDS),
-                new Card(CardRank.SEVEN, CardSuit.CLUBS),
+                new Card(CardRank.TWO, CardSuit.DIAMONDS),
+                new Card(CardRank.TWO, CardSuit.HEARTS),
                 new Card(CardRank.TWO, CardSuit.CLUBS),
-                new Card(CardRank.ACE, CardSuit.HEARTS)
+                new Card(CardRank.ACE, CardSuit.CLUBS),
+                new Card(CardRank.ACE, CardSuit.HEARTS),
+                new Card(CardRank.ACE, CardSuit.DIAMONDS)
         );
 
         List<Card> otherCardExcepted = Arrays.asList(
-                new Card(CardRank.JACK, CardSuit.SPADES),
-                new Card(CardRank.SEVEN, CardSuit.CLUBS)
+                new Card(CardRank.TWO, CardSuit.DIAMONDS),
+                new Card(CardRank.TWO, CardSuit.HEARTS)
         );
 
         ThreeOfAKindFactory threeOfAKindFactory = new ThreeOfAKindFactory();

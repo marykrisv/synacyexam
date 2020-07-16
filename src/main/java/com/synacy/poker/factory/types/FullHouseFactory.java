@@ -4,15 +4,16 @@ import com.synacy.poker.card.Card;
 import com.synacy.poker.card.CardRank;
 import com.synacy.poker.card.CardSuit;
 import com.synacy.poker.factory.Pair;
-import com.synacy.poker.utils.CardUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class FullHouseFactory extends ThreeOfAKindFactory implements Pair {
-    private List<Card> threeOfAKindCards;
     private List<Card> pairCards;
+
+    private int SAME_RANK_TRIP_SIZE = 3;
+    private int SAME_RANK_PAIR_SIZE = 2;
 
     @Override
     public void initializeCards() {
@@ -34,23 +35,20 @@ public class FullHouseFactory extends ThreeOfAKindFactory implements Pair {
 
     @Override
     public void populateCards() {
-        this.threeOfAKindCards = super.getThreeOfAKindCards();
-        CardUtil.sortCardsDesc(pairCards, threeOfAKindCards);
+        for (Map.Entry<CardRank, List<CardSuit>> entry : super.getGroupedDeckByRank().entrySet()) {
+            CardRank cardRank = entry.getKey();
+            List<CardSuit> cardSuits = entry.getValue();
+            if (cardSuits.size() == SAME_RANK_TRIP_SIZE && getThreeOfAKindCards().isEmpty()) {
+                super.populateThreeOfAKindCards(cardRank, cardSuits);
+            } else if (cardSuits.size() >= SAME_RANK_PAIR_SIZE){
+                this.populatePairCards(cardRank, cardSuits);
+            }
+        }
     }
 
     @Override
     public void groupDeck() {
         super.groupDeckByRank();
-    }
-
-    @Override
-    public List<Card> getThreeOfAKindCards() {
-        return threeOfAKindCards;
-    }
-
-    @Override
-    public void setThreeOfAKindCards(List<Card> threeOfAKindCards) {
-        this.threeOfAKindCards = threeOfAKindCards;
     }
 
     public List<Card> getPairCards() {
@@ -64,31 +62,26 @@ public class FullHouseFactory extends ThreeOfAKindFactory implements Pair {
     @Override
     public void populatePairCards(CardRank cardRank, List<CardSuit> cardSuits) {
         if (pairCards != null) {
-            for (CardSuit cardSuit: cardSuits) {
-                pairCards.add(new Card(cardRank, cardSuit));
+            for (int i = 0; i < SAME_RANK_PAIR_SIZE; i++) {
+                pairCards.add(new Card(cardRank, cardSuits.get(i)));
             }
         }
     }
 
     @Override
     public boolean checkPair() {
-        boolean isOnePair = false;
+        int ctr = 0;
 
-        // check for suit with 5 or greater than 5 value
         for (Map.Entry<CardRank, List<CardSuit>> entry : super.getGroupedDeckByRank().entrySet()) {
-            CardRank cardRank = entry.getKey();
-            List<CardSuit> cardSuits = entry.getValue();
-            if (cardSuits.size() == 2) {
-                populatePairCards(cardRank, cardSuits);
-            } else {
-                populateOtherCards(cardRank, cardSuits);
+            if (entry.getValue().size() >= SAME_RANK_PAIR_SIZE) {
+                ctr++;
             }
         }
 
-        if (pairCards.size() == 2) {
+        if (ctr == 2) {
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 }

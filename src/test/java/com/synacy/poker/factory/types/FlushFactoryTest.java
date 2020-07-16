@@ -3,7 +3,6 @@ package com.synacy.poker.factory.types;
 import com.synacy.poker.card.Card;
 import com.synacy.poker.card.CardRank;
 import com.synacy.poker.card.CardSuit;
-import com.synacy.poker.hand.types.Flush;
 import com.synacy.poker.utils.CardUtil;
 import org.junit.Test;
 

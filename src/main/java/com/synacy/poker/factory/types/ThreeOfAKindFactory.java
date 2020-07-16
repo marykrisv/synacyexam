@@ -28,7 +28,7 @@ public class ThreeOfAKindFactory extends HandFactory implements ThreeOfAKind {
         for (Map.Entry<CardRank, List<CardSuit>> entry : super.getGroupedDeckByRank().entrySet()) {
             CardRank cardRank = entry.getKey();
             List<CardSuit> cardSuits = entry.getValue();
-            if (cardSuits.size() == SAME_RANK_SIZE) {
+            if (cardSuits.size() == SAME_RANK_SIZE && threeOfAKindCards.isEmpty()) {
                 populateThreeOfAKindCards(cardRank, cardSuits);
             } else {
                 populateOtherCards(cardRank, cardSuits);

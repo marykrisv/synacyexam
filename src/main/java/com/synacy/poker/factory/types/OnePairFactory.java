@@ -31,7 +31,7 @@ public class OnePairFactory extends HandFactory implements Pair {
         for (Map.Entry<CardRank, List<CardSuit>> entry : super.getGroupedDeckByRank().entrySet()) {
             CardRank cardRank = entry.getKey();
             List<CardSuit> cardSuits = entry.getValue();
-            if (cardSuits.size() == SAME_RANK_SIZE) {
+            if (cardSuits.size() == SAME_RANK_SIZE && pairCards.isEmpty()) {
                 populatePairCards(cardRank, cardSuits);
             } else {
                 populateOtherCards(cardRank, cardSuits);
@@ -84,7 +84,7 @@ public class OnePairFactory extends HandFactory implements Pair {
     public boolean checkPair() {
         for (Map.Entry<CardRank, List<CardSuit>> entry : super.getGroupedDeckByRank().entrySet()) {
             List<CardSuit> cardSuits = entry.getValue();
-            if (cardSuits.size() == 2) {
+            if (cardSuits.size() >= SAME_RANK_SIZE) {
                 return true;
             } else {
                 // do nothing
