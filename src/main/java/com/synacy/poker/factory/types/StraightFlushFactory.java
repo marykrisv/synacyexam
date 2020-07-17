@@ -1,31 +1,30 @@
 package com.synacy.poker.factory.types;
 
-
-import com.synacy.poker.card.Card;
-import com.synacy.poker.card.CardRank;
-import com.synacy.poker.factory.HandFactory;
 import com.synacy.poker.factory.interfaces.Flush;
-import com.synacy.poker.factory.interfaces.Straight;
 import com.synacy.poker.utils.DeckBySuit;
 
 import java.util.List;
 
-public class StraightFlushFactory extends HandFactory implements Straight, Flush {
+public class StraightFlushFactory extends StraightFactory implements Flush {
 
-    @Override
-    public void initializeCards() {
-        // do nothing
-    }
+    int FLUSH_SIZE_CARD = 5;
 
     @Override
     public boolean check() {
+        for (DeckBySuit deckBySuit : super.getGroupedDeckBySuit()) {
+            if (deckBySuit.getCardRanks().size() >= FLUSH_SIZE_CARD) {
+                if (checkFlush(deckBySuit) && super.checkStraight(deckBySuit.getCardRanks())) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
-    @Override
-    public void populateCards() {
-
-    }
+//    @Override
+//    public void populateCards() {
+//        super.populateCards();
+//    }
 
     @Override
     public void groupDeck() {
@@ -34,11 +33,10 @@ public class StraightFlushFactory extends HandFactory implements Straight, Flush
 
     @Override
     public boolean checkFlush(DeckBySuit deckBySuit) {
-        return false;
-    }
+        if (deckBySuit.getCardRanks().size() >= FLUSH_SIZE_CARD) {
+            return true;
+        }
 
-    @Override
-    public boolean checkStraight(List<CardRank> cardRanks) {
         return false;
     }
 }
