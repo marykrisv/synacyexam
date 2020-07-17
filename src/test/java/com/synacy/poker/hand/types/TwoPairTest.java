@@ -1,4 +1,4 @@
-package com.synacy.poker.hand;
+package com.synacy.poker.hand.types;
 
 import com.synacy.poker.card.Card;
 import com.synacy.poker.card.CardRank;

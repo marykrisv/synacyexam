@@ -3,6 +3,7 @@ package com.synacy.poker.hand.types;
 import com.synacy.poker.card.Card;
 import com.synacy.poker.hand.Hand;
 import com.synacy.poker.hand.HandType;
+import com.synacy.poker.utils.CardUtil;
 
 import java.util.List;
 
@@ -29,15 +30,9 @@ public class FullHouse extends Hand {
      */
     @Override
     public String toString() {
-        return String.format("Full House (%s,%s)",this.getThreeOfAKindRank(), this.getPairRank());
-    }
-
-    private String getThreeOfAKindRank () {
-        return this.threeOfAKindCards.get(0).getRank().toString();
-    }
-
-    private String getPairRank () {
-        return this.pairCards.get(0).getRank().toString();
+        return String.format("Full House (%s,%s)",
+                CardUtil.getRankOfPack(threeOfAKindCards),
+                CardUtil.getRankOfPack(pairCards));
     }
 
 }

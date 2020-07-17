@@ -1,9 +1,8 @@
-package com.synacy.poker.hand;
+package com.synacy.poker.hand.types;
 
 import com.synacy.poker.card.Card;
 import com.synacy.poker.card.CardRank;
 import com.synacy.poker.card.CardSuit;
-import com.synacy.poker.hand.types.OnePair;
 import org.junit.Test;
 
 import java.util.Arrays;

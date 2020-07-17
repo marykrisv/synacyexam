@@ -5,7 +5,7 @@ import com.synacy.poker.card.CardRank;
 import com.synacy.poker.card.CardSuit;
 import com.synacy.poker.factory.HandFactory;
 import com.synacy.poker.utils.CardUtil;
-import com.synacy.poker.utils.DeckByRank;
+import com.synacy.poker.utils.PackByRank;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,9 +17,20 @@ public class FourOfAKindFactory extends HandFactory {
     int SAME_RANK_SIZE = 4;
 
     @Override
+    public void initializeCards() {
+        fourOfAKindCards = new ArrayList<>();
+        otherCards = new ArrayList<>();
+    }
+
+    @Override
+    public void groupDeck() {
+        super.groupPackByRank();
+    }
+
+    @Override
     public boolean check() {
-        for (DeckByRank deckByRank : super.getGroupedDeckByRank()) {
-            if (deckByRank.getCardSuits().size() == SAME_RANK_SIZE) {
+        for (PackByRank packByRank : super.getGroupedPackByRank()) {
+            if (packByRank.getCardSuits().size() == SAME_RANK_SIZE) {
                 return true;
             }
         }
@@ -29,9 +40,9 @@ public class FourOfAKindFactory extends HandFactory {
 
     @Override
     public void populateCards() {
-        for (DeckByRank deckByRank: super.getGroupedDeckByRank()) {
-            CardRank cardRank = deckByRank.getCardRank();
-            List<CardSuit> cardSuits = deckByRank.getCardSuits();
+        for (PackByRank packByRank : super.getGroupedPackByRank()) {
+            CardRank cardRank = packByRank.getCardRank();
+            List<CardSuit> cardSuits = packByRank.getCardSuits();
             if (cardSuits.size() == SAME_RANK_SIZE && fourOfAKindCards.isEmpty()) {
                 populateFourOfAKind(cardRank, cardSuits);
             } else {
@@ -56,18 +67,6 @@ public class FourOfAKindFactory extends HandFactory {
                 otherCards.add(new Card(cardRank, cardSuit));
             }
         }
-    }
-
-
-    @Override
-    public void groupDeck() {
-        super.groupDeckByRank();
-    }
-
-    @Override
-    public void initializeCards() {
-        fourOfAKindCards = new ArrayList<>();
-        otherCards = new ArrayList<>();
     }
 
     public List<Card> getFourOfAKindCards() {

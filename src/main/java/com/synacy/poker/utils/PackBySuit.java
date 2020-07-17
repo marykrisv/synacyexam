@@ -6,11 +6,11 @@ import com.synacy.poker.card.CardSuit;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DeckBySuit {
+public class PackBySuit {
     CardSuit cardSuit;
     List<CardRank> cardRanks;
 
-    public DeckBySuit() {
+    public PackBySuit() {
         cardRanks = new ArrayList<>();
     }
 

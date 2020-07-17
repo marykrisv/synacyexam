@@ -30,7 +30,8 @@ public class HighCard extends Hand {
      */
     @Override
     public String toString() {
-        return ranksToString(CardUtil.maxOutCardsOnHand(cards));
+        CardUtil.sortCardsDesc(cards);
+        return CardUtil.getHighestCardToString(cards, 5);
     }
 
 }

@@ -36,20 +36,9 @@ public class TwoPair extends Hand {
     @Override
     public String toString() {
         return String.format("Two Pair (%s,%s) - %s High",
-                getFirstPairRank(), getSecondPairRank(), otherCardsHigh());
-    }
-
-    private String getFirstPairRank () {
-        return this.firstPairCards.get(0).getRank().toString();
-    }
-
-    private String getSecondPairRank () {
-        return this.secondPairCards.get(0).getRank().toString();
-    }
-
-    private String otherCardsHigh() {
-        return ranksToString(CardUtil.
-                maxOutCardsOnHand(CardUtil.combineCards(firstPairCards, secondPairCards), otherCards));
+                CardUtil.getRankOfPack(firstPairCards),
+                CardUtil.getRankOfPack(secondPairCards),
+                CardUtil.getHighestCardToString(otherCards, 1));
     }
 
 }

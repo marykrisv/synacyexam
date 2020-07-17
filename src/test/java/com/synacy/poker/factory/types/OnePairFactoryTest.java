@@ -13,13 +13,6 @@ import static org.junit.Assert.*;
 
 public class OnePairFactoryTest {
 
-    private void createInits(OnePairFactory onePairFactory, List<Card> cards) {
-        onePairFactory.setCards(cards);
-        onePairFactory.initializeCards();
-        CardUtil.sortCardsDesc(cards);
-        onePairFactory.groupDeck();
-    }
-
     @Test
     public void initializeCards() {
         OnePairFactory onePairFactory = new OnePairFactory();
@@ -41,7 +34,8 @@ public class OnePairFactoryTest {
         );
 
         OnePairFactory onePairFactory = new OnePairFactory();
-        this.createInits(onePairFactory, cards);
+        onePairFactory.setCards(cards);
+        onePairFactory.create();
 
         assertTrue(onePairFactory.check());
     }
@@ -58,13 +52,14 @@ public class OnePairFactoryTest {
         );
 
         OnePairFactory onePairFactory = new OnePairFactory();
-        this.createInits(onePairFactory, cards);
+        onePairFactory.setCards(cards);
+        onePairFactory.create();
 
         assertFalse(onePairFactory.check());
     }
 
     @Test
-    public void populateCards() {
+    public void populateCards_twoCard() {
         List<Card> cards = Arrays.asList(
                 new Card(CardRank.JACK, CardSuit.CLUBS),
                 new Card(CardRank.JACK, CardSuit.DIAMONDS)
@@ -76,8 +71,8 @@ public class OnePairFactoryTest {
         );
 
         OnePairFactory onePairFactory = new OnePairFactory();
-        this.createInits(onePairFactory, cards);
-        onePairFactory.populateCards();
+        onePairFactory.setCards(cards);
+        onePairFactory.create();
 
         assertEquals(onePairExpected, onePairFactory.getPairCards());
     }
@@ -99,8 +94,8 @@ public class OnePairFactoryTest {
         );
 
         OnePairFactory onePairFactory = new OnePairFactory();
-        this.createInits(onePairFactory, cards);
-        onePairFactory.populateCards();
+        onePairFactory.setCards(cards);
+        onePairFactory.create();
 
         assertEquals(onePairExpected, onePairFactory.getPairCards());
     }
@@ -123,8 +118,8 @@ public class OnePairFactoryTest {
         );
 
         OnePairFactory onePairFactory = new OnePairFactory();
-        this.createInits(onePairFactory, cards);
-        onePairFactory.populateCards();
+        onePairFactory.setCards(cards);
+        onePairFactory.create();
 
         assertEquals(otherCardsExpected, onePairFactory.getOtherCards());
     }

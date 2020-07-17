@@ -17,23 +17,4 @@ public abstract class Hand {
      */
     public abstract HandType getHandType();
 
-    public String ranksToString (List<Card> cards) {
-        List<CardRank> cardRanks = new ArrayList<>();
-
-        for (Card card: cards) {
-            cardRanks.add(card.getRank());
-        }
-
-        cardRanks.sort(Collections.reverseOrder());
-
-        return cardRanks.toString()
-                .replace("[", "")
-                .replace("]", "")
-                .replaceAll(" ","");
-    }
-
-    public void sortedCardsDesc (List<Card> cards) {
-        Collections.sort(cards, Comparator.comparing(Card::getRank).reversed());
-    }
-
 }

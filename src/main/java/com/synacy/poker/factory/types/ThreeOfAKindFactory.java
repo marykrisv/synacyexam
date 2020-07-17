@@ -6,7 +6,7 @@ import com.synacy.poker.card.CardSuit;
 import com.synacy.poker.factory.HandFactory;
 import com.synacy.poker.factory.interfaces.ThreeOfAKind;
 import com.synacy.poker.utils.CardUtil;
-import com.synacy.poker.utils.DeckByRank;
+import com.synacy.poker.utils.PackByRank;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,9 +25,9 @@ public class ThreeOfAKindFactory extends HandFactory implements ThreeOfAKind {
 
     @Override
     public void populateCards() {
-        for (DeckByRank deckByRank: super.getGroupedDeckByRank()) {
-            CardRank cardRank = deckByRank.getCardRank();
-            List<CardSuit> cardSuits = deckByRank.getCardSuits();
+        for (PackByRank packByRank : super.getGroupedPackByRank()) {
+            CardRank cardRank = packByRank.getCardRank();
+            List<CardSuit> cardSuits = packByRank.getCardSuits();
             if (cardSuits.size() == SAME_RANK_SIZE && threeOfAKindCards.isEmpty()) {
                 populateThreeOfAKindCards(cardRank, cardSuits);
             } else {
@@ -41,7 +41,7 @@ public class ThreeOfAKindFactory extends HandFactory implements ThreeOfAKind {
 
     @Override
     public void groupDeck() {
-        super.groupDeckByRank();
+        super.groupPackByRank();
     }
 
     @Override
@@ -68,8 +68,8 @@ public class ThreeOfAKindFactory extends HandFactory implements ThreeOfAKind {
 
     @Override
     public boolean checkThreeOfAKind() {
-        for (DeckByRank deckByRank : super.getGroupedDeckByRank()) {
-            if (deckByRank.getCardSuits().size() == SAME_RANK_SIZE) {
+        for (PackByRank packByRank : super.getGroupedPackByRank()) {
+            if (packByRank.getCardSuits().size() == SAME_RANK_SIZE) {
                 return true;
             }
         }

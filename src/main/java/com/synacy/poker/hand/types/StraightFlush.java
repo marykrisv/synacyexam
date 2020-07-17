@@ -3,6 +3,7 @@ package com.synacy.poker.hand.types;
 import com.synacy.poker.card.Card;
 import com.synacy.poker.card.CardRank;
 import com.synacy.poker.hand.HandType;
+import com.synacy.poker.utils.CardUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,18 +29,12 @@ public class StraightFlush extends Straight {
     @Override
     public String toString() {
         if (isRoyal()) {
-            return String.format("Royal Flush", ranksToString(getHighest()));
+            return String.format("Royal Flush",
+                    CardUtil.getHighestCardToString(super.getCards(), 1));
         } else {
-            return String.format("Straight Flush (%s High)", ranksToString(getHighest()));
+            return String.format("Straight Flush (%s High)",
+                    CardUtil.getHighestCardToString(super.getCards(), 1));
         }
-    }
-
-    private List<Card> getHighest () {
-        List<Card> highest = new ArrayList<>();
-
-        highest.add(super.getCards().get(0));
-
-        return highest;
     }
 
     private boolean isRoyal () {

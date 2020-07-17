@@ -4,6 +4,7 @@ import com.synacy.poker.card.Card;
 import com.synacy.poker.card.CardRank;
 import com.synacy.poker.hand.Hand;
 import com.synacy.poker.hand.HandType;
+import com.synacy.poker.utils.CardUtil;
 
 import java.util.*;
 
@@ -31,15 +32,25 @@ public class Flush extends Hand {
      */
     @Override
     public String toString() {
-        return String.format("Flush (%s High)",  ranksToString(getHighest()));
+        return String.format("Flush (%s High)",
+                CardUtil.getHighestCardToString(cards, 1));
     }
 
-    private List<Card> getHighest () {
-        List<Card> highest = new ArrayList<>();
-
-        highest.add(cards.get(0));
-
-        return highest;
-    }
+    /**
+     * Gets the highest card in the pack
+     *
+     * @return
+     */
+//    private List<Card> getHighest () {
+//        if (cards != null && !cards.isEmpty()) {
+//            List<Card> highest = new ArrayList<>();
+//
+//            highest.add(cards.get(0));
+//
+//            return highest;
+//        }
+//
+//        return null;
+//    }
 
 }

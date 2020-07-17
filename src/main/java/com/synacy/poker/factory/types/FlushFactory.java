@@ -5,7 +5,7 @@ import com.synacy.poker.card.CardRank;
 import com.synacy.poker.card.CardSuit;
 import com.synacy.poker.factory.HandFactory;
 import com.synacy.poker.factory.interfaces.Flush;
-import com.synacy.poker.utils.DeckBySuit;
+import com.synacy.poker.utils.PackBySuit;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,31 +15,50 @@ public class FlushFactory extends HandFactory implements Flush {
 
     private int FLUSH_SIZE_CARD = 5;
 
+    /**
+     * initialize card declarations
+     */
     @Override
     public void initializeCards() {
         this.cards = super.getCards();
     }
 
+    /**
+     * Choose if deck is grouped by suit or by rank
+     */
+    @Override
+    public void groupDeck() {
+        super.groupPackBySuit();
+    }
+
+    /**
+     * Checks if the pack of cards is flush or not
+     *
+     * @return true if cards is a flush else false.
+     */
     @Override
     public boolean check() {
-        for (DeckBySuit deckBySuit : super.getGroupedDeckBySuit()) {
-            if (deckBySuit.getCardRanks().size() >= FLUSH_SIZE_CARD) {
-                return checkFlush(deckBySuit);
+        for (PackBySuit packBySuit : super.getGroupedPackBySuit()) {
+            if (packBySuit.getCardRanks().size() >= FLUSH_SIZE_CARD) {
+                return checkFlush(packBySuit);
             }
         }
 
         return false;
     }
 
+    /**
+     * Populate flush cards arranged in descending order
+     */
     @Override
     public void populateCards() {
         CardSuit cardSuit;
         List<CardRank> cardRanks;
 
-        for (DeckBySuit deckBySuit : super.getGroupedDeckBySuit()) {
-            cardSuit = deckBySuit.getCardSuit();
-            cardRanks = deckBySuit.getCardRanks();
-            if (deckBySuit.getCardRanks().size() >= FLUSH_SIZE_CARD) {
+        for (PackBySuit packBySuit : super.getGroupedPackBySuit()) {
+            cardSuit = packBySuit.getCardSuit();
+            cardRanks = packBySuit.getCardRanks();
+            if (packBySuit.getCardRanks().size() >= FLUSH_SIZE_CARD) {
                 this.cards = new ArrayList<>();
                 for (int i = 0; i < FLUSH_SIZE_CARD; i++) {
                     cards.add(new Card(cardRanks.get(i), cardSuit));
@@ -50,14 +69,15 @@ public class FlushFactory extends HandFactory implements Flush {
         }
     }
 
+    /**
+     * Checks whether the player's and community card is flush
+     *
+     * @param packBySuit group of cards arranged by suit
+     * @return returns true if cards is flush else false
+     */
     @Override
-    public void groupDeck() {
-        super.groupDeckBySuit();
-    }
-
-    @Override
-    public boolean checkFlush(DeckBySuit deckBySuit) {
-        if (deckBySuit.getCardRanks().size() >= FLUSH_SIZE_CARD) {
+    public boolean checkFlush(PackBySuit packBySuit) {
+        if (packBySuit.getCardRanks().size() >= FLUSH_SIZE_CARD) {
             return true;
         }
 

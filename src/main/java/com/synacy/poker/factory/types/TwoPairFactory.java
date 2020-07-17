@@ -4,11 +4,10 @@ import com.synacy.poker.card.Card;
 import com.synacy.poker.card.CardRank;
 import com.synacy.poker.card.CardSuit;
 import com.synacy.poker.utils.CardUtil;
-import com.synacy.poker.utils.DeckByRank;
+import com.synacy.poker.utils.PackByRank;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class TwoPairFactory extends OnePairFactory {
     private List<Card> firstPairCards;
@@ -18,12 +17,29 @@ public class TwoPairFactory extends OnePairFactory {
     private int FIRST_PAIR = 1;
     private int SECOND_PAIR = 2;
 
+    /**
+     * initialize card declarations
+     */
+
+    @Override
+    public void initializeCards() {
+        super.initializeCards();
+
+        firstPairCards = new ArrayList<>();
+        secondPairCards = new ArrayList<>();
+    }
+
+    /**
+     * Checks if the pack of cards is Two Pair
+     *
+     * @return true if cards is a Two Pair else false.
+     */
     @Override
     public boolean check() {
         int pairCtr = 0;
 
-        for (DeckByRank deckByRank : this.getGroupedDeckByRank()) {
-            if (deckByRank.getCardSuits().size() >= SAME_RANK_SIZE) {
+        for (PackByRank packByRank : this.getGroupedPackByRank()) {
+            if (packByRank.getCardSuits().size() >= SAME_RANK_SIZE) {
                 pairCtr++;
             }
         }
@@ -35,6 +51,9 @@ public class TwoPairFactory extends OnePairFactory {
         }
     }
 
+    /**
+     * Populate first, second, and other cards arranged in descending order
+     */
     @Override
     public void populateCards() {
         int pairCtr = 0;
@@ -42,9 +61,9 @@ public class TwoPairFactory extends OnePairFactory {
         CardRank cardRank;
         List<CardSuit> cardSuits;
 
-        for (DeckByRank deckByRank: this.getGroupedDeckByRank()) {
-            cardRank = deckByRank.getCardRank();
-            cardSuits = deckByRank.getCardSuits();
+        for (PackByRank packByRank : this.getGroupedPackByRank()) {
+            cardRank = packByRank.getCardRank();
+            cardSuits = packByRank.getCardSuits();
 
             if (cardSuits.size() >= SAME_RANK_SIZE) {
                 pairCtr++;
@@ -66,14 +85,6 @@ public class TwoPairFactory extends OnePairFactory {
         super.setOtherCards(CardUtil.maxOutCardsOnHand(
                 CardUtil.combineCards(firstPairCards, secondPairCards),
                 super.getOtherCards()));
-    }
-
-    @Override
-    public void initializeCards() {
-        super.initializeCards();
-
-        firstPairCards = new ArrayList<>();
-        secondPairCards = new ArrayList<>();
     }
 
     public List<Card> getFirstPairCards() {

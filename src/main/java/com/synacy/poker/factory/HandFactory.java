@@ -4,15 +4,15 @@ import com.synacy.poker.card.Card;
 import com.synacy.poker.card.CardRank;
 import com.synacy.poker.card.CardSuit;
 import com.synacy.poker.utils.CardUtil;
-import com.synacy.poker.utils.DeckByRank;
-import com.synacy.poker.utils.DeckBySuit;
+import com.synacy.poker.utils.PackByRank;
+import com.synacy.poker.utils.PackBySuit;
 
 import java.util.*;
 
 public abstract class HandFactory {
     private List<Card> cards;
-    private List<DeckByRank> groupedDeckByRank;
-    private List<DeckBySuit> groupedDeckBySuit;
+    private List<PackByRank> groupedPackByRank;
+    private List<PackBySuit> groupedPackBySuit;
 
     public abstract void initializeCards();
 
@@ -36,29 +36,29 @@ public abstract class HandFactory {
         }
     }
 
-    public void groupDeckBySuit () {
-        groupedDeckBySuit = new ArrayList<>();
+    public void groupPackBySuit () {
+        groupedPackBySuit = new ArrayList<>();
 
         int cardSuitInd;
 
         for (Card card: cards) {
-            cardSuitInd = deckBySuitContains(card.getSuit());
+            cardSuitInd = packBySuitContains(card.getSuit());
             if (cardSuitInd != -1) {
-                groupedDeckBySuit.get(cardSuitInd).addCardRankToList(card.getRank());
+                groupedPackBySuit.get(cardSuitInd).addCardRankToList(card.getRank());
             } else {
-                DeckBySuit deckBySuit = new DeckBySuit();
-                deckBySuit.setCardSuit(card.getSuit());
-                deckBySuit.addCardRankToList(card.getRank());
+                PackBySuit packBySuit = new PackBySuit();
+                packBySuit.setCardSuit(card.getSuit());
+                packBySuit.addCardRankToList(card.getRank());
 
-                groupedDeckBySuit.add(deckBySuit);
+                groupedPackBySuit.add(packBySuit);
             }
         }
     }
 
-    private int deckBySuitContains(CardSuit cardSuit) {
+    private int packBySuitContains(CardSuit cardSuit) {
         int i, cardInd = -1;
-        for (i=0; i < groupedDeckBySuit.size(); i++) {
-            if (groupedDeckBySuit.get(i).getCardSuit().equals(cardSuit)) {
+        for (i=0; i < groupedPackBySuit.size(); i++) {
+            if (groupedPackBySuit.get(i).getCardSuit().equals(cardSuit)) {
                 cardInd = i;
                 break;
             }
@@ -67,29 +67,29 @@ public abstract class HandFactory {
         return cardInd;
     }
 
-    public void groupDeckByRank () {
-        groupedDeckByRank = new ArrayList<>();
+    public void groupPackByRank () {
+        groupedPackByRank = new ArrayList<>();
 
         int cardRankInd;
 
         for (Card card: cards) {
-            cardRankInd = deckByRankContains(card.getRank());
+            cardRankInd = packByRankContains(card.getRank());
             if (cardRankInd != -1) {
-                groupedDeckByRank.get(cardRankInd).addCardSuitToList(card.getSuit());
+                groupedPackByRank.get(cardRankInd).addCardSuitToList(card.getSuit());
             } else {
-                DeckByRank deckByRank = new DeckByRank();
-                deckByRank.setCardRank(card.getRank());
-                deckByRank.addCardSuitToList(card.getSuit());
+                PackByRank packByRank = new PackByRank();
+                packByRank.setCardRank(card.getRank());
+                packByRank.addCardSuitToList(card.getSuit());
 
-                groupedDeckByRank.add(deckByRank);
+                groupedPackByRank.add(packByRank);
             }
         }
     }
 
-    private int deckByRankContains(CardRank cardRank) {
+    private int packByRankContains(CardRank cardRank) {
         int i, cardInd = -1;
-        for (i=0; i < groupedDeckByRank.size(); i++) {
-            if (groupedDeckByRank.get(i).getCardRank().equals(cardRank)) {
+        for (i=0; i < groupedPackByRank.size(); i++) {
+            if (groupedPackByRank.get(i).getCardRank().equals(cardRank)) {
                 cardInd = i;
                 break;
             }
@@ -106,19 +106,19 @@ public abstract class HandFactory {
         this.cards = cards;
     }
 
-    public List<DeckByRank> getGroupedDeckByRank() {
-        return groupedDeckByRank;
+    public List<PackByRank> getGroupedPackByRank() {
+        return groupedPackByRank;
     }
 
-    public void setGroupedDeckByRank(List<DeckByRank> groupedDeckByRank) {
-        this.groupedDeckByRank = groupedDeckByRank;
+    public void setGroupedPackByRank(List<PackByRank> groupedPackByRank) {
+        this.groupedPackByRank = groupedPackByRank;
     }
 
-    public List<DeckBySuit> getGroupedDeckBySuit() {
-        return groupedDeckBySuit;
+    public List<PackBySuit> getGroupedPackBySuit() {
+        return groupedPackBySuit;
     }
 
-    public void setGroupedDeckBySuit(List<DeckBySuit> groupedDeckBySuit) {
-        this.groupedDeckBySuit = groupedDeckBySuit;
+    public void setGroupedPackBySuit(List<PackBySuit> groupedPackBySuit) {
+        this.groupedPackBySuit = groupedPackBySuit;
     }
 }

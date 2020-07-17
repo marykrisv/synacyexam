@@ -1,7 +1,7 @@
 package com.synacy.poker.factory.interfaces;
 
-import com.synacy.poker.utils.DeckBySuit;
+import com.synacy.poker.utils.PackBySuit;
 
 public interface Flush {
-    boolean checkFlush (DeckBySuit deckBySuit);
+    boolean checkFlush (PackBySuit packBySuit);
 }

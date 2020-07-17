@@ -33,23 +33,14 @@ public class OnePair extends Hand {
     public String toString() {
         String format;
         if (otherCards != null && otherCards.size() != 0) {
-            format = String.format("One Pair (%s) - %s High", getOnePairRank(), otherCardsAppended());
+            format = String.format("One Pair (%s) - %s High",
+                    CardUtil.getRankOfPack(pairCards),
+                    CardUtil.getHighestCardToString(otherCards, 3));
         } else {
-            format = String.format("One Pair (%s)", getOnePairRank());
+            format = String.format("One Pair (%s)",
+                    CardUtil.getRankOfPack(pairCards));
         }
         return format;
-    }
-
-    private String getOnePairRank () {
-        if (!pairCards.isEmpty()) {
-            return this.pairCards.get(0).getRank().toString();
-        }
-
-        return "";
-    }
-
-    private String otherCardsAppended() {
-        return ranksToString(CardUtil.maxOutCardsOnHand(pairCards, otherCards));
     }
 
 }

@@ -19,14 +19,15 @@ import java.util.*;
  */
 @Component
 public class HandIdentifier {
-
     private List<HandFactoryType> handFactoryTypes;
-//    Map<HandType, HandFactory> factoryMap;
 
     public HandIdentifier () {
         this.initializeMap();
     }
 
+    /**
+     * This function will initialize the Hand Factory Types Map on instantiation
+     */
     private void initializeMap () {
         handFactoryTypes = new ArrayList<>();
         handFactoryTypes.add(new HandFactoryType(HandType.STRAIGHT_FLUSH, new StraightFlushFactory()));
@@ -48,8 +49,7 @@ public class HandIdentifier {
      * @return The player's {@link Hand} or `null` if no Hand was identified.
      */
     public Hand identifyHand(List<Card> playerCards, List<Card> communityCards) {
-        return getHand(getCurrentHand(straightFlush_FiveHigh()));
-//        return getHand(getCurrentHand(CardUtil.combineCards(playerCards, communityCards)));
+        return getHand(getCurrentHand(CardUtil.combineCards(playerCards, communityCards)));
     }
 
     private List<Card> fourOfAKind() {
@@ -221,6 +221,12 @@ public class HandIdentifier {
         );
     }
 
+    /**
+     * Given the combined cards, it will identify what Hand Factory Type
+     *      *
+     * @param cards Combined list of cards of Player's and Community card.
+     * @return The player's {@link HandFactoryType} or `null` if no Hand Factory Type was identified.
+     */
     private HandFactoryType getCurrentHand (List<Card> cards) {
         List<Card> tempCards;
         HandFactoryType currentHand = null;
@@ -241,6 +247,12 @@ public class HandIdentifier {
         return currentHand;
     }
 
+    /**
+     * Given the Hand Factory Type, identiy what Hand.
+     *
+     * @param currentHand Hand Factory Type of the player's and community cards.
+     * @return The player's {@link Hand} or `null` if no Hand was mapped with HandType identified.
+     */
     private Hand getHand(HandFactoryType currentHand) {
         Hand retHand;
 
@@ -297,175 +309,11 @@ public class HandIdentifier {
         return retHand;
     }
 
-//    private boolean isFlush(List<Card> cards) {
-//        Map<CardSuit, Integer> suitMap = new HashMap<CardSuit, Integer>();
-//
-//        // put a map for suits
-//        for (Card card: cards) {
-//            int ctr;
-//            try {
-//                ctr = suitMap.get(card.getSuit());
-//                ctr++;
-//                suitMap.replace(card.getSuit(), ctr);
-//            } catch (NullPointerException e) {
-//                ctr = 1;
-//                suitMap.put(card.getSuit(), ctr);
-//            }
-//        }
-//
-//        // check for suit with 5 or greater than 5 value
-//        for (Integer value: suitMap.values()){
-//            if (value >= 5) {
-//                return true;
-//            }
-//        }
-//
-//        return false;
-//    }
-//
-//    private boolean isFourOfAKind(List<Card> cards) {
-//        Map<CardRank, Integer> rankMap = new HashMap<CardRank, Integer>();
-//
-//        // put a map for rank
-//        for (Card card: cards) {
-//            int ctr;
-//            try {
-//                ctr = rankMap.get(card.getRank());
-//                ctr++;
-//                rankMap.replace(card.getRank(), ctr);
-//            } catch (NullPointerException e) {
-//                ctr = 1;
-//                rankMap.put(card.getRank(), ctr);
-//            }
-//        }
-//
-//        // check for rank with 4 value
-//        for (Integer value: rankMap.values()){
-//            if (value == 4) {
-//                return true;
-//            }
-//        }
-//
-//        return false;
-//    }
-//
-//    private boolean isOnePair (List<Card> cards) {
-//        Map<CardRank, Integer> rankMap = new HashMap<CardRank, Integer>();
-//
-//        // put a map for rank
-//        for (Card card: cards) {
-//            int ctr;
-//            try {
-//                ctr = rankMap.get(card.getRank());
-//                ctr++;
-//                rankMap.replace(card.getRank(), ctr);
-//            } catch (NullPointerException e) {
-//                ctr = 1;
-//                rankMap.put(card.getRank(), ctr);
-//            }
-//        }
-//
-//        // check for rank with 4 value
-//        for (Integer value: rankMap.values()){
-//            if (value == 2) {
-//                return true;
-//            }
-//        }
-//
-//        return false;
-//    }
-//
-//    private boolean isTwoPair (List<Card> cards) {
-//        Map<CardRank, Integer> rankMap = new HashMap<CardRank, Integer>();
-//
-//        // put a map for rank
-//        for (Card card: cards) {
-//            int ctr;
-//            try {
-//                ctr = rankMap.get(card.getRank());
-//                ctr++;
-//                rankMap.replace(card.getRank(), ctr);
-//            } catch (NullPointerException e) {
-//                ctr = 1;
-//                rankMap.put(card.getRank(), ctr);
-//            }
-//        }
-//
-//        int counterForPairs = 0;
-//        // check for rank with 4 value
-//        for (Integer value: rankMap.values()){
-//            if (value == 2) {
-//                counterForPairs++;
-//            }
-//        }
-//
-//        if (counterForPairs == 2) {
-//            return true;
-//        } else {
-//            return false;
-//        }
-//    }
-//
-//    private boolean isThreeOfAKind (List<Card> cards) {
-//        Map<CardRank, Integer> rankMap = new HashMap<CardRank, Integer>();
-//
-//        // put a map for rank
-//        for (Card card: cards) {
-//            int ctr;
-//            try {
-//                ctr = rankMap.get(card.getRank());
-//                ctr++;
-//                rankMap.replace(card.getRank(), ctr);
-//            } catch (NullPointerException e) {
-//                ctr = 1;
-//                rankMap.put(card.getRank(), ctr);
-//            }
-//        }
-//
-//        // check for rank with 3 value
-//        for (Integer value: rankMap.values()){
-//            if (value == 3) {
-//                return true;
-//            }
-//        }
-//
-//        return false;
-//    }
-//
-//    private boolean isStraight (List<Card> cards) {
-//        List<CardRank> cardRanks = new ArrayList<CardRank>();
-//
-//        // put a map for rank
-//        for (Card card: cards) {
-//            cardRanks.add(card.getRank());
-//        }
-//
-//        // sort the card by rank
-//        Collections.sort(cardRanks);
-//
-//        int sizeOfCard = cardRanks.size();
-//        int i, j;
-//        CardRank nextCard;
-//        for (i = 0; i < sizeOfCard; i++) {
-//            for (j = i; j < sizeOfCard-1; j++) {
-//                nextCard = cardRanks.get(j+1);
-//                if (cardRanks.get(j).ordinal()+1 != nextCard.ordinal()) {
-//                    break;
-//                }
-//            }
-//            if ((j - i)+1 >= 5) {
-//                return true;
-//            }
-//        }
-//
-//        return false;
-//    }
-//
-//    private boolean isFullHouse (List<Card> cards) {
-//        boolean hasThreeOfAKind = isThreeOfAKind(cards);
-//        boolean hasOnePair = isOnePair(cards);
-//
-//        return hasThreeOfAKind && hasOnePair;
-//    }
+    public List<HandFactoryType> getHandFactoryTypes() {
+        return handFactoryTypes;
+    }
 
+    public void setHandFactoryTypes(List<HandFactoryType> handFactoryTypes) {
+        this.handFactoryTypes = handFactoryTypes;
+    }
 }

@@ -13,13 +13,6 @@ import static org.junit.Assert.*;
 
 public class TwoPairFactoryTest {
 
-    private void createInits(TwoPairFactory twoPairFactory, List<Card> cards) {
-        twoPairFactory.setCards(cards);
-        twoPairFactory.initializeCards();
-        CardUtil.sortCardsDesc(cards);
-        twoPairFactory.groupDeck();
-    }
-
     @Test
     public void check_true() {
         List<Card> cards = Arrays.asList(
@@ -32,7 +25,8 @@ public class TwoPairFactoryTest {
         );
 
         TwoPairFactory twoPairFactory = new TwoPairFactory();
-        this.createInits(twoPairFactory, cards);
+        twoPairFactory.setCards(cards);
+        twoPairFactory.create();
 
         assertTrue(twoPairFactory.check());
     }
@@ -48,7 +42,8 @@ public class TwoPairFactoryTest {
         );
 
         TwoPairFactory twoPairFactory = new TwoPairFactory();
-        this.createInits(twoPairFactory, cards);
+        twoPairFactory.setCards(cards);
+        twoPairFactory.create();
 
         assertFalse(twoPairFactory.check());
     }
@@ -70,8 +65,8 @@ public class TwoPairFactoryTest {
         );
 
         TwoPairFactory twoPairFactory = new TwoPairFactory();
-        this.createInits(twoPairFactory, cards);
-        twoPairFactory.populateCards();
+        twoPairFactory.setCards(cards);
+        twoPairFactory.create();
 
         assertEquals(expectedFirstCard, twoPairFactory.getFirstPairCards());
     }
@@ -93,8 +88,8 @@ public class TwoPairFactoryTest {
         );
 
         TwoPairFactory twoPairFactory = new TwoPairFactory();
-        this.createInits(twoPairFactory, cards);
-        twoPairFactory.populateCards();
+        twoPairFactory.setCards(cards);
+        twoPairFactory.create();
 
         assertEquals(expectedSecondCard, twoPairFactory.getSecondPairCards());
     }
@@ -115,8 +110,8 @@ public class TwoPairFactoryTest {
         );
 
         TwoPairFactory twoPairFactory = new TwoPairFactory();
-        this.createInits(twoPairFactory, cards);
-        twoPairFactory.populateCards();
+        twoPairFactory.setCards(cards);
+        twoPairFactory.create();
 
         assertEquals(expectedOtherCard, twoPairFactory.getOtherCards());
     }

@@ -31,15 +31,9 @@ public class FourOfAKind extends Hand {
      */
     @Override
     public String toString() {
-        return String.format("Quads (%s) - %s High", this.getQuadRank(), this.getHighCard());
-    }
-
-    private String getHighCard () {
-        return ranksToString(CardUtil.maxOutCardsOnHand(fourOfAKindCards, otherCards));
-    }
-
-    private String getQuadRank () {
-        return this.fourOfAKindCards.get(0).getRank().toString();
+        return String.format("Quads (%s) - %s High",
+                CardUtil.getRankOfPack(fourOfAKindCards),
+                CardUtil.getHighestCardToString(otherCards, 1));
     }
 
 }

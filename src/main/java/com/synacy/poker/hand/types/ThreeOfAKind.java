@@ -33,14 +33,9 @@ public class ThreeOfAKind extends Hand {
      */
     @Override
     public String toString() {
-        return String.format("Trips (%s) - %s High", getThreeOfAKindRank(), otherCardsHigh());
+        return String.format("Trips (%s) - %s High",
+                CardUtil.getRankOfPack(threeOfAKindCards),
+                CardUtil.getHighestCardToString(otherCards, 2));
     }
 
-    private String getThreeOfAKindRank () {
-        return this.threeOfAKindCards.get(0).getRank().toString();
-    }
-
-    private String otherCardsHigh() {
-        return ranksToString(CardUtil.maxOutCardsOnHand(threeOfAKindCards, otherCards));
-    }
 }

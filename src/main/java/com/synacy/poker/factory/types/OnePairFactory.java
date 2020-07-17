@@ -6,7 +6,7 @@ import com.synacy.poker.card.CardSuit;
 import com.synacy.poker.factory.HandFactory;
 import com.synacy.poker.factory.interfaces.Pair;
 import com.synacy.poker.utils.CardUtil;
-import com.synacy.poker.utils.DeckByRank;
+import com.synacy.poker.utils.PackByRank;
 
 import java.util.*;
 
@@ -16,22 +16,41 @@ public class OnePairFactory extends HandFactory implements Pair {
 
     private int SAME_RANK_SIZE = 2;
 
+    /**
+     * initialize card declarations
+     */
     @Override
     public void initializeCards() {
         pairCards = new ArrayList<>();
         otherCards = new ArrayList<>();
     }
 
+    /**
+     * Choose whether deck is grouped by suit or by rank
+     */
+    @Override
+    public void groupDeck() {
+        super.groupPackByRank();
+    }
+
+    /**
+     * Calls checkPair and returns its result
+     *
+     * @return checkPair() result.
+     */
     @Override
     public boolean check() {
         return this.checkPair();
     }
 
+    /**
+     * Populate pair and other cards arranged in descending order
+     */
     @Override
     public void populateCards() {
-        for (DeckByRank deckByRank : super.getGroupedDeckByRank()) {
-            CardRank cardRank = deckByRank.getCardRank();
-            List<CardSuit> cardSuits = deckByRank.getCardSuits();
+        for (PackByRank packByRank : super.getGroupedPackByRank()) {
+            CardRank cardRank = packByRank.getCardRank();
+            List<CardSuit> cardSuits = packByRank.getCardSuits();
             if (cardSuits.size() == SAME_RANK_SIZE && pairCards.isEmpty()) {
                 populatePairCards(cardRank, cardSuits);
             } else {
@@ -43,11 +62,9 @@ public class OnePairFactory extends HandFactory implements Pair {
         otherCards = CardUtil.maxOutCardsOnHand(pairCards, otherCards);
     }
 
-    @Override
-    public void groupDeck() {
-        super.groupDeckByRank();
-    }
-
+    /**
+     * Populate other cards arranged in descending order
+     */
     public void populateOtherCards(CardRank cardRank, List<CardSuit> cardSuits) {
         if (otherCards != null) {
             for (CardSuit cardSuit: cardSuits) {
@@ -56,6 +73,9 @@ public class OnePairFactory extends HandFactory implements Pair {
         }
     }
 
+    /**
+     * Populate pair cards arranged in descending order
+     */
     @Override
     public void populatePairCards(CardRank cardRank, List<CardSuit> cardSuits) {
         if (pairCards != null) {
@@ -63,6 +83,23 @@ public class OnePairFactory extends HandFactory implements Pair {
                 pairCards.add(new Card(cardRank, cardSuit));
             }
         }
+    }
+
+    /**
+     * Checks if the pack of cards is One Pair
+     */
+    @Override
+    public boolean checkPair() {
+        for (PackByRank packByRank : super.getGroupedPackByRank()) {
+            List<CardSuit> cardSuits = packByRank.getCardSuits();
+            if (cardSuits.size() >= SAME_RANK_SIZE) {
+                return true;
+            } else {
+                // do nothing
+            }
+        }
+
+        return false;
     }
 
     public List<Card> getPairCards() {
@@ -79,19 +116,5 @@ public class OnePairFactory extends HandFactory implements Pair {
 
     public void setOtherCards(List<Card> otherCards) {
         this.otherCards = otherCards;
-    }
-
-    @Override
-    public boolean checkPair() {
-        for (DeckByRank deckByRank: super.getGroupedDeckByRank()) {
-            List<CardSuit> cardSuits = deckByRank.getCardSuits();
-            if (cardSuits.size() >= SAME_RANK_SIZE) {
-                return true;
-            } else {
-                // do nothing
-            }
-        }
-
-        return false;
     }
 }

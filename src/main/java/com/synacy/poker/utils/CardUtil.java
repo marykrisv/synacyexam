@@ -1,6 +1,7 @@
 package com.synacy.poker.utils;
 
 import com.synacy.poker.card.Card;
+import com.synacy.poker.card.CardRank;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -52,5 +53,30 @@ public class CardUtil {
         }
 
         return combinedCard;
+    }
+
+    public static String getHighestCardToString (List<Card> cards, int numOfCards) {
+        if (cards != null && !cards.isEmpty()) {
+            List<CardRank> highest = new ArrayList<>();
+
+            for (int i = 0; i < numOfCards; i++) {
+                highest.add(cards.get(i).getRank());
+            }
+
+            return highest.toString()
+                    .replace("[", "")
+                    .replace("]", "")
+                    .replaceAll(" ","");
+        }
+
+        return "";
+    }
+
+    public static  String getRankOfPack (List<Card> cards) {
+        if (cards != null && !cards.isEmpty()) {
+            return cards.get(0).getRank().toString();
+        }
+
+        return "";
     }
 }
