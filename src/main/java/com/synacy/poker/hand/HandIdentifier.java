@@ -29,6 +29,7 @@ public class HandIdentifier {
 
     private void initializeMap () {
         handFactoryTypes = new ArrayList<>();
+        handFactoryTypes.add(new HandFactoryType(HandType.STRAIGHT_FLUSH, new StraightFlushFactory()));
         handFactoryTypes.add(new HandFactoryType(HandType.FOUR_OF_A_KIND, new FourOfAKindFactory()));
         handFactoryTypes.add(new HandFactoryType(HandType.FULL_HOUSE, new FullHouseFactory()));
         handFactoryTypes.add(new HandFactoryType(HandType.FLUSH, new FlushFactory()));
@@ -47,7 +48,7 @@ public class HandIdentifier {
      * @return The player's {@link Hand} or `null` if no Hand was identified.
      */
     public Hand identifyHand(List<Card> playerCards, List<Card> communityCards) {
-        return getHand(getCurrentHand(fourOfAKind()));
+        return getHand(getCurrentHand(straightFlush_FiveHigh()));
 //        return getHand(getCurrentHand(CardUtil.combineCards(playerCards, communityCards)));
     }
 
@@ -161,6 +162,42 @@ public class HandIdentifier {
         );
     }
 
+    private List<Card> royalFlush() {
+        return Arrays.asList(
+                new Card(CardRank.ACE, CardSuit.CLUBS),
+                new Card(CardRank.KING, CardSuit.CLUBS),
+                new Card(CardRank.QUEEN, CardSuit.CLUBS),
+                new Card(CardRank.JACK, CardSuit.CLUBS),
+                new Card(CardRank.SIX, CardSuit.CLUBS),
+                new Card(CardRank.TWO, CardSuit.CLUBS),
+                new Card(CardRank.TEN, CardSuit.CLUBS)
+        );
+    }
+
+    private List<Card> straightFlush_Kingigh() {
+        return Arrays.asList(
+                new Card(CardRank.TWO, CardSuit.CLUBS),
+                new Card(CardRank.KING, CardSuit.CLUBS),
+                new Card(CardRank.QUEEN, CardSuit.CLUBS),
+                new Card(CardRank.JACK, CardSuit.CLUBS),
+                new Card(CardRank.SIX, CardSuit.CLUBS),
+                new Card(CardRank.NINE, CardSuit.CLUBS),
+                new Card(CardRank.TEN, CardSuit.CLUBS)
+        );
+    }
+
+    private List<Card> straightFlush_FiveHigh() {
+        return Arrays.asList(
+                new Card(CardRank.JACK, CardSuit.CLUBS),
+                new Card(CardRank.FIVE, CardSuit.CLUBS),
+                new Card(CardRank.QUEEN, CardSuit.CLUBS),
+                new Card(CardRank.ACE, CardSuit.CLUBS),
+                new Card(CardRank.FOUR, CardSuit.CLUBS),
+                new Card(CardRank.TWO, CardSuit.CLUBS),
+                new Card(CardRank.THREE, CardSuit.CLUBS)
+        );
+    }
+
     private List<Card> flush() {
         return Arrays.asList(
                 new Card(CardRank.ACE, CardSuit.CLUBS),
@@ -209,6 +246,10 @@ public class HandIdentifier {
 
         if (currentHand != null) {
             switch (currentHand.getHandType()) {
+                case STRAIGHT_FLUSH:
+                    StraightFlushFactory straightFlushFactory = (StraightFlushFactory) currentHand.getHandFactory();
+                    retHand = new StraightFlush(straightFlushFactory.getCards());
+                    break;
                 case FOUR_OF_A_KIND:
                     FourOfAKindFactory fourOfAKindFactory = (FourOfAKindFactory) currentHand.getHandFactory();
                     retHand = new FourOfAKind(fourOfAKindFactory.getFourOfAKindCards(),

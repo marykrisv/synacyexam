@@ -73,6 +73,24 @@ public class StraightFlushFactoryTest {
     }
 
     @Test
+    public void true_5high() {
+        List<Card> cards = Arrays.asList(
+                new Card(CardRank.JACK, CardSuit.CLUBS),
+                new Card(CardRank.NINE, CardSuit.DIAMONDS),
+                new Card(CardRank.ACE, CardSuit.DIAMONDS),
+                new Card(CardRank.FOUR, CardSuit.HEARTS),
+                new Card(CardRank.SIX, CardSuit.DIAMONDS),
+                new Card(CardRank.TEN, CardSuit.SPADES),
+                new Card(CardRank.EIGHT, CardSuit.SPADES)
+        );
+
+        StraightFlushFactory straightFlushFactory = new StraightFlushFactory();
+        this.createInits(straightFlushFactory, cards);
+
+        assertFalse(straightFlushFactory.check());
+    }
+
+    @Test
     public void false_4_straight() {
         List<Card> cards = Arrays.asList(
                 new Card(CardRank.JACK, CardSuit.CLUBS),
