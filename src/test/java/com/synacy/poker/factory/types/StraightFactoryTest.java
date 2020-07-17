@@ -73,6 +73,96 @@ public class StraightFactoryTest {
     }
 
     @Test
+    public void false_4_straight() {
+        List<Card> cards = Arrays.asList(
+                new Card(CardRank.JACK, CardSuit.CLUBS),
+                new Card(CardRank.NINE, CardSuit.DIAMONDS),
+                new Card(CardRank.ACE, CardSuit.DIAMONDS),
+                new Card(CardRank.FOUR, CardSuit.HEARTS),
+                new Card(CardRank.SIX, CardSuit.DIAMONDS),
+                new Card(CardRank.TEN, CardSuit.SPADES),
+                new Card(CardRank.EIGHT, CardSuit.SPADES)
+        );
+
+        StraightFactory straightFactory = new StraightFactory();
+        this.createInits(straightFactory, cards);
+
+        assertFalse(straightFactory.check());
+    }
+
+    @Test
+    public void false_normal() {
+        List<Card> cards = Arrays.asList(
+                new Card(CardRank.JACK, CardSuit.CLUBS),
+                new Card(CardRank.NINE, CardSuit.DIAMONDS),
+                new Card(CardRank.ACE, CardSuit.DIAMONDS),
+                new Card(CardRank.SEVEN, CardSuit.HEARTS),
+                new Card(CardRank.SEVEN, CardSuit.DIAMONDS),
+                new Card(CardRank.TEN, CardSuit.SPADES),
+                new Card(CardRank.QUEEN, CardSuit.SPADES)
+        );
+
+        StraightFactory straightFactory = new StraightFactory();
+        this.createInits(straightFactory, cards);
+
+        assertFalse(straightFactory.check());
+    }
+
+    @Test
+    public void true_normal() {
+        List<Card> cards = Arrays.asList(
+                new Card(CardRank.JACK, CardSuit.CLUBS),
+                new Card(CardRank.QUEEN, CardSuit.DIAMONDS),
+                new Card(CardRank.ACE, CardSuit.DIAMONDS),
+                new Card(CardRank.KING, CardSuit.HEARTS),
+                new Card(CardRank.SEVEN, CardSuit.DIAMONDS),
+                new Card(CardRank.TEN, CardSuit.SPADES),
+                new Card(CardRank.SEVEN, CardSuit.SPADES)
+        );
+
+        StraightFactory straightFactory = new StraightFactory();
+        this.createInits(straightFactory, cards);
+
+        assertTrue(straightFactory.check());
+    }
+
+    @Test
+    public void true_fiveHigh() {
+        List<Card> cards = Arrays.asList(
+                new Card(CardRank.ACE, CardSuit.CLUBS),
+                new Card(CardRank.TWO, CardSuit.DIAMONDS),
+                new Card(CardRank.SEVEN, CardSuit.DIAMONDS),
+                new Card(CardRank.THREE, CardSuit.HEARTS),
+                new Card(CardRank.FOUR, CardSuit.DIAMONDS),
+                new Card(CardRank.JACK, CardSuit.SPADES),
+                new Card(CardRank.FIVE, CardSuit.SPADES)
+        );
+
+        StraightFactory straightFactory = new StraightFactory();
+        this.createInits(straightFactory, cards);
+
+        assertTrue(straightFactory.check());
+    }
+
+    @Test
+    public void true_lastCards() {
+        List<Card> cards = Arrays.asList(
+                new Card(CardRank.ACE, CardSuit.CLUBS),
+                new Card(CardRank.KING, CardSuit.DIAMONDS),
+                new Card(CardRank.TEN, CardSuit.DIAMONDS),
+                new Card(CardRank.SEVEN, CardSuit.HEARTS),
+                new Card(CardRank.EIGHT, CardSuit.DIAMONDS),
+                new Card(CardRank.NINE, CardSuit.SPADES),
+                new Card(CardRank.SIX, CardSuit.SPADES)
+        );
+
+        StraightFactory straightFactory = new StraightFactory();
+        this.createInits(straightFactory, cards);
+
+        assertTrue(straightFactory.check());
+    }
+
+    @Test
     public void populateCards() {
         List<Card> cards = Arrays.asList(
                 new Card(CardRank.FIVE, CardSuit.CLUBS),
@@ -141,6 +231,33 @@ public class StraightFactoryTest {
                 new Card(CardRank.THREE, CardSuit.CLUBS),
                 new Card(CardRank.TWO, CardSuit.CLUBS),
                 new Card(CardRank.ACE, CardSuit.CLUBS)
+        );
+
+        StraightFactory straightFactory = new StraightFactory();
+        this.createInits(straightFactory, cards);
+        straightFactory.populateCards();
+
+        assertEquals(cardsExpected, straightFactory.getCards());
+    }
+
+    @Test
+    public void populateCards_lastCards() {
+        List<Card> cards = Arrays.asList(
+                new Card(CardRank.ACE, CardSuit.CLUBS),
+                new Card(CardRank.KING, CardSuit.DIAMONDS),
+                new Card(CardRank.TEN, CardSuit.DIAMONDS),
+                new Card(CardRank.SEVEN, CardSuit.HEARTS),
+                new Card(CardRank.EIGHT, CardSuit.DIAMONDS),
+                new Card(CardRank.NINE, CardSuit.SPADES),
+                new Card(CardRank.SIX, CardSuit.SPADES)
+        );
+
+        List<Card> cardsExpected = Arrays.asList(
+                new Card(CardRank.TEN, CardSuit.DIAMONDS),
+                new Card(CardRank.NINE, CardSuit.SPADES),
+                new Card(CardRank.EIGHT, CardSuit.DIAMONDS),
+                new Card(CardRank.SEVEN, CardSuit.HEARTS),
+                new Card(CardRank.SIX, CardSuit.SPADES)
         );
 
         StraightFactory straightFactory = new StraightFactory();

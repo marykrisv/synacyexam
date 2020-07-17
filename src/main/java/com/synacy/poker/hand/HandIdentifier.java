@@ -46,7 +46,7 @@ public class HandIdentifier {
      * @return The player's {@link Hand} or `null` if no Hand was identified.
      */
     public Hand identifyHand(List<Card> playerCards, List<Card> communityCards) {
-        return getHand(getCurrentHand(flush()));
+        return getHand(getCurrentHand(highCard()));
 //        return getHand(getCurrentHand(CardUtil.combineCards(playerCards, communityCards)));
     }
 
@@ -73,8 +73,8 @@ public class HandIdentifier {
                 new Card(CardRank.JACK, CardSuit.CLUBS),
                 new Card(CardRank.NINE, CardSuit.DIAMONDS),
                 new Card(CardRank.ACE, CardSuit.DIAMONDS),
-                new Card(CardRank.SEVEN, CardSuit.HEARTS),
-                new Card(CardRank.SEVEN, CardSuit.DIAMONDS),
+                new Card(CardRank.SIX, CardSuit.HEARTS),
+                new Card(CardRank.SIX, CardSuit.DIAMONDS),
                 new Card(CardRank.TEN, CardSuit.SPADES),
                 new Card(CardRank.EIGHT, CardSuit.SPADES)
         );

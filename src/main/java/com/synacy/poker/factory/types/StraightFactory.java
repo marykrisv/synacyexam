@@ -19,95 +19,78 @@ public class StraightFactory extends HandFactory {
     @Override
     public boolean check() {
         int straightCardCtr = 0;
-
+        int i, j;
         int sizeOfCard = cards.size();
         LAST_INDEX = sizeOfCard-1;
-        int i, j;
-        Card nextCard, prevCard;
-        for (i = 0; i < sizeOfCard; i++) {
+
+        Card prevCard, nextCard;
+
+        for (i = 0; i < sizeOfCard && straightCardCtr != 5; i++) {
             straightCardCtr = 0;
-            for (j = i; j < sizeOfCard && straightCardCtr != 5; j++) {
-                if (j == LAST_INDEX) {
+            for (j = i+1; j < sizeOfCard; j++) {
+                prevCard = cards.get(j-1);
+                nextCard = cards.get(j);
+                if (prevCard.getRank().ordinal()-1 != nextCard.getRank().ordinal()) {
+                    break;
+                } else {
                     straightCardCtr++;
-                } else if (straightCardCtr == 4) {
-                    prevCard = cards.get(j-1);
-                    nextCard = cards.get(j);
-                    if (prevCard.getRank().ordinal()-CARD_INDEX_INTERVAL != nextCard.getRank().ordinal()
-                            && (prevCard.getRank() != CardRank.ACE && nextCard.getRank() != CardRank.KING)) {
-                        break;
-                    } else {
+                    if (straightCardCtr == 4) {
+                        //add the last one
                         straightCardCtr++;
                     }
-                } else {
-                    prevCard = cards.get(j);
-                    nextCard = cards.get(j+CARD_INDEX_INTERVAL);
-                    if (prevCard.getRank().ordinal()-CARD_INDEX_INTERVAL != nextCard.getRank().ordinal()
-                            && (prevCard.getRank() != CardRank.ACE && nextCard.getRank() != CardRank.KING)) {
-                        break;
-                    } else {
-                        if (prevCard.getRank() == CardRank.ACE && nextCard.getRank() != CardRank.KING) {
-                            // do nothing
-                        } else {
-                            straightCardCtr++;
+                    if (j == LAST_INDEX) {
+                        if (cardContainsAce() && nextCard.getRank() == CardRank.TWO) {
+                            // add to and ace
+                            straightCardCtr+=2;
                         }
                     }
                 }
             }
-            if (straightCardCtr == STRAIGHT_CARD_SIZE) {
-                return true;
-            }
         }
-
-        return false;
+        
+        if (straightCardCtr == 5) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
     public void populateCards() {
-        List<Card> straightCard = null;
-
-        int sizeOfCard = cards.size();
+        List<Card> straightCards = new ArrayList<>();;
         int i, j;
+        int sizeOfCard = cards.size();
         LAST_INDEX = sizeOfCard-1;
-        Card nextCard, prevCard;
-        for (i = 0; i < sizeOfCard; i++) {
-            straightCard = new ArrayList<>();
-            for (j = i; j < sizeOfCard && straightCard.size() != 5; j++) {
-                if (j == LAST_INDEX) {
-                    if (cards.get(j).getRank() == CardRank.TWO) {
-                        straightCard.add(getAce());
-                    } else {
-                        straightCard.add(cards.get(j));
-                    }
 
-                } else if (straightCard.size() == 4) {
-                    prevCard = cards.get(j-1);
-                    nextCard = cards.get(j);
-                    if (prevCard.getRank().ordinal()-CARD_INDEX_INTERVAL != nextCard.getRank().ordinal()
-                            && (prevCard.getRank() != CardRank.ACE && nextCard.getRank() != CardRank.KING)) {
-                        break;
-                    } else {
-                        straightCard.add(nextCard);
-                    }
+        Card prevCard, nextCard;
+
+        for (i = 0; i < sizeOfCard && straightCards.size() != 5; i++) {
+            straightCards = new ArrayList<>();
+            for (j = i+1; j < sizeOfCard; j++) {
+                prevCard = cards.get(j-1);
+                nextCard = cards.get(j);
+                if (prevCard.getRank().ordinal()-1 != nextCard.getRank().ordinal()) {
+                    break;
                 } else {
-                    prevCard = cards.get(j);
-                    nextCard = cards.get(j+CARD_INDEX_INTERVAL);
-                    if (prevCard.getRank().ordinal()-CARD_INDEX_INTERVAL != nextCard.getRank().ordinal()
-                            && (prevCard.getRank() != CardRank.ACE && nextCard.getRank() != CardRank.KING)) {
+                    straightCards.add(prevCard);
+                    if (straightCards.size() == 4) {
+                        //add the last one
+                        straightCards.add(nextCard);
                         break;
-                    } else {
-                        if (prevCard.getRank() == CardRank.ACE && nextCard.getRank() != CardRank.KING) {
-                            // do nothing
-                        } else {
-                            straightCard.add(prevCard);
+                    }
+                    if (j == LAST_INDEX) {
+                        if (cardContainsAce() && nextCard.getRank() == CardRank.TWO) {
+                            // add to and ace
+                            straightCards.add(nextCard);
+                            straightCards.add(getAce());
+                            break;
                         }
                     }
                 }
             }
-            if (straightCard.size() == STRAIGHT_CARD_SIZE) {
-                super.setCards(straightCard);
-                break;
-            }
         }
+
+        super.setCards(straightCards);
     }
 
     @Override
