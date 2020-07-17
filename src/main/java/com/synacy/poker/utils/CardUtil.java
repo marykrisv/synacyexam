@@ -50,6 +50,10 @@ public class CardUtil {
     }
 
     public static String getHighestCardToString (List<Card> cards, int numOfCards) {
+        if (numOfCards > cards.size()) {
+            numOfCards = 2;
+        }
+
         if (cards != null && !cards.isEmpty()) {
             List<CardRank> highest = new ArrayList<>();
 
