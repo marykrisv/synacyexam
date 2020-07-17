@@ -4,12 +4,13 @@ import com.synacy.poker.card.Card;
 import com.synacy.poker.card.CardRank;
 import com.synacy.poker.card.CardSuit;
 import com.synacy.poker.factory.HandFactory;
+import com.synacy.poker.factory.interfaces.Straight;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class StraightFactory extends HandFactory {
+public class StraightFactory extends HandFactory implements Straight {
     private List<Card> cards;
     private int CARD_INDEX_INTERVAL = 1;
     private int STRAIGHT_CARD_SIZE = 5;
@@ -18,41 +19,14 @@ public class StraightFactory extends HandFactory {
 
     @Override
     public boolean check() {
-        int straightCardCtr = 0;
-        int i, j;
-        int sizeOfCard = cards.size();
-        LAST_INDEX = sizeOfCard-1;
+        List<CardRank> cardRanks = new ArrayList<>();
 
-        Card prevCard, nextCard;
+        //get rank of the card
+        for (Card card: cards) {
+            cardRanks.add(card.getRank());
+        }
 
-        for (i = 0; i < sizeOfCard && straightCardCtr != 5; i++) {
-            straightCardCtr = 0;
-            for (j = i+1; j < sizeOfCard; j++) {
-                prevCard = cards.get(j-1);
-                nextCard = cards.get(j);
-                if (prevCard.getRank().ordinal()-1 != nextCard.getRank().ordinal()) {
-                    break;
-                } else {
-                    straightCardCtr++;
-                    if (straightCardCtr == 4) {
-                        //add the last one
-                        straightCardCtr++;
-                    }
-                    if (j == LAST_INDEX) {
-                        if (cardContainsAce() && nextCard.getRank() == CardRank.TWO) {
-                            // add to and ace
-                            straightCardCtr+=2;
-                        }
-                    }
-                }
-            }
-        }
-        
-        if (straightCardCtr == 5) {
-            return true;
-        } else {
-            return false;
-        }
+        return checkStraight(cardRanks);
     }
 
     @Override
@@ -137,5 +111,44 @@ public class StraightFactory extends HandFactory {
     @Override
     public void initializeCards() {
         this.cards = super.getCards();
+    }
+
+    @Override
+    public boolean checkStraight(List<CardRank> cardRanks) {
+        int straightCardCtr = 0;
+        int i, j;
+        int sizeOfCard = cardRanks.size();
+        LAST_INDEX = sizeOfCard-1;
+
+        CardRank prevCard, nextCard;
+
+        for (i = 0; i < sizeOfCard && straightCardCtr != 5; i++) {
+            straightCardCtr = 0;
+            for (j = i+1; j < sizeOfCard; j++) {
+                prevCard = cardRanks.get(j-1);
+                nextCard = cardRanks.get(j);
+                if (prevCard.ordinal()-1 != nextCard.ordinal()) {
+                    break;
+                } else {
+                    straightCardCtr++;
+                    if (straightCardCtr == 4) {
+                        //add the last one
+                        straightCardCtr++;
+                    }
+                    if (j == LAST_INDEX) {
+                        if (cardContainsAce() && nextCard == CardRank.TWO) {
+                            // add to and ace
+                            straightCardCtr+=2;
+                        }
+                    }
+                }
+            }
+        }
+
+        if (straightCardCtr == 5) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

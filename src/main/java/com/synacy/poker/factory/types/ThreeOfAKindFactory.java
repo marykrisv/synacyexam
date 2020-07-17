@@ -4,13 +4,12 @@ import com.synacy.poker.card.Card;
 import com.synacy.poker.card.CardRank;
 import com.synacy.poker.card.CardSuit;
 import com.synacy.poker.factory.HandFactory;
-import com.synacy.poker.factory.ThreeOfAKind;
+import com.synacy.poker.factory.interfaces.ThreeOfAKind;
 import com.synacy.poker.utils.CardUtil;
 import com.synacy.poker.utils.DeckByRank;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class ThreeOfAKindFactory extends HandFactory implements ThreeOfAKind {
 

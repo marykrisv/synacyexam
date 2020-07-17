@@ -1,4 +1,4 @@
-package com.synacy.poker.factory;
+package com.synacy.poker.factory.interfaces;
 
 public interface ThreeOfAKind {
     boolean checkThreeOfAKind();

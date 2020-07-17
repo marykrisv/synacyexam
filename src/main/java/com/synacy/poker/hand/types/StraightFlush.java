@@ -1,8 +1,10 @@
 package com.synacy.poker.hand.types;
 
 import com.synacy.poker.card.Card;
+import com.synacy.poker.card.CardRank;
 import com.synacy.poker.hand.HandType;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,11 +27,28 @@ public class StraightFlush extends Straight {
      */
     @Override
     public String toString() {
-        return "";
+        if (isRoyal()) {
+            return String.format("Royal Flush", ranksToString(getHighest()));
+        } else {
+            return String.format("Straight Flush (%s High)", ranksToString(getHighest()));
+        }
     }
 
-//    @Override
-    public boolean checkCard() {
+    private List<Card> getHighest () {
+        List<Card> highest = new ArrayList<>();
+
+        highest.add(super.getCards().get(0));
+
+        return highest;
+    }
+
+    private boolean isRoyal () {
+        if (super.getCards() != null && !super.getCards().isEmpty()) {
+            if (super.getCards().get(0).getRank() == CardRank.ACE) {
+                return true;
+            }
+        }
+
         return false;
     }
 

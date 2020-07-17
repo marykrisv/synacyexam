@@ -4,7 +4,7 @@ import com.synacy.poker.card.Card;
 import com.synacy.poker.card.CardRank;
 import com.synacy.poker.card.CardSuit;
 import com.synacy.poker.factory.HandFactory;
-import com.synacy.poker.factory.Pair;
+import com.synacy.poker.factory.interfaces.Pair;
 import com.synacy.poker.utils.CardUtil;
 import com.synacy.poker.utils.DeckByRank;
 

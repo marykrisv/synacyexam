@@ -1,4 +1,4 @@
-package com.synacy.poker.factory;
+package com.synacy.poker.factory.interfaces;
 
 import com.synacy.poker.card.Card;
 import com.synacy.poker.card.CardRank;

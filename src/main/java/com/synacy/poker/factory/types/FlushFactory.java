@@ -4,12 +4,13 @@ import com.synacy.poker.card.Card;
 import com.synacy.poker.card.CardRank;
 import com.synacy.poker.card.CardSuit;
 import com.synacy.poker.factory.HandFactory;
+import com.synacy.poker.factory.interfaces.Flush;
 import com.synacy.poker.utils.DeckBySuit;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FlushFactory extends HandFactory {
+public class FlushFactory extends HandFactory implements Flush {
     private List<Card> cards;
 
     private int FLUSH_SIZE_CARD = 5;
@@ -23,7 +24,7 @@ public class FlushFactory extends HandFactory {
     public boolean check() {
         for (DeckBySuit deckBySuit : super.getGroupedDeckBySuit()) {
             if (deckBySuit.getCardRanks().size() >= FLUSH_SIZE_CARD) {
-                return true;
+                return checkFlush(deckBySuit);
             }
         }
 
@@ -52,5 +53,14 @@ public class FlushFactory extends HandFactory {
     @Override
     public void groupDeck() {
         super.groupDeckBySuit();
+    }
+
+    @Override
+    public boolean checkFlush(DeckBySuit deckBySuit) {
+        if (deckBySuit.getCardRanks().size() >= FLUSH_SIZE_CARD) {
+            return true;
+        }
+
+        return false;
     }
 }
