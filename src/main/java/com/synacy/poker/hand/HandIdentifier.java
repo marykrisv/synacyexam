@@ -29,6 +29,7 @@ public class HandIdentifier {
 
     private void initializeMap () {
         handFactoryTypes = new ArrayList<>();
+        handFactoryTypes.add(new HandFactoryType(HandType.FOUR_OF_A_KIND, new FourOfAKindFactory()));
         handFactoryTypes.add(new HandFactoryType(HandType.FULL_HOUSE, new FullHouseFactory()));
         handFactoryTypes.add(new HandFactoryType(HandType.FLUSH, new FlushFactory()));
         handFactoryTypes.add(new HandFactoryType(HandType.STRAIGHT, new StraightFactory()));
@@ -46,8 +47,20 @@ public class HandIdentifier {
      * @return The player's {@link Hand} or `null` if no Hand was identified.
      */
     public Hand identifyHand(List<Card> playerCards, List<Card> communityCards) {
-        return getHand(getCurrentHand(highCard()));
+        return getHand(getCurrentHand(fourOfAKind()));
 //        return getHand(getCurrentHand(CardUtil.combineCards(playerCards, communityCards)));
+    }
+
+    private List<Card> fourOfAKind() {
+        return Arrays.asList(
+                new Card(CardRank.JACK, CardSuit.CLUBS),
+                new Card(CardRank.SIX, CardSuit.DIAMONDS),
+                new Card(CardRank.JACK, CardSuit.DIAMONDS),
+                new Card(CardRank.JACK, CardSuit.HEARTS),
+                new Card(CardRank.EIGHT, CardSuit.DIAMONDS),
+                new Card(CardRank.JACK, CardSuit.SPADES),
+                new Card(CardRank.SIX, CardSuit.DIAMONDS)
+        );
     }
 
     private List<Card> onePairBug() {
@@ -196,6 +209,11 @@ public class HandIdentifier {
 
         if (currentHand != null) {
             switch (currentHand.getHandType()) {
+                case FOUR_OF_A_KIND:
+                    FourOfAKindFactory fourOfAKindFactory = (FourOfAKindFactory) currentHand.getHandFactory();
+                    retHand = new FourOfAKind(fourOfAKindFactory.getFourOfAKindCards(),
+                            fourOfAKindFactory.getOtherCards());
+                    break;
                 case FULL_HOUSE:
                     FullHouseFactory fullHouseFactory = (FullHouseFactory) currentHand.getHandFactory();
                     retHand = new FullHouse(fullHouseFactory.getThreeOfAKindCards(), fullHouseFactory.getPairCards());
