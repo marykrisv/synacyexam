@@ -16,17 +16,28 @@ public class FourOfAKindFactory extends HandFactory {
 
     int SAME_RANK_SIZE = 4;
 
+    /**
+     * initialize card declarations
+     */
     @Override
     public void initializeCards() {
         fourOfAKindCards = new ArrayList<>();
         otherCards = new ArrayList<>();
     }
 
+    /**
+     * Choose whether deck is grouped by suit or by rank
+     */
     @Override
     public void groupDeck() {
         super.groupPackByRank();
     }
 
+    /**
+     * Checks if the pack of cards is four of a kind
+     *
+     * @return true if cards is a four of a kind else false.
+     */
     @Override
     public boolean check() {
         for (PackByRank packByRank : super.getGroupedPackByRank()) {
@@ -38,6 +49,9 @@ public class FourOfAKindFactory extends HandFactory {
         return false;
     }
 
+    /**
+     * Populate fourOfAKind and other cards arranged in descending order
+     */
     @Override
     public void populateCards() {
         for (PackByRank packByRank : super.getGroupedPackByRank()) {
@@ -54,6 +68,12 @@ public class FourOfAKindFactory extends HandFactory {
         otherCards = CardUtil.maxOutCardsOnHand(fourOfAKindCards, otherCards);
     }
 
+    /**
+     * Populate fourOfAkind cards arranged in descending order
+     *
+     * @param cardRank {@link CardRank} of fourOfAkind card
+     * @param cardSuits list of {@link CardSuit} of fourOfAkind card
+     */
     public void populateFourOfAKind(CardRank cardRank, List<CardSuit> cardSuits) {
         if (fourOfAKindCards != null) {
             for (CardSuit cardSuit: cardSuits) {
@@ -61,6 +81,13 @@ public class FourOfAKindFactory extends HandFactory {
             }
         }
     }
+
+    /**
+     * Populate non-fourOfAkind cards arranged in descending order
+     *
+     * @param cardRank {@link CardRank} of non-fourOfAkind card
+     * @param cardSuits list of {@link CardSuit} of non-fourOfAkind card
+     */
     public void populateOtherCards(CardRank cardRank, List<CardSuit> cardSuits) {
         if (otherCards != null) {
             for (CardSuit cardSuit: cardSuits) {

@@ -3,7 +3,6 @@ package com.synacy.poker.factory.types;
 import com.synacy.poker.card.Card;
 import com.synacy.poker.card.CardRank;
 import com.synacy.poker.card.CardSuit;
-import com.synacy.poker.utils.CardUtil;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -12,12 +11,6 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class FullHouseFactoryTest {
-    private void createInits(FullHouseFactory fullHouseFactory, List<Card> cards) {
-        fullHouseFactory.setCards(cards);
-        fullHouseFactory.initializeCards();
-        CardUtil.sortCardsDesc(cards);
-        fullHouseFactory.groupDeck();
-    }
 
     @Test
     public void check_true() {
@@ -31,7 +24,8 @@ public class FullHouseFactoryTest {
         );
 
         FullHouseFactory fullHouseFactory = new FullHouseFactory();
-        this.createInits(fullHouseFactory, cards);
+        fullHouseFactory.setCards(cards);
+        fullHouseFactory.create();
 
         assertTrue(fullHouseFactory.check());
     }
@@ -48,7 +42,8 @@ public class FullHouseFactoryTest {
         );
 
         FullHouseFactory fullHouseFactory = new FullHouseFactory();
-        this.createInits(fullHouseFactory, cards);
+        fullHouseFactory.setCards(cards);
+        fullHouseFactory.create();
 
         assertFalse(fullHouseFactory.check());
     }
@@ -70,8 +65,8 @@ public class FullHouseFactoryTest {
         );
 
         FullHouseFactory fullHouseFactory = new FullHouseFactory();
-        this.createInits(fullHouseFactory, cards);
-        fullHouseFactory.populateCards();
+        fullHouseFactory.setCards(cards);
+        fullHouseFactory.create();
 
         assertEquals(expectedPairCards, fullHouseFactory.getPairCards());
     }
@@ -94,8 +89,8 @@ public class FullHouseFactoryTest {
         );
 
         FullHouseFactory fullHouseFactory = new FullHouseFactory();
-        this.createInits(fullHouseFactory, cards);
-        fullHouseFactory.populateCards();
+        fullHouseFactory.setCards(cards);
+        fullHouseFactory.create();
 
         assertEquals(expectedThreeOfAKind, fullHouseFactory.getThreeOfAKindCards());
     }

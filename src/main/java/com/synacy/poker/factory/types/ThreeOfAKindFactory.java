@@ -18,11 +18,36 @@ public class ThreeOfAKindFactory extends HandFactory implements ThreeOfAKind {
 
     private int SAME_RANK_SIZE = 3;
 
+    /**
+     * initialize card declarations
+     */
+    @Override
+    public void initializeCards() {
+        threeOfAKindCards = new ArrayList<>();
+        otherCards = new ArrayList<>();
+    }
+
+    /**
+     * Choose whether deck is grouped by suit or by rank
+     */
+    @Override
+    public void groupDeck() {
+        super.groupPackByRank();
+    }
+
+    /**
+     * Calls checkThreeOfAKind function
+     *
+     * @return returns checkThreeOfAKind function result
+     */
     @Override
     public boolean check() {
         return this.checkThreeOfAKind();
     }
 
+    /**
+     * Populate threeOfAKind and other cards arranged in descending order
+     */
     @Override
     public void populateCards() {
         for (PackByRank packByRank : super.getGroupedPackByRank()) {
@@ -39,17 +64,12 @@ public class ThreeOfAKindFactory extends HandFactory implements ThreeOfAKind {
         otherCards = CardUtil.maxOutCardsOnHand(threeOfAKindCards, otherCards);
     }
 
-    @Override
-    public void groupDeck() {
-        super.groupPackByRank();
-    }
-
-    @Override
-    public void initializeCards() {
-        threeOfAKindCards = new ArrayList<>();
-        otherCards = new ArrayList<>();
-    }
-
+    /**
+     * Populates threeOfAKind card
+     *
+     * @param cardRank {@link CardRank} of the threeOfAKind card
+     * @param cardSuits List of {@link CardRank} of the threeOfAKind card
+     */
     public void populateThreeOfAKindCards(CardRank cardRank, List<CardSuit> cardSuits) {
         if (threeOfAKindCards != null) {
             for (CardSuit cardSuit: cardSuits) {
@@ -58,6 +78,11 @@ public class ThreeOfAKindFactory extends HandFactory implements ThreeOfAKind {
         }
     }
 
+    /**
+     *
+     * @param cardRank {@link CardRank} of the non-threeOfAKind card
+     * @param cardSuits List of {@link CardSuit} of the non-threeOfAKind card
+     */
     public void populateOtherCards(CardRank cardRank, List<CardSuit> cardSuits) {
         if (otherCards != null) {
             for (CardSuit cardSuit: cardSuits) {
@@ -66,6 +91,11 @@ public class ThreeOfAKindFactory extends HandFactory implements ThreeOfAKind {
         }
     }
 
+    /**
+     * Checks if the pack of cards is Three of a Kind
+     *
+     * @return true if cards is a Three of a Kind else false.
+     */
     @Override
     public boolean checkThreeOfAKind() {
         for (PackByRank packByRank : super.getGroupedPackByRank()) {

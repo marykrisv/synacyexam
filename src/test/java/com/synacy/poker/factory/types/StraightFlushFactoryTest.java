@@ -13,12 +13,6 @@ import static org.junit.Assert.*;
 import static org.junit.Assert.assertFalse;
 
 public class StraightFlushFactoryTest {
-    private void createInits(StraightFlushFactory straightFlushFactory, List<Card> cards) {
-        straightFlushFactory.setCards(cards);
-        straightFlushFactory.initializeCards();
-        CardUtil.sortCardsDesc(cards);
-        straightFlushFactory.groupDeck();
-    }
 
     @Test
     public void initializeCards() {
@@ -33,7 +27,7 @@ public class StraightFlushFactoryTest {
 
         StraightFlushFactory straightFlushFactory = new StraightFlushFactory();
         straightFlushFactory.setCards(cards);
-        straightFlushFactory.initializeCards();
+        straightFlushFactory.create();
 
         assertEquals(cards, straightFlushFactory.getCards());
     }
@@ -50,7 +44,8 @@ public class StraightFlushFactoryTest {
         );
 
         StraightFlushFactory straightFlushFactory = new StraightFlushFactory();
-        this.createInits(straightFlushFactory, cards);
+        straightFlushFactory.setCards(cards);
+        straightFlushFactory.create();
 
         assertTrue(straightFlushFactory.check());
     }
@@ -67,7 +62,8 @@ public class StraightFlushFactoryTest {
         );
 
         StraightFlushFactory straightFlushFactory = new StraightFlushFactory();
-        this.createInits(straightFlushFactory, cards);
+        straightFlushFactory.setCards(cards);
+        straightFlushFactory.create();
 
         assertFalse(straightFlushFactory.check());
     }
@@ -85,7 +81,8 @@ public class StraightFlushFactoryTest {
         );
 
         StraightFlushFactory straightFlushFactory = new StraightFlushFactory();
-        this.createInits(straightFlushFactory, cards);
+        straightFlushFactory.setCards(cards);
+        straightFlushFactory.create();
 
         assertFalse(straightFlushFactory.check());
     }
@@ -103,7 +100,8 @@ public class StraightFlushFactoryTest {
         );
 
         StraightFlushFactory straightFlushFactory = new StraightFlushFactory();
-        this.createInits(straightFlushFactory, cards);
+        straightFlushFactory.setCards(cards);
+        straightFlushFactory.create();
 
         assertFalse(straightFlushFactory.check());
     }
@@ -121,7 +119,8 @@ public class StraightFlushFactoryTest {
         );
 
         StraightFlushFactory straightFlushFactory = new StraightFlushFactory();
-        this.createInits(straightFlushFactory, cards);
+        straightFlushFactory.setCards(cards);
+        straightFlushFactory.create();
 
         assertFalse(straightFlushFactory.check());
     }
@@ -139,7 +138,8 @@ public class StraightFlushFactoryTest {
         );
 
         StraightFlushFactory straightFlushFactory = new StraightFlushFactory();
-        this.createInits(straightFlushFactory, cards);
+        straightFlushFactory.setCards(cards);
+        straightFlushFactory.create();
 
         assertTrue(straightFlushFactory.check());
     }
@@ -157,7 +157,8 @@ public class StraightFlushFactoryTest {
         );
 
         StraightFlushFactory straightFlushFactory = new StraightFlushFactory();
-        this.createInits(straightFlushFactory, cards);
+        straightFlushFactory.setCards(cards);
+        straightFlushFactory.create();
 
         assertTrue(straightFlushFactory.check());
     }
@@ -175,7 +176,8 @@ public class StraightFlushFactoryTest {
         );
 
         StraightFlushFactory straightFlushFactory = new StraightFlushFactory();
-        this.createInits(straightFlushFactory, cards);
+        straightFlushFactory.setCards(cards);
+        straightFlushFactory.create();
 
         assertTrue(straightFlushFactory.check());
     }
@@ -200,8 +202,8 @@ public class StraightFlushFactoryTest {
         );
 
         StraightFlushFactory straightFlushFactory = new StraightFlushFactory();
-        this.createInits(straightFlushFactory, cards);
-        straightFlushFactory.populateCards();
+        straightFlushFactory.setCards(cards);
+        straightFlushFactory.create();
 
         assertEquals(cardsExpected, straightFlushFactory.getCards());
     }
@@ -226,8 +228,8 @@ public class StraightFlushFactoryTest {
         );
 
         StraightFlushFactory straightFlushFactory = new StraightFlushFactory();
-        this.createInits(straightFlushFactory, cards);
-        straightFlushFactory.populateCards();
+        straightFlushFactory.setCards(cards);
+        straightFlushFactory.create();
 
         assertEquals(cardsExpected, straightFlushFactory.getCards());
     }
@@ -252,8 +254,8 @@ public class StraightFlushFactoryTest {
         );
 
         StraightFlushFactory straightFlushFactory = new StraightFlushFactory();
-        this.createInits(straightFlushFactory, cards);
-        straightFlushFactory.populateCards();
+        straightFlushFactory.setCards(cards);
+        straightFlushFactory.create();
 
         assertEquals(cardsExpected, straightFlushFactory.getCards());
     }
@@ -279,8 +281,8 @@ public class StraightFlushFactoryTest {
         );
 
         StraightFlushFactory straightFlushFactory = new StraightFlushFactory();
-        this.createInits(straightFlushFactory, cards);
-        straightFlushFactory.populateCards();
+        straightFlushFactory.setCards(cards);
+        straightFlushFactory.create();
 
         assertEquals(cardsExpected, straightFlushFactory.getCards());
     }

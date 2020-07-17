@@ -3,7 +3,6 @@ package com.synacy.poker.factory.types;
 import com.synacy.poker.card.Card;
 import com.synacy.poker.card.CardRank;
 import com.synacy.poker.card.CardSuit;
-import com.synacy.poker.utils.CardUtil;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -13,12 +12,6 @@ import static org.junit.Assert.*;
 import static org.junit.Assert.assertFalse;
 
 public class StraightFactoryTest {
-    private void createInits(StraightFactory straightFactory, List<Card> cards) {
-        straightFactory.setCards(cards);
-        straightFactory.initializeCards();
-        CardUtil.sortCardsDesc(cards);
-        straightFactory.groupDeck();
-    }
 
     @Test
     public void initializeCards() {
@@ -33,7 +26,7 @@ public class StraightFactoryTest {
 
         StraightFactory straightFactory = new StraightFactory();
         straightFactory.setCards(cards);
-        straightFactory.initializeCards();
+        straightFactory.create();
 
         assertEquals(cards, straightFactory.getCards());
     }
@@ -50,7 +43,8 @@ public class StraightFactoryTest {
         );
 
         StraightFactory straightFactory = new StraightFactory();
-        this.createInits(straightFactory, cards);
+        straightFactory.setCards(cards);
+        straightFactory.create();
 
         assertTrue(straightFactory.check());
     }
@@ -67,7 +61,8 @@ public class StraightFactoryTest {
         );
 
         StraightFactory straightFactory = new StraightFactory();
-        this.createInits(straightFactory, cards);
+        straightFactory.setCards(cards);
+        straightFactory.create();
 
         assertFalse(straightFactory.check());
     }
@@ -85,7 +80,8 @@ public class StraightFactoryTest {
         );
 
         StraightFactory straightFactory = new StraightFactory();
-        this.createInits(straightFactory, cards);
+        straightFactory.setCards(cards);
+        straightFactory.create();
 
         assertFalse(straightFactory.check());
     }
@@ -103,7 +99,8 @@ public class StraightFactoryTest {
         );
 
         StraightFactory straightFactory = new StraightFactory();
-        this.createInits(straightFactory, cards);
+        straightFactory.setCards(cards);
+        straightFactory.create();
 
         assertFalse(straightFactory.check());
     }
@@ -121,7 +118,8 @@ public class StraightFactoryTest {
         );
 
         StraightFactory straightFactory = new StraightFactory();
-        this.createInits(straightFactory, cards);
+        straightFactory.setCards(cards);
+        straightFactory.create();
 
         assertTrue(straightFactory.check());
     }
@@ -139,7 +137,8 @@ public class StraightFactoryTest {
         );
 
         StraightFactory straightFactory = new StraightFactory();
-        this.createInits(straightFactory, cards);
+        straightFactory.setCards(cards);
+        straightFactory.create();
 
         assertTrue(straightFactory.check());
     }
@@ -157,7 +156,8 @@ public class StraightFactoryTest {
         );
 
         StraightFactory straightFactory = new StraightFactory();
-        this.createInits(straightFactory, cards);
+        straightFactory.setCards(cards);
+        straightFactory.create();
 
         assertTrue(straightFactory.check());
     }
@@ -182,8 +182,8 @@ public class StraightFactoryTest {
         );
 
         StraightFactory straightFactory = new StraightFactory();
-        this.createInits(straightFactory, cards);
-        straightFactory.populateCards();
+        straightFactory.setCards(cards);
+        straightFactory.create();
 
         assertEquals(cardsExpected, straightFactory.getCards());
     }
@@ -208,8 +208,8 @@ public class StraightFactoryTest {
         );
 
         StraightFactory straightFactory = new StraightFactory();
-        this.createInits(straightFactory, cards);
-        straightFactory.populateCards();
+        straightFactory.setCards(cards);
+        straightFactory.create();
 
         assertEquals(cardsExpected, straightFactory.getCards());
     }
@@ -234,8 +234,8 @@ public class StraightFactoryTest {
         );
 
         StraightFactory straightFactory = new StraightFactory();
-        this.createInits(straightFactory, cards);
-        straightFactory.populateCards();
+        straightFactory.setCards(cards);
+        straightFactory.create();
 
         assertEquals(cardsExpected, straightFactory.getCards());
     }
@@ -261,8 +261,8 @@ public class StraightFactoryTest {
         );
 
         StraightFactory straightFactory = new StraightFactory();
-        this.createInits(straightFactory, cards);
-        straightFactory.populateCards();
+        straightFactory.setCards(cards);
+        straightFactory.create();
 
         assertEquals(cardsExpected, straightFactory.getCards());
     }

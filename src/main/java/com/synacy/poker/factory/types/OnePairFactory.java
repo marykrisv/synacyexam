@@ -64,6 +64,9 @@ public class OnePairFactory extends HandFactory implements Pair {
 
     /**
      * Populate other cards arranged in descending order
+     *
+     * @param cardRank {@link CardRank} of non-onePair card
+     * @param cardSuits list of {@link CardSuit} of non-onePair card
      */
     public void populateOtherCards(CardRank cardRank, List<CardSuit> cardSuits) {
         if (otherCards != null) {
@@ -75,6 +78,9 @@ public class OnePairFactory extends HandFactory implements Pair {
 
     /**
      * Populate pair cards arranged in descending order
+     *
+     * @param cardRank {@link CardRank} of onePair card
+     * @param cardSuits list of {@link CardSuit} of onePair card
      */
     @Override
     public void populatePairCards(CardRank cardRank, List<CardSuit> cardSuits) {
@@ -87,6 +93,8 @@ public class OnePairFactory extends HandFactory implements Pair {
 
     /**
      * Checks if the pack of cards is One Pair
+     *
+     * @return true if cards is a One Pair else false.
      */
     @Override
     public boolean checkPair() {

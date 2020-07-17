@@ -1,8 +1,6 @@
 package com.synacy.poker.hand;
 
 import com.synacy.poker.card.Card;
-import com.synacy.poker.card.CardRank;
-import com.synacy.poker.card.CardSuit;
 import com.synacy.poker.factory.HandFactory;
 import com.synacy.poker.factory.HandFactoryType;
 import com.synacy.poker.factory.types.*;
@@ -50,175 +48,6 @@ public class HandIdentifier {
      */
     public Hand identifyHand(List<Card> playerCards, List<Card> communityCards) {
         return getHand(getCurrentHand(CardUtil.combineCards(playerCards, communityCards)));
-    }
-
-    private List<Card> fourOfAKind() {
-        return Arrays.asList(
-                new Card(CardRank.JACK, CardSuit.CLUBS),
-                new Card(CardRank.SIX, CardSuit.DIAMONDS),
-                new Card(CardRank.JACK, CardSuit.DIAMONDS),
-                new Card(CardRank.JACK, CardSuit.HEARTS),
-                new Card(CardRank.EIGHT, CardSuit.DIAMONDS),
-                new Card(CardRank.JACK, CardSuit.SPADES),
-                new Card(CardRank.SIX, CardSuit.DIAMONDS)
-        );
-    }
-
-    private List<Card> onePairBug() {
-        return Arrays.asList(
-                new Card(CardRank.JACK, CardSuit.CLUBS),
-                new Card(CardRank.JACK, CardSuit.DIAMONDS)
-        );
-    }
-
-    private List<Card> twoPairBug() {
-        return Arrays.asList(
-                new Card(CardRank.NINE, CardSuit.CLUBS),
-                new Card(CardRank.FOUR, CardSuit.DIAMONDS),
-                new Card(CardRank.NINE, CardSuit.DIAMONDS),
-                new Card(CardRank.ACE, CardSuit.HEARTS),
-                new Card(CardRank.SIX, CardSuit.DIAMONDS),
-                new Card(CardRank.FOUR, CardSuit.DIAMONDS)
-        );
-    }
-
-    private List<Card> straightBug() {
-        return Arrays.asList(
-                new Card(CardRank.JACK, CardSuit.CLUBS),
-                new Card(CardRank.NINE, CardSuit.DIAMONDS),
-                new Card(CardRank.ACE, CardSuit.DIAMONDS),
-                new Card(CardRank.SIX, CardSuit.HEARTS),
-                new Card(CardRank.SIX, CardSuit.DIAMONDS),
-                new Card(CardRank.TEN, CardSuit.SPADES),
-                new Card(CardRank.EIGHT, CardSuit.SPADES)
-        );
-    }
-
-    private List<Card> highCard() {
-        return Arrays.asList(
-                new Card(CardRank.ACE, CardSuit.CLUBS),
-                new Card(CardRank.KING, CardSuit.HEARTS),
-                new Card(CardRank.QUEEN, CardSuit.DIAMONDS),
-                new Card(CardRank.SEVEN, CardSuit.HEARTS),
-                new Card(CardRank.TWO, CardSuit.CLUBS),
-                new Card(CardRank.EIGHT, CardSuit.CLUBS)
-        );
-    }
-
-    private List<Card> onePair() {
-        return Arrays.asList(
-                new Card(CardRank.ACE, CardSuit.CLUBS),
-                new Card(CardRank.ACE, CardSuit.HEARTS),
-                new Card(CardRank.EIGHT, CardSuit.CLUBS),
-                new Card(CardRank.SEVEN, CardSuit.DIAMONDS),
-                new Card(CardRank.TWO, CardSuit.CLUBS),
-                new Card(CardRank.QUEEN, CardSuit.CLUBS)
-        );
-    }
-
-    private List<Card> twoPair() {
-        return Arrays.asList(
-                new Card(CardRank.TWO, CardSuit.DIAMONDS),
-                new Card(CardRank.TWO, CardSuit.CLUBS),
-                new Card(CardRank.ACE, CardSuit.CLUBS),
-                new Card(CardRank.ACE, CardSuit.HEARTS),
-                new Card(CardRank.SEVEN, CardSuit.SPADES),
-                new Card(CardRank.QUEEN, CardSuit.CLUBS)
-        );
-    }
-
-    private List<Card> threeOfAKind() {
-        return Arrays.asList(
-                new Card(CardRank.ACE, CardSuit.CLUBS),
-                new Card(CardRank.ACE, CardSuit.HEARTS),
-                new Card(CardRank.SIX, CardSuit.CLUBS),
-                new Card(CardRank.QUEEN, CardSuit.SPADES),
-                new Card(CardRank.ACE, CardSuit.DIAMONDS),
-                new Card(CardRank.TWO, CardSuit.CLUBS),
-                new Card(CardRank.NINE, CardSuit.HEARTS)
-        );
-    }
-
-    private List<Card> straight1() {
-        return Arrays.asList(
-                new Card(CardRank.ACE, CardSuit.CLUBS),
-                new Card(CardRank.QUEEN, CardSuit.HEARTS),
-                new Card(CardRank.KING, CardSuit.CLUBS),
-                new Card(CardRank.TWO, CardSuit.SPADES),
-                new Card(CardRank.TEN, CardSuit.CLUBS),
-                new Card(CardRank.JACK, CardSuit.HEARTS)
-        );
-    }
-
-    private List<Card> straight2() {
-        return Arrays.asList(
-                new Card(CardRank.ACE, CardSuit.CLUBS),
-                new Card(CardRank.QUEEN, CardSuit.HEARTS),
-                new Card(CardRank.FIVE, CardSuit.CLUBS),
-                new Card(CardRank.THREE, CardSuit.DIAMONDS),
-                new Card(CardRank.SIX, CardSuit.SPADES),
-                new Card(CardRank.TWO, CardSuit.CLUBS),
-                new Card(CardRank.FOUR, CardSuit.DIAMONDS)
-        );
-    }
-
-    private List<Card> royalFlush() {
-        return Arrays.asList(
-                new Card(CardRank.ACE, CardSuit.CLUBS),
-                new Card(CardRank.KING, CardSuit.CLUBS),
-                new Card(CardRank.QUEEN, CardSuit.CLUBS),
-                new Card(CardRank.JACK, CardSuit.CLUBS),
-                new Card(CardRank.SIX, CardSuit.CLUBS),
-                new Card(CardRank.TWO, CardSuit.CLUBS),
-                new Card(CardRank.TEN, CardSuit.CLUBS)
-        );
-    }
-
-    private List<Card> straightFlush_Kingigh() {
-        return Arrays.asList(
-                new Card(CardRank.TWO, CardSuit.CLUBS),
-                new Card(CardRank.KING, CardSuit.CLUBS),
-                new Card(CardRank.QUEEN, CardSuit.CLUBS),
-                new Card(CardRank.JACK, CardSuit.CLUBS),
-                new Card(CardRank.SIX, CardSuit.CLUBS),
-                new Card(CardRank.NINE, CardSuit.CLUBS),
-                new Card(CardRank.TEN, CardSuit.CLUBS)
-        );
-    }
-
-    private List<Card> straightFlush_FiveHigh() {
-        return Arrays.asList(
-                new Card(CardRank.JACK, CardSuit.CLUBS),
-                new Card(CardRank.FIVE, CardSuit.CLUBS),
-                new Card(CardRank.QUEEN, CardSuit.CLUBS),
-                new Card(CardRank.ACE, CardSuit.CLUBS),
-                new Card(CardRank.FOUR, CardSuit.CLUBS),
-                new Card(CardRank.TWO, CardSuit.CLUBS),
-                new Card(CardRank.THREE, CardSuit.CLUBS)
-        );
-    }
-
-    private List<Card> flush() {
-        return Arrays.asList(
-                new Card(CardRank.ACE, CardSuit.CLUBS),
-                new Card(CardRank.QUEEN, CardSuit.HEARTS),
-                new Card(CardRank.FIVE, CardSuit.CLUBS),
-                new Card(CardRank.THREE, CardSuit.CLUBS),
-                new Card(CardRank.SIX, CardSuit.CLUBS),
-                new Card(CardRank.TWO, CardSuit.CLUBS),
-                new Card(CardRank.FOUR, CardSuit.CLUBS)
-        );
-    }
-
-    private List<Card> fullHouse() {
-        return Arrays.asList(
-                new Card(CardRank.TWO, CardSuit.DIAMONDS),
-                new Card(CardRank.TWO, CardSuit.HEARTS),
-                new Card(CardRank.TWO, CardSuit.CLUBS),
-                new Card(CardRank.ACE, CardSuit.CLUBS),
-                new Card(CardRank.ACE, CardSuit.HEARTS),
-                new Card(CardRank.ACE, CardSuit.DIAMONDS)
-        );
     }
 
     /**
@@ -303,8 +132,6 @@ public class HandIdentifier {
         } else {
             return null;
         }
-
-
 
         return retHand;
     }

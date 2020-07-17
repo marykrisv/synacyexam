@@ -36,21 +36,4 @@ public class Flush extends Hand {
                 CardUtil.getHighestCardToString(cards, 1));
     }
 
-    /**
-     * Gets the highest card in the pack
-     *
-     * @return
-     */
-//    private List<Card> getHighest () {
-//        if (cards != null && !cards.isEmpty()) {
-//            List<Card> highest = new ArrayList<>();
-//
-//            highest.add(cards.get(0));
-//
-//            return highest;
-//        }
-//
-//        return null;
-//    }
-
 }

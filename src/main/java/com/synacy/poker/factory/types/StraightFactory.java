@@ -17,6 +17,27 @@ public class StraightFactory extends HandFactory implements Straight {
     private int SECOND_TO_THE_LAST_CARD_SIZE = 4;
     private int LAST_INDEX;
 
+    /**
+     * initialize card declarations
+     */
+    @Override
+    public void initializeCards() {
+        this.cards = super.getCards();
+    }
+
+    /**
+     * Choose whether deck is grouped by suit or by rank, this is not needed for straight cards
+     */
+    @Override
+    public void groupDeck() {
+        // do nothing
+    }
+
+    /**
+     * Calls checkStraight and returns its result
+     *
+     * @return checkStraight() result.
+     */
     @Override
     public boolean check() {
         List<CardRank> cardRanks = new ArrayList<>();
@@ -29,6 +50,10 @@ public class StraightFactory extends HandFactory implements Straight {
         return checkStraight(cardRanks);
     }
 
+
+    /**
+     * Populate straight cards arranged in descending order
+     */
     @Override
     public void populateCards() {
         List<Card> straightCards = new ArrayList<>();;
@@ -67,11 +92,11 @@ public class StraightFactory extends HandFactory implements Straight {
         super.setCards(straightCards);
     }
 
-    @Override
-    public void groupDeck() {
-        // do nothing
-    }
-
+    /**
+     * Checks whether the cards contains Ace
+     *
+     * @return return true if cards contains Ace else false
+     */
     private boolean cardContainsAce() {
         List<Card> aces = Arrays.asList(
             new Card(CardRank.ACE, CardSuit.CLUBS),
@@ -90,6 +115,11 @@ public class StraightFactory extends HandFactory implements Straight {
         return false;
     }
 
+    /**
+     * Gets the Ace card in cards
+     *
+     * @return returns the Ace in the cards
+     */
     private Card getAce () {
         List<Card> aces = Arrays.asList(
                 new Card(CardRank.ACE, CardSuit.CLUBS),
@@ -108,11 +138,11 @@ public class StraightFactory extends HandFactory implements Straight {
         return null;
     }
 
-    @Override
-    public void initializeCards() {
-        this.cards = super.getCards();
-    }
-
+    /**
+     * Checks if the pack of cards is Straight
+     *
+     * @return true if cards is a Straight else false.
+     */
     @Override
     public boolean checkStraight(List<CardRank> cardRanks) {
         int straightCardCtr = 0;

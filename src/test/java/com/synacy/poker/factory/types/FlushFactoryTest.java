@@ -3,7 +3,6 @@ package com.synacy.poker.factory.types;
 import com.synacy.poker.card.Card;
 import com.synacy.poker.card.CardRank;
 import com.synacy.poker.card.CardSuit;
-import com.synacy.poker.utils.CardUtil;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -13,12 +12,6 @@ import static org.junit.Assert.*;
 import static org.junit.Assert.assertFalse;
 
 public class FlushFactoryTest {
-    private void createInits(FlushFactory flushFactory, List<Card> cards) {
-        flushFactory.setCards(cards);
-        flushFactory.initializeCards();
-        CardUtil.sortCardsDesc(cards);
-        flushFactory.groupDeck();
-    }
 
     @Test
     public void initializeCards() {
@@ -27,13 +20,12 @@ public class FlushFactoryTest {
                 new Card(CardRank.ACE, CardSuit.CLUBS),
                 new Card(CardRank.EIGHT, CardSuit.CLUBS),
                 new Card(CardRank.SEVEN, CardSuit.CLUBS),
-                new Card(CardRank.TWO, CardSuit.CLUBS),
-                new Card(CardRank.QUEEN, CardSuit.CLUBS)
+                new Card(CardRank.TWO, CardSuit.CLUBS)
         );
 
         FlushFactory flushFactory = new FlushFactory();
         flushFactory.setCards(cards);
-        flushFactory.initializeCards();
+        flushFactory.create();
 
         assertEquals(cards, flushFactory.getCards());
     }
@@ -50,7 +42,8 @@ public class FlushFactoryTest {
         );
 
         FlushFactory flushFactory = new FlushFactory();
-        this.createInits(flushFactory, cards);
+        flushFactory.setCards(cards);
+        flushFactory.create();
 
         assertTrue(flushFactory.check());
     }
@@ -67,7 +60,8 @@ public class FlushFactoryTest {
         );
 
         FlushFactory flushFactory = new FlushFactory();
-        this.createInits(flushFactory, cards);
+        flushFactory.setCards(cards);
+        flushFactory.create();
 
         assertFalse(flushFactory.check());
     }
@@ -92,8 +86,8 @@ public class FlushFactoryTest {
         );
 
         FlushFactory flushFactory = new FlushFactory();
-        this.createInits(flushFactory, cards);
-        flushFactory.populateCards();
+        flushFactory.setCards(cards);
+        flushFactory.create();
 
         assertEquals(onePairExpected, flushFactory.getCards());
     }

@@ -7,6 +7,19 @@ public class StraightFlushFactory extends StraightFactory implements Flush {
 
     int FLUSH_SIZE_CARD = 5;
 
+    /**
+     * Choose whether deck is grouped by suit or by rank
+     */
+    @Override
+    public void groupDeck() {
+        super.groupPackBySuit();
+    }
+
+    /**
+     * Calls checkFlush and returns its result
+     *
+     * @return checkFlush() result.
+     */
     @Override
     public boolean check() {
         for (PackBySuit packBySuit : super.getGroupedPackBySuit()) {
@@ -19,16 +32,11 @@ public class StraightFlushFactory extends StraightFactory implements Flush {
         return false;
     }
 
-//    @Override
-//    public void populateCards() {
-//        super.populateCards();
-//    }
-
-    @Override
-    public void groupDeck() {
-        super.groupPackBySuit();
-    }
-
+    /**
+     * Checks if the pack of cards is Straight Flush
+     *
+     * @return true if cards is a Straight Flush else false.
+     */
     @Override
     public boolean checkFlush(PackBySuit packBySuit) {
         if (packBySuit.getCardRanks().size() >= FLUSH_SIZE_CARD) {

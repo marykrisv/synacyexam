@@ -35,7 +35,7 @@ public class Straight extends Hand {
     @Override
     public String toString() {
         return String.format("Straight (%s High)",
-                CardUtil.getHighestCardToString(cards, 5));
+                CardUtil.getHighestCardToString(cards, 1));
     }
 
 }

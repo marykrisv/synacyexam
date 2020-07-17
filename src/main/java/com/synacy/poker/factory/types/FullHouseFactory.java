@@ -16,6 +16,9 @@ public class FullHouseFactory extends ThreeOfAKindFactory implements Pair {
     private int SAME_RANK_PAIR_SIZE = 2;
     private int TWO_PAIR = 2;
 
+    /**
+     * initialize card declarations
+     */
     @Override
     public void initializeCards() {
         super.initializeCards();
@@ -23,6 +26,19 @@ public class FullHouseFactory extends ThreeOfAKindFactory implements Pair {
         pairCards = new ArrayList<>();
     }
 
+    /**
+     * Choose whether deck is grouped by suit or by rank, this is not needed for straight cards
+     */
+    @Override
+    public void groupDeck() {
+        super.groupPackByRank();
+    }
+
+    /**
+     * Calls checkPair and super class' checkThreeOfAkind function and returns its result
+     *
+     * @return checkPair() and super.checkThreeOfAKind() result.
+     */
     @Override
     public boolean check() {
         boolean isThreeOfAKind = super.checkThreeOfAKind();
@@ -34,6 +50,9 @@ public class FullHouseFactory extends ThreeOfAKindFactory implements Pair {
         }
     }
 
+    /**
+     * Populate pair and threeOfAKind cards arranged in descending order
+     */
     @Override
     public void populateCards() {
         for (PackByRank packByRank : super.getGroupedPackByRank()) {
@@ -47,19 +66,12 @@ public class FullHouseFactory extends ThreeOfAKindFactory implements Pair {
         }
     }
 
-    @Override
-    public void groupDeck() {
-        super.groupPackByRank();
-    }
-
-    public List<Card> getPairCards() {
-        return pairCards;
-    }
-
-    public void setPairCards(List<Card> pairCards) {
-        this.pairCards = pairCards;
-    }
-
+    /**
+     * Populate pair cards arranged in descending order
+     *
+     * @param cardRank {@link CardRank} of onePair card
+     * @param cardSuits list of {@link CardSuit} of onePair card
+     */
     @Override
     public void populatePairCards(CardRank cardRank, List<CardSuit> cardSuits) {
         if (pairCards != null) {
@@ -69,6 +81,11 @@ public class FullHouseFactory extends ThreeOfAKindFactory implements Pair {
         }
     }
 
+    /**
+     * Checks if the pack of cards contains pair
+     *
+     * @return true if cards contains pair else false.
+     */
     @Override
     public boolean checkPair() {
         int ctr = 0;
@@ -84,5 +101,13 @@ public class FullHouseFactory extends ThreeOfAKindFactory implements Pair {
         }
 
         return false;
+    }
+
+    public List<Card> getPairCards() {
+        return pairCards;
+    }
+
+    public void setPairCards(List<Card> pairCards) {
+        this.pairCards = pairCards;
     }
 }

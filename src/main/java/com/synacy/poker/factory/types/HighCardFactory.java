@@ -1,10 +1,7 @@
 package com.synacy.poker.factory.types;
 
-import com.synacy.poker.card.Card;
 import com.synacy.poker.factory.HandFactory;
 import com.synacy.poker.utils.CardUtil;
-
-import java.util.List;
 
 public class HighCardFactory extends HandFactory {
 
@@ -16,7 +13,7 @@ public class HighCardFactory extends HandFactory {
     }
 
     /**
-     * Choose whether deck is grouped by suit or by rank, this is not needed for straight cards
+     * Choose whether deck is grouped by suit or by rank, this is not needed for high cards
      */
     @Override
     public void groupDeck() {

@@ -3,7 +3,6 @@ package com.synacy.poker.factory.types;
 import com.synacy.poker.card.Card;
 import com.synacy.poker.card.CardRank;
 import com.synacy.poker.card.CardSuit;
-import com.synacy.poker.utils.CardUtil;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -13,13 +12,6 @@ import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 
 public class ThreeOfAKindFactoryTest {
-
-    private void createInits(ThreeOfAKindFactory threeOfAKindFactory, List<Card> cards) {
-        threeOfAKindFactory.setCards(cards);
-        threeOfAKindFactory.initializeCards();
-        CardUtil.sortCardsDesc(cards);
-        threeOfAKindFactory.groupDeck();
-    }
 
     @Test
     public void initializeCards() {
@@ -42,7 +34,8 @@ public class ThreeOfAKindFactoryTest {
         );
 
         ThreeOfAKindFactory threeOfAKindFactory = new ThreeOfAKindFactory();
-        this.createInits(threeOfAKindFactory, cards);
+        threeOfAKindFactory.setCards(cards);
+        threeOfAKindFactory.create();
 
         assertTrue(threeOfAKindFactory.check());
     }
@@ -59,7 +52,8 @@ public class ThreeOfAKindFactoryTest {
         );
 
         ThreeOfAKindFactory threeOfAKindFactory = new ThreeOfAKindFactory();
-        this.createInits(threeOfAKindFactory, cards);
+        threeOfAKindFactory.setCards(cards);
+        threeOfAKindFactory.create();
 
         assertFalse(threeOfAKindFactory.check());
     }
@@ -82,8 +76,8 @@ public class ThreeOfAKindFactoryTest {
         );
 
         ThreeOfAKindFactory threeOfAKindFactory = new ThreeOfAKindFactory();
-        this.createInits(threeOfAKindFactory, cards);
-        threeOfAKindFactory.populateCards();
+        threeOfAKindFactory.setCards(cards);
+        threeOfAKindFactory.create();
 
         assertEquals(threeOfAKindExcepected, threeOfAKindFactory.getThreeOfAKindCards());
     }
@@ -105,8 +99,8 @@ public class ThreeOfAKindFactoryTest {
         );
 
         ThreeOfAKindFactory threeOfAKindFactory = new ThreeOfAKindFactory();
-        this.createInits(threeOfAKindFactory, cards);
-        threeOfAKindFactory.populateCards();
+        threeOfAKindFactory.setCards(cards);
+        threeOfAKindFactory.create();
 
         assertEquals(otherCardExcepted, threeOfAKindFactory.getOtherCards());
     }
