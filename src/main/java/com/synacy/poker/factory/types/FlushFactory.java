@@ -73,7 +73,7 @@ public class FlushFactory extends HandFactory implements Flush {
      * Checks whether the player's and community card is flush
      *
      * @param packBySuit group of cards arranged by suit
-     * @return returns true if cards is flush else false
+     * @return true if cards is flush else false
      */
     @Override
     public boolean checkFlush(PackBySuit packBySuit) {

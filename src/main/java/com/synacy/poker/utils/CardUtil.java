@@ -11,12 +11,6 @@ import java.util.List;
 public class CardUtil {
     private static int MAX_CARD_ON_HAND = 5;
 
-    public static void sortCardAsc(List<Card>... toSortCards) {
-        for (int i =0; i < toSortCards.length; i++) {
-            Collections.sort(toSortCards[i], Comparator.comparing(Card::getRank));
-        }
-    }
-
     public static void sortCardsDesc(List<Card>... toSortCards) {
         for (int i =0; i < toSortCards.length; i++) {
             Collections.sort(toSortCards[i], Comparator.comparing(Card::getRank).reversed());

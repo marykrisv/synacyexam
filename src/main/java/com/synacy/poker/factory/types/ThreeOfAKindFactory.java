@@ -79,6 +79,7 @@ public class ThreeOfAKindFactory extends HandFactory implements ThreeOfAKind {
     }
 
     /**
+     * Populates non-threeOfAKind card
      *
      * @param cardRank {@link CardRank} of the non-threeOfAKind card
      * @param cardSuits List of {@link CardSuit} of the non-threeOfAKind card
